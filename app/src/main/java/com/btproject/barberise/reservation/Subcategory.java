@@ -5,6 +5,8 @@ public class Subcategory {
     private String name;
     private double price;
 
+    private String description;
+
     public Subcategory() {
         // Required empty public constructor for Firebase Realtime Database
     }
@@ -20,6 +22,16 @@ public class Subcategory {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getDescription()
+    {
+        return this.description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 
 }

@@ -49,6 +49,16 @@
             app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
 
         <RadioGroup
+            android:id="@+id/opening_hour_radio_group"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
+
+        <RadioGroup
             android:id="@+id/timeFirstRowRadioGroup"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
