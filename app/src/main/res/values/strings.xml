@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">barberise-app</string>
+    <!--SignUp activity-->
+    <string name="sign_ip">Remember email</string>
+    <string name="continue_guest">Skip ›</string>
+    <string name="save">Save</string>
+    <string name="phone_no">Your phone number here</string>
+    <string name="send">Send</string>
+
+
+    <!--Home Activity-->
+    <string name="search">Search</string>
+
+    <!--Profile Fragment-->
+    <string name="partnerprofile">Partner profile</string>
+    <string name="promocode">Promo code</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="aboutus">About us</string>
+    <string name="help">Help</string>
+
+    <!--Calendar Fragment-->
+    <string name="myreservations">My reservations</string>
+    <string name="next">Oncoming event</string>
+
+    <!--Favorite Fragment-->
+    <string name="favorite">Favorite</string>
+
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="recommendedItems">Recommended</string>
+    <string name="ratedItems">Best Rated</string>
+    <string name="availableToday">Available Today</string>
+    <string name="youremail_gmail_com" translatable="false">youremail@gmail.com</string>
+
+    <!--Partner Profile-->
+    <string name="password">password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="picture_hint">Choose your profile picture by clicking on the gray area above</string>
+    <string name="business_name">Name of the shop</string>
+    <string name="name_reminder">This name will be displayed in the app</string>
+
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
+    <string name="Sunday">Sunday</string>
+
+    <string name="Monday_hours" translatable="false">9:00 - 17:00</string>
+    <string name="Tuesday_hours" translatable="false">9:00 - 17:00</string>
+    <string name="Wednesday_hours" translatable="false">9:00 - 17:00</string>
+    <string name="Thursday_hours" translatable="false">9:00 - 17:00</string>
+    <string name="Friday_hours" translatable="false">9:00 - 17:00</string>
+    <string name="Saturday_hours" translatable="false">---</string>
+    <string name="Sunday_hours" translatable="false">---</string>
+
+    <string name="default_time">Keep the default opening hours</string>
+    <string name="save_changes">Save changes ›</string>
+
+    <!--Chosen user-->
+    <string name="contact_info">Contact information ›</string>
+    <string name="about_us">About us ›</string>
+
+    <!--    Reservation-->
+    <string name="choose_category">Choose category</string>
+    <string name="choose_service">Choose service</string>
+    <string name="choose_date">Choose date</string>
+    <string name="choose_time">Choose time</string>
+    <string name="save_date">Save date ›</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+</resources>

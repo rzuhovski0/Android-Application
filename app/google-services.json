@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "887382341946",
+    "firebase_url": "https://barberise-app-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "barberise-app",
+    "storage_bucket": "barberise-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887382341946:android:2895a49d6bb69c48037803",
+        "android_client_info": {
+          "package_name": "com.btproject.barberise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "887382341946-ahbc8pqn9qq3g7ao3ljb49r9a07i6fsg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXyYkOAZZWPQp0RQ5DXvMmUL9z4vvkNjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "887382341946-ahbc8pqn9qq3g7ao3ljb49r9a07i6fsg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_marginBottom="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/barberisesplash" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/sen_bold"
+        android:shadowColor="#7F000000"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="4"
+        android:text="@string/sign_ip"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/phoneNoEditText"
+        app:layout_constraintStart_toStartOf="@+id/phoneNoEditText" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sendSmsButton"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/round_shape_shadows"
+        android:backgroundTint="#6DB5CA"
+        android:fontFamily="@font/sen"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="#FBFBFB"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNoEditText"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNoEditText" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/phoneNoEditText"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:background="@drawable/round_shape_shadows"
+        android:backgroundTint="#D9D9D9"
+        android:ems="10"
+        android:fontFamily="@font/sen"
+        android:hint="@string/youremail_gmail_com"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#BFFFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/skipEmailButton"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:background="@drawable/round_shape_shadows"
+        android:backgroundTint="#FF7235"
+        android:fontFamily="@font/sen"
+        android:text="@string/continue_guest"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNoEditText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

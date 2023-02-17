@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">barberise-app</string>
+    <string name="sign_ip">Zapamätať email</string>
+    <string name="continue_guest">Preskočiť ›</string>
+    <string name="save">Uložit</string>
+    <string name="title_activity_menu">Menu Activity</string>
+    <string name="action_settings">Nastavenia</string>
+    <string name="recommendedItems">Odporúčané</string>
+    <string name="ratedItems">Najlepšie hodnotené</string>
+    <string name="availableToday">Dostupné dnes</string>
+    <string name="search">hľadať</string>
+    <string name="partnerprofile">Partnerský profil</string>
+    <string name="promocode">Promo kódy</string>
+    <string name="profile">Profil</string>
+    <string name="settings">Nastavenia</string>
+    <string name="aboutus">O nás</string>
+    <string name="help">Pomoc</string>
+    <string name="favorite">Obľúbené</string>
+    <string name="next">Nadchádzajúce</string>
+    <string name="myreservations">Moje rezervácie</string>
+    <string name="password">heslo</string>
+    <string name="register">Zaregistrovať</string>
+    <string name="login">Prihlásiť sa</string>
+    <string name="picture_hint">Zvolte si profilový obrázok kliknutím na sivú plochu vyššie</string>
+    <string name="business_name">Názov prevádzky</string>
+    <string name="name_reminder">Názov, ktorý zvolíte, bude zobrazený v aplikácií</string>
+    <string name="default_time">Ponechať základnú otváraciu dobu</string>
+    <string name="save_changes">Uložit nastavenia ›</string>
+    <string name="Monday">Pondelok</string>
+    <string name="Tuesday">Utorok</string>
+    <string name="Wednesday">Streda</string>
+    <string name="Thursday">Štvrtok</string>
+    <string name="Friday">Piatok</string>
+    <string name="Saturday">Sobota</string>
+    <string name="Sunday">Nedela</string>
+    <string name="contact_info">Kontaktné údaje ›</string>
+    <string name="about_us">O nás ›</string>
+    <string name="phone_no">Vaše telefónne číslo</string>
+    <string name="send">Poslať</string>
+    <string name="choose_category">Vyberte kategóriu</string>
+    <string name="choose_service">Vyberte službu</string>
+    <string name="choose_time">Vyberte čas</string>
+    <string name="choose_date">Vyberte dátum</string>
+    <string name="save_date">Potvrdiť dátum ›</string>
+</resources>
