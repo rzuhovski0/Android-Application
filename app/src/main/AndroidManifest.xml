@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Barberiseapp"
         tools:targetApi="31">
         <activity
+            android:name=".reservation.ReservationTestingActivity"
+            android:exported="false" />
+        <activity
             android:name=".reservation.ReservationSuccessfulActivity"
             android:exported="false" />
         <activity

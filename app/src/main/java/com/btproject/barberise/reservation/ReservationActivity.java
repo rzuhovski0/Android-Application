@@ -82,7 +82,7 @@ public class ReservationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choosen_user);
+        setContentView(R.layout.activity_reservation);
 
 
         serviceProviderId = getIntent().getStringExtra("id");
@@ -165,7 +165,7 @@ public class ReservationActivity extends AppCompatActivity {
             expandCategory(selectedCategory);
 
             /**RESERVATION Category*/
-            reservation.setCategory(selectedCategory);
+            reservation.setCategoryName(selectedCategory);
 
             categoryRadioGroup.startAnimation(
                     FadeOut()
@@ -183,7 +183,7 @@ public class ReservationActivity extends AppCompatActivity {
             String selectedSubcategory = selectedRadioButton.getText().toString();
 
             /**RESERVATION SubCategory*/
-            reservation.setSubcategory(selectedSubcategory);
+            reservation.setSubcategoryName(selectedSubcategory);
 
             serviceRadioGroup.startAnimation(
                     FadeOut()

@@ -185,34 +185,37 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-    private List<Category> getCategories()
+    private ArrayList<Category> getCategories()
     {
-        List<Category> categories = new LinkedList<>();
+        ArrayList<Category> categories = new ArrayList<>();
 
+        ArrayList<Subcategory> fsubcategories = new ArrayList<>();
         Subcategory fSubcategory = new Subcategory("Classic Strih",14.0);
         Subcategory sSubcategory = new Subcategory("Dlhé vlasy",20.0);
         Subcategory tSubcategory = new Subcategory("Junior Strih",10.0);
-        List<Subcategory> fsubcategories = new LinkedList<>();
         fsubcategories.add(fSubcategory);
         fsubcategories.add(sSubcategory);
         fsubcategories.add(tSubcategory);
+
         Category fCategory = new Category("Vlasy",fsubcategories);
         categories.add(fCategory);
 
+        ArrayList<Subcategory> ssubcategories = new ArrayList<>();
         Subcategory ffSubcategory = new Subcategory("Holenie brady",8.0);
         Subcategory ssSubcategory = new Subcategory("Úprava brady",10.0);
-        List<Subcategory> ssubcategories = new LinkedList<>();
         ssubcategories.add(ffSubcategory);
         ssubcategories.add(ssSubcategory);
+
         Category sCategory = new Category("Brada",ssubcategories);
         categories.add(sCategory);
 
-
+        ArrayList<Subcategory> tsubcategories = new ArrayList<>();
         Subcategory tffSubcategory = new Subcategory("Classic strih + úprava brady",24.0);
         Subcategory tssSubcategory = new Subcategory("Holenie hlavy a holenie brady",20.0);
-        List<Subcategory> tsubcategories = new LinkedList<>();
+
         tsubcategories.add(tffSubcategory);
         tsubcategories.add(tssSubcategory);
+
         Category tCategory = new Category("Komplet",tsubcategories);
         categories.add(tCategory);
 
@@ -343,7 +346,7 @@ public class RegistrationActivity extends AppCompatActivity {
         return displayMetrics.widthPixels;
     }
 
-    public void register(String email, String password, String userName, List<Category> categories,Map<String, ArrayList<String>> openingHours) {
+    public void register(String email, String password, String userName, ArrayList<Category> categories,Map<String, ArrayList<String>> openingHours) {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -365,29 +368,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                         userData.put("profile_picture", profilePictureUrl);
                                         userData.put("category","available_today");
                                         userData.put("opening_hours",openingHours);
-
-                                        // Save the list of categories to the database
-                                        Map<String, Object> categoriesMap = new HashMap<>();
-
-                                        for (Category category : categories) {
-                                            Map<String, Object> categoryMap = new HashMap<>();
-                                            categoryMap.put("name", category.getName());
-
-                                            List<Map<String, Object>> subcategoriesList = new ArrayList<>();
-
-                                            for (Subcategory subcategory : category.getSubcategories()) {
-
-                                                Map<String, Object> subcategoryMap = new HashMap<>();
-                                                subcategoryMap.put("name", subcategory.getName());
-                                                subcategoryMap.put("price", subcategory.getPrice());
-                                                subcategoriesList.add(subcategoryMap);
-
-                                            }
-                                            categoryMap.put("subcategories", subcategoriesList);
-
-                                            categoriesMap.put(category.getName(), categoryMap);
-                                        }
-                                        userData.put("categories", categoriesMap);
+                                        userData.put("categories", categories);
 
                                         databaseReference.setValue(userData);
                                     });

@@ -1,8 +1,5 @@
 package com.btproject.barberise.reservation;
 
-import com.google.android.material.imageview.ShapeableImageView;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Reservation {
@@ -23,6 +20,8 @@ public class Reservation {
 
     private Calendar selectedDate;
 
+    private String subcategoryDescription;
+
     public Reservation()
     {}
 
@@ -30,6 +29,14 @@ public class Reservation {
     {
         this.userName = userName;
         this.serviceProviderName = serviceProviderName;
+    }
+
+    public void setSubcategoryDescription(String subcategoryDescription) {
+        this.subcategoryDescription = subcategoryDescription;
+    }
+
+    public String getSubcategoryDescription() {
+        return subcategoryDescription;
     }
 
     public Calendar getSelectedDate() {
@@ -53,11 +60,11 @@ public class Reservation {
         return subcategoryName;
     }
 
-    public void setCategory(String categoryName) {
+    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 
-    public void setSubcategory(String subcategoryName) {
+    public void setSubcategoryName(String subcategoryName) {
         this.subcategoryName = subcategoryName;
     }
 

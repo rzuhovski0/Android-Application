@@ -1,18 +1,17 @@
 package com.btproject.barberise.reservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Category {
-
-    private String name;
-    private List<Subcategory> subcategories;
+public class Category extends Options{
+    public ArrayList<Subcategory> subcategories;
 
     public Category() {
         // Required empty public constructor for Firebase Realtime Database
     }
 
-    public Category(String name, List<Subcategory> subcategories) {
-        this.name = name;
+    public Category(String name, ArrayList<Subcategory> subcategories) {
+        super(name);
         this.subcategories = subcategories;
     }
 
@@ -20,7 +19,7 @@ public class Category {
         return name;
     }
 
-    public List<Subcategory> getSubcategories() {
+    public ArrayList<Subcategory> getSubcategories() {
         return subcategories;
     }
 

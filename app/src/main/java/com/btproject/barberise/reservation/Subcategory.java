@@ -1,10 +1,8 @@
 package com.btproject.barberise.reservation;
 
-public class Subcategory {
+public class Subcategory extends Options{
 
-    private String name;
     private double price;
-
     private String description;
 
     public Subcategory() {
@@ -12,7 +10,7 @@ public class Subcategory {
     }
 
     public Subcategory(String name, double price) {
-        this.name = name;
+        super(name);
         this.price = price;
     }
 

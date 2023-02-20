@@ -1,5 +1,9 @@
 package com.btproject.barberise.utils;
 
+import android.graphics.Color;
+
+import com.applikeysolutions.cosmocalendar.view.CalendarView;
+import com.btproject.barberise.R;
 import com.btproject.barberise.reservation.Day;
 import com.btproject.barberise.reservation.Reservation;
 
@@ -121,6 +125,20 @@ public class CalendarUtils {
                 }
             }
         }
+    }
+
+    public static void setCalendarColors(int color, CalendarView calendarView)
+    {
+        calendarView.setWeekendDayTextColor(color);
+        calendarView.setSelectedDayBackgroundColor(color);
+        calendarView.setCurrentDayIconRes(R.drawable.red_dot);
+        calendarView.setDayTextColor(Color.BLACK);
+    }
+
+    public static void disablePreviousDays(CalendarView calendarView)
+    {
+        Set<Long> disabledDays = getPreviousDays();
+        calendarView.setDisabledDays(disabledDays);
     }
 
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.btproject.barberise.reservation.ReservationActivity;
 import com.btproject.barberise.R;
 import com.btproject.barberise.navigation.profile.User;
+import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -65,7 +66,7 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
                     .into(holder.profilePictureImageView);
         }
         holder.cardView.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, ReservationActivity.class);
+            Intent intent = new Intent(mContext, ReservationTestingActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("id",user.getId());
             intent.putExtra("username",user.getUsername());
