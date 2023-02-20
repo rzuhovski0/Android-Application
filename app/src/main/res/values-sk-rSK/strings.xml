@@ -43,4 +43,10 @@
     <string name="choose_time">Vyberte čas</string>
     <string name="choose_date">Vyberte dátum</string>
     <string name="save_date">Potvrdiť dátum ›</string>
+    <string name="reserve">Rezervovať</string>
+    <string name="reservation_warn">Prosím, zvolte čas.</string>
+    <string name="reservation_success">Vaša rezervácia prebehla úspešne.</string>
+    <string name="reservation_thanks">Ďakujeme za rezerváciu !</string>
+    <string name="reservation_notification">Potvrdenie rezervácie Vám zašleme mailom</string>
+    <string name="check_reservation">Svoju rezerváciu si môžte skontrolovať kliknutím sem</string>
 </resources>

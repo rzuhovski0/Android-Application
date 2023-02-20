@@ -29,7 +29,13 @@ public class MenuActivity extends AppCompatActivity {
         binding = ActivityMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 //        setContentView(R.layout.activity_menu);
-        replaceFragment(new HomeFragment());
+
+        boolean openReservations = getIntent().getBooleanExtra("openReservations",false);
+
+        if(openReservations)
+            replaceFragment(new CalendarFragment());
+        else
+            replaceFragment(new HomeFragment());
 
         binding.bottomNavigationView2.setOnItemSelectedListener(item -> {
             switch(item.getItemId()){

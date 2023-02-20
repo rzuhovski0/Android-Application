@@ -64,12 +64,18 @@
     <string name="contact_info">Contact information ›</string>
     <string name="about_us">About us ›</string>
 
-    <!--    Reservation-->
+    <!--Reservation-->
     <string name="choose_category">Choose category</string>
     <string name="choose_service">Choose service</string>
     <string name="choose_date">Choose date</string>
     <string name="choose_time">Choose time</string>
     <string name="save_date">Save date ›</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="reserve">Reserve</string>
+    <string name="reservation_warn">Please make sure that all reservation fields are valid</string>
+    <string name="reservation_success">Your reservation is successful.</string>
+    <string name="reservation_thanks">Thank you for your reservation !</string>
+    <string name="reservation_notification">We\'ll send confirmation of the reservation
+        to your email.</string>
+    <string name="check_reservation">You can check your reservation clicking here</string>
 
 </resources>

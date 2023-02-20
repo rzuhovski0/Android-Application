@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChosenUser">
+    tools:context=".reservation.ReservationActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:id="@+id/categoryRadioGroup"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
@@ -43,7 +43,7 @@
             android:id="@+id/serviceRadioGroup"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
@@ -52,47 +52,17 @@
             android:id="@+id/opening_hour_radio_group"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/timeFirstRowRadioGroup"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/timeSecondRowRadioGroup"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeFirstRowRadioGroup"></RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/timeThirdRowRadioGroup"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeSecondRowRadioGroup"></RadioGroup>
+            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView" />
 
         <com.applikeysolutions.cosmocalendar.view.CalendarView
             android:id="@+id/cosmo_calendar"
             android:layout_width="300dp"
             android:layout_height="250dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/currentStepTextView" />
@@ -108,6 +78,18 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/reserveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@drawable/round_shape_shadows"
+            android:drawableLeft="@drawable/calendar_check_white"
+            android:text="@string/reserve"
+            android:fontFamily="@font/sen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/opening_hour_radio_group" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

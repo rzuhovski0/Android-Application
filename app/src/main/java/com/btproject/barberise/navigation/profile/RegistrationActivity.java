@@ -109,80 +109,80 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-    private Map<String, Map<String, Boolean>> getOpeningHours()
+    private Map<String,ArrayList<String>> getOpeningHours()
     {
-        Map<String, Map<String, Boolean>> openingHours = new HashMap<>();
-
+        Map<String,ArrayList<String>> openingHours = new HashMap<>();
         // Opening hours for Monday
-        Map<String, Boolean> mondayHours = new HashMap<>();
+        ArrayList<String> mondayHours = new ArrayList<>();
         for (int hour = 9; hour < 20; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
                 String time = String.format("%02d:%02d", hour, minute);
-                mondayHours.put(time, true);
+                mondayHours.add(time);
             }
         }
         openingHours.put("Monday", mondayHours);
 
         // Opening hours for Tuesday
-        Map<String, Boolean> tuesdayHours = new HashMap<>();
+        ArrayList<String> tuesdayHours = new ArrayList<>();
         for (int hour = 10; hour < 21; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
                 String time = String.format("%02d:%02d", hour, minute);
-                tuesdayHours.put(time, true);
+                tuesdayHours.add(time);
             }
         }
         openingHours.put("Tuesday", tuesdayHours);
 
         // Opening hours for Wednesday
-        Map<String, Boolean> wednesdayHours = new HashMap<>();
+        ArrayList<String> wednesdayHours = new ArrayList<>();
         for (int hour = 8; hour < 18; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
                 String time = String.format("%02d:%02d", hour, minute);
-                wednesdayHours.put(time, true);
+                wednesdayHours.add(time);
             }
         }
         openingHours.put("Wednesday", wednesdayHours);
 
         // Opening hours for Thursday
-        Map<String, Boolean> thursdayHours = new HashMap<>();
+        ArrayList<String> thursdayHours = new ArrayList<>();
         for (int hour = 12; hour < 22; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
                 String time = String.format("%02d:%02d", hour, minute);
-                thursdayHours.put(time, true);
+                thursdayHours.add(time);
             }
         }
         openingHours.put("Thursday", thursdayHours);
 
         // Opening hours for Friday
-        Map<String, Boolean> fridayHours = new HashMap<>();
+        ArrayList<String> fridayHours = new ArrayList<>();
         for (int hour = 9; hour < 17; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
                 String time = String.format("%02d:%02d", hour, minute);
-                fridayHours.put(time, true);
+                fridayHours.add(time);
             }
         }
         openingHours.put("Friday", fridayHours);
 
         // Opening hours for Saturday
-        Map<String, Boolean> saturdayHours = new HashMap<>();
+        ArrayList<String> saturdayHours = new ArrayList<>();
         for (int hour = 11; hour < 16; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
                 String time = String.format("%02d:%02d", hour, minute);
-                saturdayHours.put(time, true);
+                saturdayHours.add(time);
             }
         }
         openingHours.put("Saturday", saturdayHours);
 
         // Opening hours for Sunday
-        Map<String, Boolean> sundayHours = new HashMap<>();
+        ArrayList<String> sundayHours = new ArrayList<>();
         for (int hour = 12; hour < 18; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
                 String time = String.format("%02d:%02d", hour, minute);
-                sundayHours.put(time, true);
+                sundayHours.add(time);
             }
         }
         openingHours.put("Sunday", sundayHours);
         return openingHours;
+
     }
 
     private List<Category> getCategories()
@@ -343,7 +343,7 @@ public class RegistrationActivity extends AppCompatActivity {
         return displayMetrics.widthPixels;
     }
 
-    public void register(String email, String password, String userName, List<Category> categories,Map<String, Map<String, Boolean>> openingHours) {
+    public void register(String email, String password, String userName, List<Category> categories,Map<String, ArrayList<String>> openingHours) {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {

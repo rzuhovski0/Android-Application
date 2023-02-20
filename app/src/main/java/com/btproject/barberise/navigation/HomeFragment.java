@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.btproject.barberise.MyCallback;
 import com.btproject.barberise.R;
 import com.btproject.barberise.adapters.MyUsersAdapter;
 import com.btproject.barberise.navigation.profile.User;
@@ -38,7 +40,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String>ratings = new ArrayList<>();
     private ArrayList<Integer>images = new ArrayList<>();
-//    ShopsViewAdapter shopsViewAdapter;
+    //    ShopsViewAdapter shopsViewAdapter;
 //    UsersAdapter usersAdapter;
     MyUsersAdapter myUsersAdapter;
     MyUsersAdapter bestRatedAdapter;
@@ -101,12 +103,12 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         fillAttrib();
-        initialize(rootView);
+        initComponents(rootView);
 //        initializeItems(rootView);
         return rootView;
     }
 
-    private void initialize(View rootView)
+    private void initComponents(View rootView)
     {
         //Recommended Recycler & TextView
         recommendedTextView = (TextView)rootView.findViewById(R.id.recommendedTextView);//textView
@@ -165,75 +167,129 @@ public class HomeFragment extends Fragment {
                     switch(user.getCategory()){
                         case "recommended":
                             recommendedUsers.add(user);
+                            myUsersAdapter.notifyItemInserted(getItemIndex(user,recommendedUsers));
                             break;
                         case "best_rated":
                             ratedUsers.add(user);
+                            myUsersAdapter.notifyItemInserted(getItemIndex(user,ratedUsers));
                             break;
                         case "available_today":
                             availableUsers.add(user);
+                            myUsersAdapter.notifyItemInserted(getItemIndex(user,availableUsers));
                             break;
                         default:
                             otherUsers.add(user);
+                            myUsersAdapter.notifyItemInserted(getItemIndex(user,otherUsers));
                     }
 
-                    myUsersAdapter.notifyItemInserted(getItemIndex(user));
+
                 }
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String previousChildName) {
                 User user = dataSnapshot.getValue(User.class);
+                assert user != null;
                 user.setId(dataSnapshot.getKey());
-                int index = getItemIndex(user);
-                recommendedUsers.set(index, user);
+                int index;
+                switch (user.getCategory()){
+                    case "recommended":
+                        index = getItemIndex(user,recommendedUsers);
+                        break;
+                    case "best_rated":
+                        index = getItemIndex(user,ratedUsers);
+                        break;
+                    case "available_today":
+                        index = getItemIndex(user,availableUsers);
+                        break;
+                    default:
+                        index = getItemIndex(user,otherUsers);
+                }
+                notifyCorrectList(user,index,"changed");
                 myUsersAdapter.notifyItemChanged(index);
             }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 user.setId(dataSnapshot.getKey());
-                int index = getItemIndex(user);
-                recommendedUsers.remove(index);
+                int index;
+                switch (user.getCategory()){
+                    case "recommended":
+                        index = getItemIndex(user,recommendedUsers);
+                        break;
+                    case "best_rated":
+                        index = getItemIndex(user,ratedUsers);
+                        break;
+                    case "available_today":
+                        index = getItemIndex(user,availableUsers);
+                        break;
+                    default:
+                        index = getItemIndex(user,otherUsers);
+                }
+                notifyCorrectList(user,index,"removed");
                 myUsersAdapter.notifyItemRemoved(index);
             }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String previousChildName) {
                 // TODO: handle moved items
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 // TODO: handle error
             }
         });
 
     }
 
-    private int getItemIndex(User user) {
+    private void notifyCorrectList(User user,int index,String operation)
+    {
+        if(operation.equals("removed")){
+            switch(user.getCategory()){
+                case "recommended":
+                    recommendedUsers.remove(index);
+                    break;
+                case "best_rated":
+                    ratedUsers.remove(index);
+                    break;
+                case "available_today":
+                    availableUsers.remove(index);
+                    break;
+                default:
+                    otherUsers.remove(index);
+            }
+        }else if(operation.equals("changed")){
+            switch(user.getCategory()){
+                case "recommended":
+                    recommendedUsers.set(index,user);
+                    break;
+                case "best_rated":
+                    ratedUsers.set(index,user);
+                    break;
+                case "available_today":
+                    availableUsers.set(index,user);
+                    break;
+                default:
+                    otherUsers.set(index,user);
+            }
+        }
+
+
+    }
+
+    private int getItemIndex(User user,List<User> userList)
+    {
         int index = -1;
-        for (int i = 0; i < recommendedUsers.size(); i++) {
-            if (recommendedUsers.get(i).getId().equals(user.getId())) {
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getId().equals(user.getId())) {
                 index = i;
                 break;
             }
         }
         return index;
     }
-
-
-//    private void initializeItems(View rootView) {
-//
-//        initialize(rootView);
-//
-//        shopsViewAdapter = new ShopsViewAdapter(names,ratings,images, getContext());
-//
-//
-//
-//    }
-
-
 
     private void fillAttrib()
     {

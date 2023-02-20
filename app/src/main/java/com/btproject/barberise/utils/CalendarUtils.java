@@ -1,7 +1,12 @@
 package com.btproject.barberise.utils;
 
+import com.btproject.barberise.reservation.Day;
+import com.btproject.barberise.reservation.Reservation;
+
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -77,4 +82,45 @@ public class CalendarUtils {
                 return "Sunday";
         }
     }
+
+    public static String getDateInString(Calendar selectedDate)
+    {
+        if(selectedDate != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            return dateFormat.format(selectedDate.getTime());
+        }
+        return null;
+    }
+
+    public ArrayList<Day> createDays(ArrayList<Reservation> reservations)
+    {
+        ArrayList<Day> days = new ArrayList<>();
+
+        for(Reservation reservation : reservations)
+        {
+            String currentDayDate = reservation.getDate();
+            String currentDayTime = reservation.getTime();
+
+            Day day = new Day(currentDayDate,currentDayTime);
+            days.add(day);
+        }
+
+        return days;
+    }
+
+    public void compareDaysInfo(ArrayList<Day> days)
+    {
+        ArrayList<Day> equalDateDays = new ArrayList<>();
+        for(Day day : days){
+            for(Day otherDay : days) {
+                if (day.getDate().equals(otherDay.getDate())) {
+
+                    equalDateDays.add(day);
+                    days.remove(day);
+
+                }
+            }
+        }
+    }
+
 }
