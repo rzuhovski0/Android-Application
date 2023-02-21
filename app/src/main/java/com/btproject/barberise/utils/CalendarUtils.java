@@ -108,9 +108,10 @@ public class CalendarUtils {
         calendarView.setDayTextColor(Color.BLACK);
     }
 
-    public static void disablePreviousDays(CalendarView calendarView)
+    public static void disablePreviousDays(CalendarView calendarView,TreeSet<Long> alreadyReservedDates)
     {
         Set<Long> disabledDays = getPreviousDays();
+        disabledDays.addAll(alreadyReservedDates);
         calendarView.setDisabledDays(disabledDays);
     }
 

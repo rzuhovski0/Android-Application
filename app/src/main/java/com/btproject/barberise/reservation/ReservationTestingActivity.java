@@ -147,7 +147,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 TreeSet<Long> disabledDates = new TreeSet<>();
                 disabledDates = getDisabledDates(allDays);
 
-                calendarView.setDisabledDays(disabledDates);
+                // Disable all dates past today
+                CalendarUtils.disablePreviousDays(calendarView,disabledDates);
             }
         };
         getUserFromDatabase(callback);
@@ -335,13 +336,17 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
     private ArrayList<String> getAvailableHours(String day)
     {
-        ArrayList<String> availableHours = openingHours.get(day);
+        ArrayList<String> availableHoursForDay = openingHours.get(day);
 
         /**Filter available hours*/
-        availableHours = getFilteredHours(availableHours,allDays,day);
+        ArrayList<String> availableHours = getFilteredHours(availableHoursForDay,allDays,day);
 
         assert availableHours != null;
+
+        // Sort hours chronologically
         Collections.sort(availableHours);
+
+
         return availableHours;
     }
 
@@ -487,9 +492,6 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
         //Set palette-colors
         CalendarUtils.setCalendarColors(orangeColor,calendarView);
-
-        // Disable all dates past today
-        CalendarUtils.disablePreviousDays(calendarView);
 
         calendarView.update();
     }

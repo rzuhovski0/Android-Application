@@ -41,7 +41,7 @@ public class Day {
 
     public String getDay()
     {
-        return this.date;
+        return this.day;
     }
 
     public void printTimes()
