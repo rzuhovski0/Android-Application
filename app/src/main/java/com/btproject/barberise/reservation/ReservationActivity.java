@@ -224,7 +224,7 @@ public class ReservationActivity extends AppCompatActivity {
             for (Calendar selectedDate : selectedDates) {
 //                Toast.makeText(getApplicationContext(), day, Toast.LENGTH_SHORT).show();
                 /** RESERVATION Date*/
-                reservation.setSelectedDate(selectedDate);
+//                reservation.setSelectedDate(selectedDate);
                 String dateStringFormat = CalendarUtils.getDateInString(selectedDate);
                 reservation.setDate(dateStringFormat);
 
@@ -318,7 +318,7 @@ public class ReservationActivity extends AppCompatActivity {
         reservationMap.put("service_provider_name",reservation.getServiceProviderName());
         reservationMap.put("category",reservation.getCategoryName());
         reservationMap.put("subcategory",reservation.getSubcategoryName());
-        reservationMap.put("selected_date",reservation.getSelectedDate());
+//        reservationMap.put("selected_date",reservation.getSelectedDate());
 
         // Create a new child node with a unique ID under the "reservations" node
         DatabaseReference reservationsRef = dbRef.child("reservations").push();
@@ -357,7 +357,7 @@ public class ReservationActivity extends AppCompatActivity {
             reservationMap.put("service_provider_name",reservation.getServiceProviderName());
             reservationMap.put("category",reservation.getCategoryName());
             reservationMap.put("subcategory",reservation.getSubcategoryName());
-            reservationMap.put("selected_date",reservation.getSelectedDate());
+//            reservationMap.put("selected_date",reservation.getSelectedDate());
             reservationMap.put("day",day);
 
             reservationsRef.setValue(reservationMap).addOnCompleteListener(task -> {

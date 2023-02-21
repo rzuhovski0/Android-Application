@@ -7,6 +7,7 @@ import com.btproject.barberise.R;
 import com.btproject.barberise.reservation.Day;
 import com.btproject.barberise.reservation.Reservation;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -14,7 +15,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class CalendarUtils {
 
@@ -90,41 +94,10 @@ public class CalendarUtils {
     public static String getDateInString(Calendar selectedDate)
     {
         if(selectedDate != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY);
             return dateFormat.format(selectedDate.getTime());
         }
         return null;
-    }
-
-    public ArrayList<Day> createDays(ArrayList<Reservation> reservations)
-    {
-        ArrayList<Day> days = new ArrayList<>();
-
-        for(Reservation reservation : reservations)
-        {
-            String currentDayDate = reservation.getDate();
-            String currentDayTime = reservation.getTime();
-
-            Day day = new Day(currentDayDate,currentDayTime);
-            days.add(day);
-        }
-
-        return days;
-    }
-
-    public void compareDaysInfo(ArrayList<Day> days)
-    {
-        ArrayList<Day> equalDateDays = new ArrayList<>();
-        for(Day day : days){
-            for(Day otherDay : days) {
-                if (day.getDate().equals(otherDay.getDate())) {
-
-                    equalDateDays.add(day);
-                    days.remove(day);
-
-                }
-            }
-        }
     }
 
     public static void setCalendarColors(int color, CalendarView calendarView)
@@ -140,5 +113,80 @@ public class CalendarUtils {
         Set<Long> disabledDays = getPreviousDays();
         calendarView.setDisabledDays(disabledDays);
     }
+
+    public static ArrayList<Day> getDays(ArrayList<Reservation> reservations, Map<String,ArrayList<String>> openingHours)
+    {
+        ArrayList<Day> days = new ArrayList<>();
+
+        for(Reservation reservation : reservations){
+
+            String date = reservation.getDate();
+            String time = reservation.getTime();
+            String dayString = reservation.getDay();
+            ArrayList<String> forSize = openingHours.get(dayString);
+            int size = forSize.size();
+
+            // check if a Day with the same date has already been created
+            boolean existingDay = false;
+            for (Day day : days) {
+                if (day.getDate().equals(date)) {
+                    day.setTime(time);
+                    //Added day
+                    day.setDay(reservation.getDay());
+                    existingDay = true;
+                    break;
+                }
+            }
+
+            // if no existing Day, create a new one and fill with null values
+            if (!existingDay) {
+                Day day = new Day(date,size,reservation.getTimeInMilliseconds());
+                day.setTime(time);
+                //Added day
+                day.setDay(reservation.getDay());
+                days.add(day);
+            }
+        }
+        return days;
+    }
+
+    public static TreeSet<Long> getDisabledDates(ArrayList<Day> unavailableDays)
+    {
+        TreeSet<Long> disabledDates = new TreeSet<>();
+
+        for(Day day : unavailableDays)
+        {
+            if(!day.isAvailable()){
+                disabledDates.add(day.getSelectedDate());
+            }
+        }
+
+        return disabledDates;
+
+    }
+
+    public static ArrayList<String> getFilteredHours(ArrayList<String> allAvailableHours, ArrayList<Day> days,String dayString)
+    {
+        for(Day day : days)
+        {
+            if(day.isAvailable() && day.getDay().equals(dayString)) {
+                // iterate through both arrays
+                for (int i = 0; i < allAvailableHours.size(); i++) {
+                    String s1 = allAvailableHours.get(i);
+                    for (int j = 0; j < day.getTimes().length; j++) {
+                        String s2 = day.getTimes()[j];
+                        if (s1.equals(s2)) {
+                            allAvailableHours.remove(i);
+                            i--; // decrement i to account for the removed element
+                            break; // break out of the inner loop since the element was removed
+                        }
+                    }
+                }
+            }
+        }
+        return allAvailableHours;
+    }
+
+
 
 }

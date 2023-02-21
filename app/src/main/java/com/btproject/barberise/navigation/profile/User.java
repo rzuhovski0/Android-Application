@@ -24,14 +24,15 @@ public class User {
     /**Data lists*/
     public ArrayList<Category> categories = new ArrayList<>();
     public Map<String,ArrayList<String>> opening_hours  = new HashMap<>();;
-    public ArrayList<Reservation> reservations  = new ArrayList<>();
+    public HashMap<String,Object> reservations = new HashMap<>();
 
     public User() {
         // default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
+    /**Constructor with HashMap reservations*/
     public User(String id, String username, String profilePictureUrl, String category,
-                ArrayList<Category> categories,Map<String,ArrayList<String>> opening_hours,ArrayList<Reservation> reservations) {
+                ArrayList<Category> categories,Map<String,ArrayList<String>> opening_hours,HashMap<String,Object> reservations) {
         this.id = id;
         this.username = username;
         this.profile_picture = profilePictureUrl;
@@ -41,6 +42,26 @@ public class User {
         this.reservations = reservations;
     }
 
+    /**Constructor with ArrayList reservations*/
+//    public User(String id, String username, String profilePictureUrl, String category,
+//                ArrayList<Category> categories,Map<String,ArrayList<String>> opening_hours,ArrayList<Reservation> reservations) {
+//        this.id = id;
+//        this.username = username;
+//        this.profile_picture = profilePictureUrl;
+//        this.category = category;
+//        this.categories = categories;
+//        this.opening_hours = opening_hours;
+//        this.reservations = reservations;
+//    }
+
+
+    public void setReservations(HashMap<String,Object> reservations) {
+        this.reservations = reservations;
+    }
+
+    public HashMap<String,Object> getReservations() {
+        return reservations;
+    }
 
     public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
@@ -48,10 +69,6 @@ public class User {
 
     public void setOpeningHours(Map<String, ArrayList<String>> openingHours) {
         this.opening_hours = openingHours;
-    }
-
-    public void setReservations(ArrayList<Reservation> reservations) {
-        this.reservations = reservations;
     }
 
     public ArrayList<Category> getCategories() {
@@ -62,9 +79,6 @@ public class User {
         return opening_hours;
     }
 
-    public ArrayList<Reservation> getReservations() {
-        return reservations;
-    }
 
     public void setCategory(String category) {
         this.category = category;

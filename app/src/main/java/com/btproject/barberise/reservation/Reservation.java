@@ -1,6 +1,12 @@
 package com.btproject.barberise.reservation;
 
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Reservation {
 
@@ -14,13 +20,16 @@ public class Reservation {
 
     private String subcategoryName;
 
+    private String subcategoryDescription;
+
     private String time;
 
     private String date;
 
-    private Calendar selectedDate;
+    private long timeInMilliseconds;
 
-    private String subcategoryDescription;
+    private String day;
+
 
     public Reservation()
     {}
@@ -31,6 +40,14 @@ public class Reservation {
         this.serviceProviderName = serviceProviderName;
     }
 
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
     public void setSubcategoryDescription(String subcategoryDescription) {
         this.subcategoryDescription = subcategoryDescription;
     }
@@ -39,15 +56,30 @@ public class Reservation {
         return subcategoryDescription;
     }
 
-    public Calendar getSelectedDate() {
-        return selectedDate;
+    public void setTimeInMilliseconds(long timeInMilliseconds) {
+        this.timeInMilliseconds = timeInMilliseconds;
     }
-    public void setSelectedDate(Calendar selectedDate) {
-        this.selectedDate = selectedDate;
+
+    public void setTimeInMillisecondsByDate(String date)
+    {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY);
+        try{
+            Date mDate1 = sdf1.parse(date);
+            this.timeInMilliseconds = mDate1.getTime();
+        } catch (ParseException e) {
+            Log.e("DateException", e.getMessage());
+        }
+        System.out.println(timeInMilliseconds);
     }
+
+    public long getTimeInMilliseconds() {
+        return timeInMilliseconds;
+    }
+
     public String getUserName() {
         return userName;
     }
+
     public String getServiceProviderName() {
         return serviceProviderName;
     }
@@ -93,6 +125,6 @@ public class Reservation {
     {
         return this.getTime() != null && this.getDate() != null && this.getUserName() != null
                 && this.getServiceProviderName() != null && this.getCategoryName() != null
-                && this.getSubcategoryName() != null && this.getSelectedDate() != null;
+                && this.getSubcategoryName() != null;/* && this.getSelectedDate() != null;*/
     }
 }

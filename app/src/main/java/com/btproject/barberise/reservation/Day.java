@@ -3,19 +3,61 @@ package com.btproject.barberise.reservation;
 public class Day {
 
     private String date;
-    private String time;
+    private String[] times;
+    private long selectedDate;
+    private int counter;
 
-    public Day(String date,String time)
-    {
+    //For filtering availableHours
+    private String day;
+
+    public Day(String date,int size,long selectedDate) {
         this.date = date;
-        this.time = time;
+        times = new String[size];
+        this.selectedDate = selectedDate;
+        counter = 0;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public long getSelectedDate() {
+        return selectedDate;
     }
 
     public String getDate() {
         return date;
     }
 
-    public String getTime() {
-        return time;
+    public String[] getTimes() {
+        return times;
+    }
+
+    public void setTime(String time)
+    {
+        this.times[counter] = time;
+        counter++;
+    }
+
+    public String getDay()
+    {
+        return this.date;
+    }
+
+    public void printTimes()
+    {
+        for(String time : times)
+        {
+            System.out.println(time);
+        }
+    }
+
+    public boolean isAvailable()
+    {
+        for(String time : times){
+            if(time == null)
+                return true;
+        }
+        return false;
     }
 }

@@ -114,7 +114,7 @@ public class RegistrationActivity extends AppCompatActivity {
         Map<String,ArrayList<String>> openingHours = new HashMap<>();
         // Opening hours for Monday
         ArrayList<String> mondayHours = new ArrayList<>();
-        for (int hour = 9; hour < 20; hour++) {
+        for (int hour = 9; hour < 11; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
                 String time = String.format("%02d:%02d", hour, minute);
                 mondayHours.add(time);

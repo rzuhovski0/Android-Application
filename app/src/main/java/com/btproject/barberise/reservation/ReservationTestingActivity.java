@@ -1,5 +1,8 @@
 package com.btproject.barberise.reservation;
 
+import static com.btproject.barberise.utils.CalendarUtils.getDisabledDates;
+import static com.btproject.barberise.utils.CalendarUtils.getDays;
+import static com.btproject.barberise.utils.CalendarUtils.getFilteredHours;
 import static com.btproject.barberise.utils.LayoutUtils.getEmptyButton;
 import static com.btproject.barberise.utils.LayoutUtils.getGridLayoutParams;
 import static com.btproject.barberise.utils.LayoutUtils.prettifyButton;
@@ -10,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -31,6 +35,8 @@ import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.utils.CalendarUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +50,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.TreeSet;
 
 public class ReservationTestingActivity extends AppCompatActivity {
 
@@ -63,7 +71,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
     private ArrayList<Category> categories;
     private ArrayList<HashMap<String,ArrayList<Subcategory>>> subcategories;
     private Map<String,ArrayList<String>> openingHours;
-    private ArrayList<Reservation> reservations;
+    private ArrayList<Reservation> reservationsArray;
+    private HashMap<String,Object> reservationsMap;
 
     /** Reservation */
     private Reservation reservation;
@@ -75,6 +84,9 @@ public class ReservationTestingActivity extends AppCompatActivity {
     /**For Layout utils*/
     private Resources resources;
     private Context context;
+
+    /**Filtering*/
+    ArrayList<Day> allDays;
 
 
     @Override
@@ -95,9 +107,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
         /**Set iInitial visibility*/
         updateRadioGroupVisibility();
 
-        /**Calendar attribs*/
+        /**Calendar attributes*/
         setUpCalendar();
-
 
         DataFetchCallback callback = new DataFetchCallback() {
             @Override
@@ -108,6 +119,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 categories = barberShop.getCategories();
                 subcategories = getSubcategoriesFromCategories(categories);
                 openingHours = barberShop.getOpeningHours();
+                reservationsMap = barberShop.getReservations();
 
                 /**Apply desired size on RadioButtons for category*/
                 radioButtonsArrayCategory = new RadioButton[categories.size()];
@@ -124,9 +136,97 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
 
             }
+            @Override
+            public void onReservationsLoaded(ArrayList<Reservation> reservations) {
+
+                /**Get days which are fully reserved*/
+
+                allDays = getDays(reservations,openingHours);
+
+                /**Get dates in Long format from all days which are fully reserved*/
+                TreeSet<Long> disabledDates = new TreeSet<>();
+                disabledDates = getDisabledDates(allDays);
+
+                calendarView.setDisabledDays(disabledDates);
+            }
         };
         getUserFromDatabase(callback);
 
+        /**Initially, the reservations had to be fetched from User, however, the only possible options to get them from User.class afterwards
+         * would be in HashMap format, with key value of reservation Id. Since the Id is randomly generated, there is no way to get any values
+         * from HashMap using keys. Thus, the only option is to fetch the reservations again (even though they are already fetched) and using
+         * datasnapshot.getChildren() method to fill the ArrayList<Reservation> reservations from children of the node.
+         */
+        getReservationsFromDatabase(callback);
+
+
+        reserveButton.setOnClickListener(view -> {
+
+            if(reservation.reservationValid())
+                try {
+                    makeReservationWithAuth(reservation);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),"Error saving reservation: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            else{
+                Toast.makeText(getApplicationContext(),"Please make sure that all reservation fields are valid",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void getReservationsFromDatabase(DataFetchCallback callback)
+    {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference().child("users").child(barberShopId).child("reservations");
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot reservationSnapshot : snapshot.getChildren()) {
+                    Reservation reservation = reservationSnapshot.getValue(Reservation.class);
+                    reservationsArray.add(reservation);
+                }
+                callback.onReservationsLoaded(reservationsArray);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle the error
+            }
+        });
+    }
+
+    private void makeReservationWithAuth(Reservation reservation)
+    {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        // Get a reference to the current user
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        // Check if the user is authenticated
+        if (currentUser != null) {
+            // User is authenticated, so we can save the reservation
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(barberShopId);
+            DatabaseReference reservationsRef = userRef.child("reservations").push();
+
+            reservationsRef.setValue(reservation).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Reservation saved successfully
+                    Toast.makeText(getApplicationContext(), "Reservation saved successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ReservationTestingActivity.this, ReservationSuccessfulActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    // Reservation saving failed
+                    Toast.makeText(getApplicationContext(), "Error saving reservation: "
+                            + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // User is not authenticated, so we cannot save the reservation
+            Toast.makeText(this, "You must be logged in to make a reservation", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void createReservationSession()
@@ -140,7 +240,6 @@ public class ReservationTestingActivity extends AppCompatActivity {
         /**Third step -> Get user choice of date*/
         requestDateFromUser();
     }
-
 
     @Override
     public void onBackPressed()
@@ -205,8 +304,6 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
             // Iterate over the selected dates
             for (Calendar selectedDate : selectedDates) {
-                /** RESERVATION Date*/
-                reservation.setSelectedDate(selectedDate);
 
                 // Method to get a dd.MM.yyyy format from milliseconds
                 String dateStringFormat = CalendarUtils.getDateInString(selectedDate);
@@ -215,9 +312,12 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 reservation.setDate(dateStringFormat);
 
                 /** Save selected date in milliseconds format*/
-                reservation.setSelectedDate(selectedDate);
+                reservation.setTimeInMillisecondsByDate(dateStringFormat);
 
                 selectedDayString = CalendarUtils.getDay(selectedDate);
+
+                /** Store Day to reservation*/
+                reservation.setDay(selectedDayString);
 
 
                 /**Fourth step -> Get user choice of time*/
@@ -236,6 +336,10 @@ public class ReservationTestingActivity extends AppCompatActivity {
     private ArrayList<String> getAvailableHours(String day)
     {
         ArrayList<String> availableHours = openingHours.get(day);
+
+        /**Filter available hours*/
+        availableHours = getFilteredHours(availableHours,allDays,day);
+
         assert availableHours != null;
         Collections.sort(availableHours);
         return availableHours;
@@ -414,18 +518,14 @@ public class ReservationTestingActivity extends AppCompatActivity {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 if (dataSnapshot.exists()) {
-
                     barberShop = dataSnapshot.getValue(User.class);
                     // Pass the data to the callback
                     callback.onDataLoaded(barberShop);
-
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Failed to read value
@@ -474,7 +574,9 @@ public class ReservationTestingActivity extends AppCompatActivity {
         categories = new ArrayList<>();
         subcategories = new ArrayList<>();
         openingHours = new HashMap<>();
-        reservations = new ArrayList<>();
+        reservationsArray = new ArrayList<>();
+        reservationsMap = new HashMap<>();
+        allDays = new ArrayList<>();
     }
 
     private void updateRadioGroupVisibility()

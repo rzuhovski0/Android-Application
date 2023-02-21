@@ -48,5 +48,6 @@
     <string name="reservation_success">Vaša rezervácia prebehla úspešne.</string>
     <string name="reservation_thanks">Ďakujeme za rezerváciu !</string>
     <string name="reservation_notification">Potvrdenie rezervácie Vám zašleme mailom</string>
-    <string name="check_reservation">Svoju rezerváciu si môžte skontrolovať kliknutím sem</string>
+    <string name="check_reservation">Svoju rezerváciu si môžte skontrolovať
+        kliknutím sem</string>
 </resources>
