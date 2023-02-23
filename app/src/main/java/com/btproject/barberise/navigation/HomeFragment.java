@@ -37,6 +37,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView recommendedRecView,ratedRecView,discountRecView,otherRecView;
     private TextView recommendedTextView,ratedTextView, discountTextView;
 
+    private TextView usrName;
+
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String>ratings = new ArrayList<>();
     private ArrayList<Integer>images = new ArrayList<>();
@@ -110,6 +112,14 @@ public class HomeFragment extends Fragment {
 
     private void initComponents(View rootView)
     {
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        usrName = (TextView)rootView.findViewById(R.id.usrName);
+        assert user != null;
+        usrName.setText(user.getUid());
+
         //Recommended Recycler & TextView
         recommendedTextView = (TextView)rootView.findViewById(R.id.recommendedTextView);//textView
         recommendedRecView = (RecyclerView)rootView.findViewById(R.id.recommendedRecyclerView);

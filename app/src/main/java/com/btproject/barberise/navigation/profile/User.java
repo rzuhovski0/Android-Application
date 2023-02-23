@@ -25,8 +25,7 @@ public class User {
     public ArrayList<Category> categories = new ArrayList<>();
     public HashMap<String,ArrayList<String>> opening_hours  = new HashMap<>();;
     public HashMap<String,Object> reservations = new HashMap<>();
-
-    public ArrayList<User> favorites = new ArrayList<>();
+    public HashMap<String, HashMap<String,String>> favorites = new HashMap<>();
 
     public User() {
         // default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -44,11 +43,11 @@ public class User {
         this.reservations = reservations;
     }
 
-    public ArrayList<User> getFavorites() {
+    public HashMap<String, HashMap<String,String>> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(ArrayList<User> favorites) {
+    public void setFavorites(HashMap<String, HashMap<String,String>> favorites) {
         this.favorites = favorites;
     }
 

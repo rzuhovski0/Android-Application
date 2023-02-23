@@ -94,6 +94,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
     private TextView ContactInfoTextView;
     private TextView AboutUsTextView;
 
+    private TextView addToFavTextView;
+
     private void setContactInfoAboutUsListeners()
     {
         AboutUsTextView.setOnClickListener(view -> {
@@ -112,6 +114,52 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        addToFavTextView.setOnClickListener(view -> {
+            addToFavorite(barberShop);
+            addToFavTextView.setBackgroundResource(R.drawable.heart_fill);
+
+            //TODO implement drawable change heart/heart_fill if barberShop already added in favorites
+        });
+    }
+
+    private void addToFavorite(User barberShop)
+    {
+
+        String userName = barberShop.getUsername();
+        String imageUrl = barberShop.getProfile_picture();
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        // Get a reference to the current user
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        // Check if the user is authenticated
+        if (currentUser != null) {
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("favorites");
+
+
+            // Create a Map object with the values you want to store
+            Map<String, Object> favoriteMap = new HashMap<>();
+            favoriteMap.put("barberShopId", barberShopId);
+            favoriteMap.put("userName", userName);
+            favoriteMap.put("imageUrl", imageUrl);
+
+            // Add the new barber shop ID to the list of favorites
+            databaseReference.child(barberShopId).setValue(favoriteMap).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Barber shop was successfully added to favorites
+                    Toast.makeText(getApplicationContext(), "Barber shop added to favorites successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Failed to add barber shop to favorites
+                    Toast.makeText(getApplicationContext(), "Failed to add barber shop to favorites: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // User is not authenticated, so we cannot save the reservation
+            Toast.makeText(this, "You must be logged in to add a barber shop to favorites", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -122,6 +170,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
         barberShopId = getIntent().getStringExtra("id");
         resources = getResources();
         context = getApplicationContext();
+
 
         /**Initialize UI components*/
         initUIComponents();
@@ -613,6 +662,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
         //AboutUs & ContactInfo
         AboutUsTextView = findViewById(R.id.aboutUserTextView);
         ContactInfoTextView = findViewById(R.id.contactInfoTextView);
+        addToFavTextView = findViewById(R.id.addToFavTextView);
     }
 
     private void initLists()
