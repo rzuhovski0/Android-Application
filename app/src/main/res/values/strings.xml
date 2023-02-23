@@ -77,5 +77,8 @@
     <string name="reservation_notification">We\'ll send confirmation of the reservation
         to your email.</string>
     <string name="check_reservation">You can check your reservation clicking here</string>
+    <string name="opening_hours">Opening hours</string>
+    <string name="tel_number">Phone number :</string>
+    <string name="email" translatable="false">Email :</string>
 
 </resources>

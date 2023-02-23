@@ -32,6 +32,7 @@ import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
 import com.btproject.barberise.navigation.profile.User;
+import com.btproject.barberise.partner.MainActivity;
 import com.btproject.barberise.utils.CalendarUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -43,6 +44,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -70,7 +72,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
     /**Data lists*/
     private ArrayList<Category> categories;
     private ArrayList<HashMap<String,ArrayList<Subcategory>>> subcategories;
-    private Map<String,ArrayList<String>> openingHours;
+    private HashMap<String,ArrayList<String>> openingHours;
     private ArrayList<Reservation> reservationsArray;
     private HashMap<String,Object> reservationsMap;
 
@@ -88,6 +90,29 @@ public class ReservationTestingActivity extends AppCompatActivity {
     /**Filtering*/
     ArrayList<Day> allDays;
 
+    /**TextViews for ContactInfo & AboutUs*/
+    private TextView ContactInfoTextView;
+    private TextView AboutUsTextView;
+
+    private void setContactInfoAboutUsListeners()
+    {
+        AboutUsTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(ReservationTestingActivity.this,AboutUsActivity.class);
+            startActivity(intent);
+            /**Without finish() to not close current Activity*/
+        });
+
+        ContactInfoTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(ReservationTestingActivity.this,ContactInfoActivity.class);
+
+            Bundle userInfoBundle = getUserInfoBundle();
+//
+            if(!userInfoBundle.isEmpty()) {
+                intent.putExtras(userInfoBundle);
+                startActivity(intent);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +155,10 @@ public class ReservationTestingActivity extends AppCompatActivity {
 //                reservations = barberShop.getReservations();
                 //TODO implement reservations
                 reservation = new Reservation("Filip Rzuhovsky",barberShop.getUsername());
+
+                /**Add listeners for ContactInfo & AboutUs*/
+                setContactInfoAboutUsListeners();
+
 
                 /**Start the reservation process if all the attributes are loaded*/
                 createReservationSession();
@@ -174,6 +203,17 @@ public class ReservationTestingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private Bundle getUserInfoBundle()
+    {
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable("openingHours",openingHours);
+        bundle.putString("email","+421 09 999 999");
+        bundle.putString("phone","barbercontact@gmail.com");
+        bundle.putString("address","Alžbetina 9,Košice");
+        return bundle;
     }
 
     private void getReservationsFromDatabase(DataFetchCallback callback)
@@ -569,6 +609,10 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
         //CosmoCalendarView
         calendarView = findViewById(R.id.cosmo_calendar);
+
+        //AboutUs & ContactInfo
+        AboutUsTextView = findViewById(R.id.aboutUserTextView);
+        ContactInfoTextView = findViewById(R.id.contactInfoTextView);
     }
 
     private void initLists()

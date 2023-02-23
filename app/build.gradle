@@ -76,5 +76,10 @@ dependencies {
     //cosmo calendar
     implementation 'com.github.applikeysolutions:cosmocalendar:1.0.4'
 
+    //GoogleMaps
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+
 
 }

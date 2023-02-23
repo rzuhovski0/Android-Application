@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Barberiseapp"
         tools:targetApi="31">
+        <activity
+            android:name=".reservation.ContactInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".reservation.AboutUsActivity"
+            android:exported="false" />
         <activity
             android:name=".reservation.ReservationTestingActivity"
             android:exported="false" />
@@ -180,6 +188,11 @@
                 <action android:name="SMS_SENT" />
             </intent-filter>
         </receiver>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAXDcH3TsxVlx2p8ObPNP8pPZxUPWxXB98" />
+
     </application>
 
 </manifest>

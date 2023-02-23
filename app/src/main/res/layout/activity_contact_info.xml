@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".reservation.ContactInfoActivity">
+
+    <TextView
+        android:id="@+id/addressTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/sen"
+        android:text="@string/opening_hours"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/addressTextView"
+        app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
+
+    <TextView
+        android:id="@+id/mondayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/sen"
+        android:text="@string/Monday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/tuesdayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="@string/Tuesday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/mondayTextView"
+        app:layout_constraintTop_toBottomOf="@+id/mondayTextView" />
+
+    <TextView
+        android:id="@+id/wednesdayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="@string/Wednesday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tuesdayTextView"
+        app:layout_constraintTop_toBottomOf="@+id/tuesdayTextView" />
+
+    <TextView
+        android:id="@+id/thursdayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="@string/Thursday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/wednesdayTextView"
+        app:layout_constraintTop_toBottomOf="@+id/wednesdayTextView" />
+
+    <TextView
+        android:id="@+id/fridayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="@string/Friday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/thursdayTextView"
+        app:layout_constraintTop_toBottomOf="@+id/thursdayTextView" />
+
+    <TextView
+        android:id="@+id/saturdayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="@string/Saturday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/fridayTextView"
+        app:layout_constraintTop_toBottomOf="@+id/fridayTextView" />
+
+    <TextView
+        android:id="@+id/sundayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="@string/Sunday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/saturdayTextView"
+        app:layout_constraintTop_toBottomOf="@+id/saturdayTextView" />
+
+    <TextView
+        android:id="@+id/mondayDisplayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/mondayTextView"
+        app:layout_constraintTop_toTopOf="@+id/mondayTextView" />
+
+    <TextView
+        android:id="@+id/tuesdayDisplayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/mondayDisplayHours"
+        app:layout_constraintTop_toBottomOf="@+id/mondayDisplayHours" />
+
+    <TextView
+        android:id="@+id/wednesdayDisplayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tuesdayDisplayHours"
+        app:layout_constraintTop_toBottomOf="@+id/tuesdayDisplayHours" />
+
+    <TextView
+        android:id="@+id/thursdayDisplayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/wednesdayDisplayHours"
+        app:layout_constraintTop_toBottomOf="@+id/wednesdayDisplayHours" />
+
+    <TextView
+        android:id="@+id/fridayDisplayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/thursdayDisplayHours"
+        app:layout_constraintTop_toBottomOf="@+id/thursdayDisplayHours" />
+
+    <TextView
+        android:id="@+id/saturdayDisplayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/fridayDisplayHours"
+        app:layout_constraintTop_toBottomOf="@+id/fridayDisplayHours" />
+
+    <TextView
+        android:id="@+id/sundayDisplayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/saturdayDisplayHours"
+        app:layout_constraintTop_toBottomOf="@+id/saturdayDisplayHours" />
+
+    <TextView
+        android:id="@+id/numberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/sen"
+        android:text="@string/tel_number"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/sundayTextView"
+        app:layout_constraintTop_toBottomOf="@+id/sundayTextView" />
+
+    <TextView
+        android:id="@+id/emailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/sen"
+        android:text="@string/email"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/numberTextView"
+        app:layout_constraintTop_toBottomOf="@+id/numberTextView" />
+
+    <TextView
+        android:id="@+id/phoneDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/numberTextView"
+        app:layout_constraintTop_toBottomOf="@+id/sundayDisplayHours" />
+
+    <TextView
+        android:id="@+id/emailDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/sen"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/phoneDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/phoneDisplay" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

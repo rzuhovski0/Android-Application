@@ -23,8 +23,10 @@ public class User {
 
     /**Data lists*/
     public ArrayList<Category> categories = new ArrayList<>();
-    public Map<String,ArrayList<String>> opening_hours  = new HashMap<>();;
+    public HashMap<String,ArrayList<String>> opening_hours  = new HashMap<>();;
     public HashMap<String,Object> reservations = new HashMap<>();
+
+    public ArrayList<User> favorites = new ArrayList<>();
 
     public User() {
         // default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -32,7 +34,7 @@ public class User {
 
     /**Constructor with HashMap reservations*/
     public User(String id, String username, String profilePictureUrl, String category,
-                ArrayList<Category> categories,Map<String,ArrayList<String>> opening_hours,HashMap<String,Object> reservations) {
+                ArrayList<Category> categories,HashMap<String,ArrayList<String>> opening_hours,HashMap<String,Object> reservations) {
         this.id = id;
         this.username = username;
         this.profile_picture = profilePictureUrl;
@@ -42,18 +44,13 @@ public class User {
         this.reservations = reservations;
     }
 
-    /**Constructor with ArrayList reservations*/
-//    public User(String id, String username, String profilePictureUrl, String category,
-//                ArrayList<Category> categories,Map<String,ArrayList<String>> opening_hours,ArrayList<Reservation> reservations) {
-//        this.id = id;
-//        this.username = username;
-//        this.profile_picture = profilePictureUrl;
-//        this.category = category;
-//        this.categories = categories;
-//        this.opening_hours = opening_hours;
-//        this.reservations = reservations;
-//    }
+    public ArrayList<User> getFavorites() {
+        return favorites;
+    }
 
+    public void setFavorites(ArrayList<User> favorites) {
+        this.favorites = favorites;
+    }
 
     public void setReservations(HashMap<String,Object> reservations) {
         this.reservations = reservations;
@@ -67,7 +64,7 @@ public class User {
         this.categories = categories;
     }
 
-    public void setOpeningHours(Map<String, ArrayList<String>> openingHours) {
+    public void setOpeningHours(HashMap<String, ArrayList<String>> openingHours) {
         this.opening_hours = openingHours;
     }
 
@@ -75,10 +72,9 @@ public class User {
         return categories;
     }
 
-    public Map<String, ArrayList<String>> getOpeningHours() {
+    public HashMap<String, ArrayList<String>> getOpeningHours() {
         return opening_hours;
     }
-
 
     public void setCategory(String category) {
         this.category = category;

@@ -2,6 +2,7 @@ package com.btproject.barberise.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHolder> {
@@ -56,11 +59,11 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
     public void onBindViewHolder(@NonNull MyUsersAdapter.ViewHolder holder, int position) {
         User user = mUsers.get(position);
         holder.usernameTextView.setText(user.getUsername());
-        if(mUsers.get(position).getProfile_picture() != null) {
+        if (mUsers.get(position).getProfile_picture() != null) {
             Glide.with(holder.profilePictureImageView.getContext())
                     .load(user.getProfile_picture())
                     .into(holder.profilePictureImageView);
-        }else{
+        } else {
             Glide.with(holder.profilePictureImageView.getContext())
                     .load(R.drawable.user)
                     .into(holder.profilePictureImageView);
@@ -68,8 +71,8 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
         holder.cardView.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, ReservationTestingActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("id",user.getId());
-            intent.putExtra("username",user.getUsername());
+            intent.putExtra("id", user.getId());
+            intent.putExtra("username", user.getUsername());
             mContext.startActivity(intent);
         });
     }
@@ -77,5 +80,12 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
     @Override
     public int getItemCount() {
         return mUsers.size();
+    }
+
+    private Bundle getUserBundle(User user)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("opening_hours",user.getOpeningHours());
+        return bundle;
     }
 }

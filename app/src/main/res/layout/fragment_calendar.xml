@@ -95,7 +95,7 @@
             android:layout_marginEnd="35dp"
             android:layout_marginBottom="400dp"
             android:src="@drawable/arrow_clockwise"
-            app:backgroundTint="#6DB5CA"
+            app:backgroundTint="@color/light_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
