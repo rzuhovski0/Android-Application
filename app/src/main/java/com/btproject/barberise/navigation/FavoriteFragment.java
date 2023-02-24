@@ -17,14 +17,17 @@ import com.btproject.barberise.reservation.DataFetchCallback;
 import com.btproject.barberise.reservation.Reservation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class FavoriteFragment extends Fragment {
 
@@ -94,42 +97,123 @@ public class FavoriteFragment extends Fragment {
         recyclerView.setAdapter(favoriteCardAdapter);
     }
 
+//    private void getUserFavorites(DataFetchCallback callback) {
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        FirebaseUser user = auth.getCurrentUser();
+//
+//        if (user != null){
+//            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+//            DatabaseReference favRef = ref.child("favorites");
+//
+//            favRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for (DataSnapshot favSnapshot : snapshot.getChildren()) {
+//
+//                        // Get the values of the child nodes
+//                        HashMap<String,String> favMap = new HashMap<>();
+//
+//                        String barberShopId = favSnapshot.child("barberShopId").getValue(String.class);
+//                        favMap.put("barberShopId",barberShopId);
+//
+//                        String userName = favSnapshot.child("userName").getValue(String.class);
+//                        favMap.put("userName",userName);
+//
+//                        String imageUrl = favSnapshot.child("imageUrl").getValue(String.class);
+//                        favMap.put("imageUrl",imageUrl);
+//
+//                        favUsers.add(favMap);
+//                    }
+//                    callback.onDataLoaded(null);
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//        }
+//    }
     private void getUserFavorites(DataFetchCallback callback) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
-        if (user != null){
+        if (user != null) {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
             DatabaseReference favRef = ref.child("favorites");
 
-            favRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            favRef.addChildEventListener(new ChildEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot favSnapshot : snapshot.getChildren()) {
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Called when a new child is added to the "favorites" node
+                    HashMap<String,String> favMap = new HashMap<>();
 
-                        // Get the values of the child nodes
+                    String barberShopId = snapshot.child("barberShopId").getValue(String.class);
+                    favMap.put("barberShopId",barberShopId);
+
+                    String userName = snapshot.child("userName").getValue(String.class);
+                    favMap.put("userName",userName);
+
+                    String imageUrl = snapshot.child("imageUrl").getValue(String.class);
+                    favMap.put("imageUrl",imageUrl);
+
+                    favUsers.add(favMap);
+                    if (favoriteCardAdapter == null) {
+                        initAdapters();
+                    } else {
+                        favoriteCardAdapter.notifyItemInserted(favUsers.size() - 1);
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Called when an existing child is modified
+                    String barberShopId = snapshot.child("barberShopId").getValue(String.class);
+                    int index = getIndex(barberShopId);
+                    if (index >= 0) {
                         HashMap<String,String> favMap = new HashMap<>();
-
-                        String barberShopId = favSnapshot.child("barberShopId").getValue(String.class);
-                        favMap.put("barberShopId",barberShopId);
-
-                        String userName = favSnapshot.child("userName").getValue(String.class);
+                        String userName = snapshot.child("userName").getValue(String.class);
                         favMap.put("userName",userName);
 
-                        String imageUrl = favSnapshot.child("imageUrl").getValue(String.class);
+                        String imageUrl = snapshot.child("imageUrl").getValue(String.class);
                         favMap.put("imageUrl",imageUrl);
 
-                        favUsers.add(favMap);
+                        favUsers.set(index, favMap);
+                        favoriteCardAdapter.notifyItemChanged(index);
                     }
-                    callback.onDataLoaded(null);
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    // Called when a child is removed from the "favorites" node
+                    String barberShopId = snapshot.child("barberShopId").getValue(String.class);
+                    int index = getIndex(barberShopId);
+                    if (index >= 0) {
+                        favUsers.remove(index);
+                        favoriteCardAdapter.notifyItemRemoved(index);
+                    }
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Not used in this case
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    // Handle errors here
                 }
             });
         }
+    }
+
+    private int getIndex(String barberShopId) {
+        for (int i = 0; i < favUsers.size(); i++) {
+            if (Objects.equals(favUsers.get(i).get("barberShopId"), barberShopId)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

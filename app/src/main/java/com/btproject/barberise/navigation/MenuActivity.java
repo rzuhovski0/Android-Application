@@ -9,15 +9,22 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.btproject.barberise.R;
 import com.btproject.barberise.databinding.ActivityMenuBinding;
+import com.btproject.barberise.navigation.profile.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
 
     ActivityMenuBinding binding;
-
     FirebaseDatabase database;
     DatabaseReference reference;
+
+    public static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

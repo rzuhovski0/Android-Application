@@ -1,5 +1,7 @@
 package com.btproject.barberise.adapters;
 
+import static com.btproject.barberise.utils.DatabaseUtils.removeUserFromFavorites;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -53,6 +55,11 @@ public class FavoriteCardAdapter extends RecyclerView.Adapter<FavoriteCardAdapte
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("id", favMap.get("barberShopId"));
             mContext.startActivity(intent);
+        });
+
+        holder.inFavFavButton.setOnClickListener(v ->
+        {
+            removeUserFromFavorites(favMap.get("barberShopId"));
         });
     }
 
