@@ -20,7 +20,7 @@
     <string name="help">Help</string>
 
     <!--Calendar Fragment-->
-    <string name="myreservations">My reservations</string>
+    <string name="my_reservations">My reservations</string>
     <string name="next">Oncoming event</string>
 
     <!--Favorite Fragment-->

@@ -3,6 +3,8 @@ package com.btproject.barberise.reservation;
 import static com.btproject.barberise.utils.CalendarUtils.getDisabledDates;
 import static com.btproject.barberise.utils.CalendarUtils.getDays;
 import static com.btproject.barberise.utils.CalendarUtils.getFilteredHours;
+import static com.btproject.barberise.utils.DatabaseUtils.addUserToFavorites;
+import static com.btproject.barberise.utils.DatabaseUtils.removeUserFromFavorites;
 import static com.btproject.barberise.utils.LayoutUtils.getEmptyButton;
 import static com.btproject.barberise.utils.LayoutUtils.getGridLayoutParams;
 import static com.btproject.barberise.utils.LayoutUtils.prettifyButton;
@@ -32,7 +34,6 @@ import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
 import com.btproject.barberise.navigation.profile.User;
-import com.btproject.barberise.partner.MainActivity;
 import com.btproject.barberise.utils.CalendarUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -44,14 +45,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.TreeSet;
 
@@ -116,19 +115,20 @@ public class ReservationTestingActivity extends AppCompatActivity {
         });
 
         addToFavTextView.setOnClickListener(view -> {
-            addToFavorite(barberShop);
-            addToFavTextView.setBackgroundResource(R.drawable.heart_fill);
-
-            //TODO implement drawable change heart/heart_fill if barberShop already added in favorites
+            if(alreadyIsAdded) {
+                removeUserFromFavorites(barberShopId);
+                alreadyIsAdded = false;
+                setHeartIcon(false);
+            } else {
+                addUserToFavorites(barberShop, barberShopId, getApplicationContext());
+                alreadyIsAdded = true;
+                setHeartIcon(true);
+            }
         });
     }
 
-    private void addToFavorite(User barberShop)
+    private void isUserInFav()
     {
-
-        String userName = barberShop.getUsername();
-        String imageUrl = barberShop.getProfile_picture();
-
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         // Get a reference to the current user
@@ -136,31 +136,41 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
         // Check if the user is authenticated
         if (currentUser != null) {
-
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("favorites");
-
-
-            // Create a Map object with the values you want to store
-            Map<String, Object> favoriteMap = new HashMap<>();
-            favoriteMap.put("barberShopId", barberShopId);
-            favoriteMap.put("userName", userName);
-            favoriteMap.put("imageUrl", imageUrl);
-
-            // Add the new barber shop ID to the list of favorites
-            databaseReference.child(barberShopId).setValue(favoriteMap).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    // Barber shop was successfully added to favorites
-                    Toast.makeText(getApplicationContext(), "Barber shop added to favorites successfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Failed to add barber shop to favorites
-                    Toast.makeText(getApplicationContext(), "Failed to add barber shop to favorites: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
+                    .child("favorites").child(barberShopId);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    boolean dataExists = dataSnapshot.exists();
+                    if (dataExists) {
+                        // Data exists in the database
+                        setHeartIcon(true);
+                    } else {
+                        // Data does not exist in the database
+                        setHeartIcon(false);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle errors here
                 }
             });
-        } else {
-            // User is not authenticated, so we cannot save the reservation
-            Toast.makeText(this, "You must be logged in to add a barber shop to favorites", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void setHeartIcon(boolean isAddedToFavorites)
+    {
+        if (isAddedToFavorites) {
+            addToFavTextView.setBackgroundResource(R.drawable.heart_fill);
+            alreadyIsAdded = true;
+        } else {
+            addToFavTextView.setBackgroundResource(R.drawable.heart_orange);
+            alreadyIsAdded = false;
+        }
+    }
+
+
+    private boolean alreadyIsAdded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +218,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 /**Add listeners for ContactInfo & AboutUs*/
                 setContactInfoAboutUsListeners();
 
+                /**Check if the barber is already in favorites*/
+                isUserInFav();
 
                 /**Start the reservation process if all the attributes are loaded*/
                 createReservationSession();

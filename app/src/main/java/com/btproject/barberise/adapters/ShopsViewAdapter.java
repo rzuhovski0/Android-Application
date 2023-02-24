@@ -70,7 +70,7 @@ public class ShopsViewAdapter extends RecyclerView.Adapter<ShopsViewAdapter.Shop
             cardView = itemView.findViewById(R.id.cardViewShop);
             textViewShopName = itemView.findViewById(R.id.nameTextView);
             textViewRating = itemView.findViewById(R.id.RatingTextView);
-            imageView = itemView.findViewById(R.id.profileImageView);
+            imageView = itemView.findViewById(R.id.inFavProfileImageView);
         }
     }
 

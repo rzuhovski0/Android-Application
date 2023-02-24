@@ -17,7 +17,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/sen_bold"
-            android:text="@string/myreservations"
+            android:text="@string/my_reservations"
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +88,7 @@
             app:layout_constraintTop_toBottomOf="@+id/logoImageView" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/againButton"
+            android:id="@+id/inFavAgainButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"

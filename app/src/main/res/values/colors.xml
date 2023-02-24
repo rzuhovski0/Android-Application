@@ -9,5 +9,6 @@
     <color name="gray">#7A7A7A</color>
     <color name="light_gray">#D9D9D9</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="orange">#FF7235</color>
+    <color name="orange">#FFAD33</color><!--Old Orange : FF7235-->
+
 </resources>

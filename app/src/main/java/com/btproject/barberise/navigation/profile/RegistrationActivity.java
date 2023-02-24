@@ -38,8 +38,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -73,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        profileImageView = findViewById(R.id.profileImageView);
+        profileImageView = findViewById(R.id.inFavProfileImageView);
         saveChangesTextView = findViewById(R.id.saveChangesTextView);
         name = findViewById(R.id.shopNameEditText);
         checkBox = findViewById(R.id.checkBox);

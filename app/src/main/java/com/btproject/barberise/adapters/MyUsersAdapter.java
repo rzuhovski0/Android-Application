@@ -13,14 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.btproject.barberise.reservation.ReservationActivity;
 import com.btproject.barberise.R;
 import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHolder> {
@@ -33,10 +30,12 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             usernameTextView = itemView.findViewById(R.id.nameTextView);
-            profilePictureImageView = itemView.findViewById(R.id.profileImageView);
+            profilePictureImageView = itemView.findViewById(R.id.inFavProfileImageView);
             cardView = itemView.findViewById(R.id.cardView);
         }
     }
+
+
 
     private List<User> mUsers;
     private Context mContext;
@@ -80,12 +79,5 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
     @Override
     public int getItemCount() {
         return mUsers.size();
-    }
-
-    private Bundle getUserBundle(User user)
-    {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("opening_hours",user.getOpeningHours());
-        return bundle;
     }
 }
