@@ -107,8 +107,11 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/backgroundImageView"
-        android:layout_width="450dp"
-        android:layout_height="250dp"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

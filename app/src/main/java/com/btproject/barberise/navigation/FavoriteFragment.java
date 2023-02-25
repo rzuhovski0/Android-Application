@@ -93,9 +93,10 @@ public class FavoriteFragment extends Fragment {
 
     private void initAdapters()
     {
-        if(isAdded())
-            favoriteCardAdapter = new FavoriteCardAdapter(favUsers,requireActivity().getApplicationContext());
+        if(isAdded()) {
+            favoriteCardAdapter = new FavoriteCardAdapter(favUsers, requireActivity().getApplicationContext());
             recyclerView.setAdapter(favoriteCardAdapter);
+        }
     }
 
     private void getUserFavorites(DataFetchCallback callback) {
