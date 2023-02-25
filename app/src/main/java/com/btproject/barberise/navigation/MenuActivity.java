@@ -25,7 +25,6 @@ public class MenuActivity extends AppCompatActivity {
     public static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers = new ArrayList<>();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +38,7 @@ public class MenuActivity extends AppCompatActivity {
 
         boolean openReservations = getIntent().getBooleanExtra("openReservations",false);
 
+        /**If opened from ReservationSuccessfulActivity*/
         if(openReservations)
             replaceFragment(new CalendarFragment());
         else

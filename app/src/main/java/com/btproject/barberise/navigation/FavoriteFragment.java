@@ -93,47 +93,11 @@ public class FavoriteFragment extends Fragment {
 
     private void initAdapters()
     {
-        favoriteCardAdapter = new FavoriteCardAdapter(favUsers,requireActivity().getApplicationContext());
-        recyclerView.setAdapter(favoriteCardAdapter);
+        if(isAdded())
+            favoriteCardAdapter = new FavoriteCardAdapter(favUsers,requireActivity().getApplicationContext());
+            recyclerView.setAdapter(favoriteCardAdapter);
     }
 
-//    private void getUserFavorites(DataFetchCallback callback) {
-//        FirebaseAuth auth = FirebaseAuth.getInstance();
-//        FirebaseUser user = auth.getCurrentUser();
-//
-//        if (user != null){
-//            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
-//            DatabaseReference favRef = ref.child("favorites");
-//
-//            favRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    for (DataSnapshot favSnapshot : snapshot.getChildren()) {
-//
-//                        // Get the values of the child nodes
-//                        HashMap<String,String> favMap = new HashMap<>();
-//
-//                        String barberShopId = favSnapshot.child("barberShopId").getValue(String.class);
-//                        favMap.put("barberShopId",barberShopId);
-//
-//                        String userName = favSnapshot.child("userName").getValue(String.class);
-//                        favMap.put("userName",userName);
-//
-//                        String imageUrl = favSnapshot.child("imageUrl").getValue(String.class);
-//                        favMap.put("imageUrl",imageUrl);
-//
-//                        favUsers.add(favMap);
-//                    }
-//                    callback.onDataLoaded(null);
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//        }
-//    }
     private void getUserFavorites(DataFetchCallback callback) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -179,7 +143,11 @@ public class FavoriteFragment extends Fragment {
                         favMap.put("imageUrl",imageUrl);
 
                         favUsers.set(index, favMap);
-                        favoriteCardAdapter.notifyItemChanged(index);
+                        if (favoriteCardAdapter == null) {
+                            initAdapters();
+                        } else {
+                            favoriteCardAdapter.notifyItemChanged(index);
+                        }
                     }
                 }
 
@@ -190,7 +158,11 @@ public class FavoriteFragment extends Fragment {
                     int index = getIndex(barberShopId);
                     if (index >= 0) {
                         favUsers.remove(index);
-                        favoriteCardAdapter.notifyItemRemoved(index);
+                        if (favoriteCardAdapter == null) {
+                            initAdapters();
+                        } else {
+                            favoriteCardAdapter.notifyItemRemoved(index);
+                        }
                     }
                 }
 
