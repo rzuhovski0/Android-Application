@@ -156,17 +156,7 @@ public class HomeFragment extends Fragment {
         otherRecView.setAdapter(otherAdapter);
         discountRecView.setAdapter(availableTodayAdapter);
         ratedRecView.setAdapter(bestRatedAdapter);
-
     }
-
-    private void initLists()
-    {
-        recommendedUsers = MenuActivity.getRecommendedUsers();
-        ratedUsers = MenuActivity.getRatedUsers();
-        availableUsers = MenuActivity.getAvailableUsers();
-        otherUsers = MenuActivity.getOtherUsers();
-    }
-
 
     private void fetchUsers()
     {

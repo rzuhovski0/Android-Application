@@ -1,9 +1,13 @@
 package com.btproject.barberise.navigation;
 
+import static com.btproject.barberise.utils.DatabaseUtils.getReservationsFromDatabase;
+import static com.btproject.barberise.utils.ReservationUtils.sortReservations;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -11,9 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.btproject.barberise.R;
+import com.btproject.barberise.adapters.ReservationCardAdapter;
+import com.btproject.barberise.navigation.profile.User;
+import com.btproject.barberise.reservation.DataFetchCallback;
+import com.btproject.barberise.reservation.Reservation;
 //import com.btproject.barberise.adapters.PastReservationsAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,15 +33,17 @@ import java.util.ArrayList;
 public class CalendarFragment extends Fragment {
 
     private RecyclerView pastReservationsRecyclerView;
+
+    /**Oncoming reservation*/
     private TextView nameTextView,priceTextView,timeTextView;
-    private ArrayList<String> name = new ArrayList<>();
-    private ArrayList<String>price = new ArrayList<>();
-    private ArrayList<String>time = new ArrayList<>();
-    private ArrayList<Integer> image = new ArrayList<>();
+    private FrameLayout buttonCancelFrameLayout;
+    private TextView seeAllOncomingTextView;
 
-//    private PastReservationsAdapter adapter;
+    /**Reservation array*/
+    private ArrayList<Reservation> reservations;
 
-
+    /**Adapter*/
+    private ReservationCardAdapter reservationCardAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,41 +90,50 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
-        initializeItems(rootView);
-        fillAttrib();
-//        return inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        /**Initialize components*/
+        initComponents(rootView);
+
+        /**Fetch reservations from database*/
+        DataFetchCallback callback = new DataFetchCallback() {
+            @Override
+            public void onDataLoaded(User barberShop) {
+
+            }
+            @Override
+            public void onReservationsLoaded(ArrayList<Reservation> reservations) {
+                sortReservations(reservations);
+                initAdapter(reservations);
+            }
+        };
+        getReservationsFromDatabase(reservations,callback);
+
         return rootView;
     }
 
-    private void fillAttrib() {
 
-            time.add("4.okt,2022 15:00");
-            time.add("7.sep,2022 12:30");
-//            time.add("19.jan,2022 10:00");
 
-            name.add("BARBER1");
-            name.add("BARBER2");
-//            name.add("BARBER3");
 
-//            price.add("13,00 €");
-            price.add("10,00 €");
-            price.add("7,00 €");
+    private void initComponents(View rootView) {
+        reservations = new ArrayList<>();
 
-//            image.add(R.drawable.btestone);
-            image.add(R.drawable.background);
-            image.add(R.drawable.background);
-
-    }
-
-    private void initializeItems(View rootView) {
         nameTextView = (TextView)rootView.findViewById(R.id.barberNameTextView);//textView
         priceTextView = (TextView)rootView.findViewById(R.id.priceTextView);//textView
-        timeTextView = (TextView)rootView.findViewById(R.id.timeTextView);//textView
+        timeTextView = (TextView)rootView.findViewById(R.id.inCalDateTimeTextView);//textView
+
+        seeAllOncomingTextView = rootView.findViewById(R.id.inCalSeeAllTextView);
+        buttonCancelFrameLayout = rootView.findViewById(R.id.inCalAgainFragmentView);
 
         pastReservationsRecyclerView = (RecyclerView)rootView.findViewById(R.id.pastReservationRecyclerView);
         pastReservationsRecyclerView.setHasFixedSize(true);
         pastReservationsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-//        adapter = new PastReservationsAdapter(name,price,time,image);
-//        pastReservationsRecyclerView.setAdapter(adapter);
     }
+
+    private void initAdapter(ArrayList<Reservation> reservations){
+        if(isAdded()) {
+            reservationCardAdapter = new ReservationCardAdapter(reservations, requireActivity().getApplicationContext());
+            pastReservationsRecyclerView.setAdapter(reservationCardAdapter);
+        }
+    }
+
 }

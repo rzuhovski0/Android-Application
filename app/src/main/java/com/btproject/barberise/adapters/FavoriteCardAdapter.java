@@ -77,7 +77,7 @@ public class FavoriteCardAdapter extends RecyclerView.Adapter<FavoriteCardAdapte
             inFavNameOneTextView = itemView.findViewById(R.id.inCalNameTextView);
             inFavNameTwoTextView = itemView.findViewById(R.id.inCalPriceTextView);
 
-            inFavAgainButton = itemView.findViewById(R.id.inCalCandelFragmentView);
+            inFavAgainButton = itemView.findViewById(R.id.inCalAgainFragmentView);
             inFavFavButton = itemView.findViewById(R.id.inFavFavFrameLayoutButton);
 
             inFavProfileImageView = itemView.findViewById(R.id.inCalProfileImageView);

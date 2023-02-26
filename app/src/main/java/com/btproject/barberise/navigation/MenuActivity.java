@@ -12,7 +12,6 @@ import com.btproject.barberise.R;
 import com.btproject.barberise.databinding.ActivityMenuBinding;
 import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.reservation.DataFetchCallback;
-import com.btproject.barberise.reservation.Reservation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -29,7 +27,6 @@ public class MenuActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     public static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

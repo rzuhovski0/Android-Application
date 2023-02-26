@@ -7,9 +7,20 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.btproject.barberise.R;
+import com.btproject.barberise.reservation.Reservation;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 public class ReservationUtils {
 
@@ -29,6 +40,36 @@ public class ReservationUtils {
                 radioButton.setTextColor(Color.BLACK);
             }
         }
+    }
+
+
+    /**Sort reservations based on their timeInMilliseconds*/
+    public static void sortReservations(ArrayList<Reservation> reservations)
+    {
+        // Define a custom Comparator for Reservation objects based on the timeInMilliseconds attribute
+        Comparator<Reservation> comparator = new Comparator<Reservation>() {
+            @Override
+            public int compare(Reservation r1, Reservation r2) {
+                return Long.compare(r1.getTimeInMilliseconds(), r2.getTimeInMilliseconds());
+            }
+        };
+
+        // Sort the reservations ArrayList using the custom Comparator
+        Collections.sort(reservations, comparator);
+    }
+
+    public static boolean hasTimeAlreadyHappened(@NonNull String timeString) throws ParseException {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        Date time = dateFormat.parse(timeString);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(time);
+
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
+
+        // Check if the time is in the past
+        return calendar.before(now);
     }
 
 

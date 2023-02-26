@@ -71,7 +71,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/oval_shape"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/inCalCandelFragmentView"
+                app:layout_constraintEnd_toStartOf="@+id/inCalAgainFragmentView"
                 app:layout_constraintTop_toBottomOf="@+id/inCalProfileImageView">
 
                 <ImageView
@@ -82,7 +82,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/inCalCandelFragmentView"
+                android:id="@+id/inCalAgainFragmentView"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"

@@ -1,5 +1,8 @@
 package com.btproject.barberise.reservation;
 
+import static com.btproject.barberise.utils.ReservationUtils.hasTimeAlreadyHappened;
+
+import android.icu.text.DateFormatSymbols;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -30,6 +33,11 @@ public class Reservation {
 
     private String day;
 
+    private double price;
+
+    private String serviceProviderId;
+
+    private String profilePicture;
 
     public Reservation()
     {}
@@ -38,6 +46,70 @@ public class Reservation {
     {
         this.userName = userName;
         this.serviceProviderName = serviceProviderName;
+    }
+
+    public boolean hasPassed() throws ParseException {
+        long currentTime = System.currentTimeMillis();
+        /**We check if the time has already passed as well as date*/
+        return timeInMilliseconds < currentTime && hasTimeAlreadyHappened(time);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setServiceProviderName(String serviceProviderName) {
+        this.serviceProviderName = serviceProviderName;
+    }
+
+    public void setServiceProviderId(String serviceProviderId) {
+        this.serviceProviderId = serviceProviderId;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getServiceProviderId() {
+        return serviceProviderId;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public String formatDateAndTime() throws ParseException {
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(inputDateFormat.parse(date + " " + time));
+
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("d.MMM, yyyy HH:mm", Locale.US);
+        String formattedDateTime = outputDateFormat.format(calendar.getTime());
+
+        //formattedDateTime = formattedDateTime.replace(".", new DateFormatSymbols(Locale.US).getShortMonths()[calendar.get(Calendar.MONTH)]);
+
+        String monthAbbreviation = new DateFormatSymbols(Locale.US).getShortMonths()[calendar.get(Calendar.MONTH)];
+        formattedDateTime = formattedDateTime.replaceFirst("\\.\\d+", "." + monthAbbreviation);
+
+        return formattedDateTime;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    /**Get price in string*/
+    public String getPriceString()
+    {
+        return Double.toString(getPrice()) + " €";
     }
 
     public String getDay() {

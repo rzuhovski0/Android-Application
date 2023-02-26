@@ -3,12 +3,20 @@ package com.btproject.barberise.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.btproject.barberise.navigation.profile.User;
+import com.btproject.barberise.reservation.DataFetchCallback;
+import com.btproject.barberise.reservation.Reservation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -34,6 +42,14 @@ public class DatabaseUtils {
         FirebaseUser currentUser = getCurrentUser();
         DatabaseReference favDatabaseReference = getFavoritesDbReference(currentUser).child(barberShopId);
         favDatabaseReference.removeValue();
+    }
+
+    public static void removeReservation(String reservationId)
+    {
+        FirebaseUser currentUser = getCurrentUser();
+        DatabaseReference resRef = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(currentUser.getUid()).child("reservations").child(reservationId);
+        resRef.removeValue();
     }
 
     public static void addUserToFavorites(User barberShop, String barberShopId, Context context)
@@ -74,6 +90,31 @@ public class DatabaseUtils {
         }
     }
 
+    public static void getReservationsFromDatabase(ArrayList<Reservation> reservations, DataFetchCallback callback)
+    {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        if(currentUser != null) {
+            String currentUserId = currentUser.getUid();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference resRef = database.getReference().child("users").child(currentUserId).child("reservations");
+
+            resRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot reservationSnapshot : snapshot.getChildren()) {
+                        Reservation reservation = reservationSnapshot.getValue(Reservation.class);
+                        reservations.add(reservation);
+                    }
+                    callback.onReservationsLoaded(reservations);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
 
 }
