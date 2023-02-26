@@ -97,7 +97,6 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        fillAttrib();
     }
 
     @Override
@@ -159,6 +158,15 @@ public class HomeFragment extends Fragment {
         ratedRecView.setAdapter(bestRatedAdapter);
 
     }
+
+    private void initLists()
+    {
+        recommendedUsers = MenuActivity.getRecommendedUsers();
+        ratedUsers = MenuActivity.getRatedUsers();
+        availableUsers = MenuActivity.getAvailableUsers();
+        otherUsers = MenuActivity.getOtherUsers();
+    }
+
 
     private void fetchUsers()
     {

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,15 +15,12 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.btproject.barberise.R;
-import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class FavoriteCardAdapter extends RecyclerView.Adapter<FavoriteCardAdapter.ViewHolder>{
 
@@ -78,13 +74,13 @@ public class FavoriteCardAdapter extends RecyclerView.Adapter<FavoriteCardAdapte
             super(itemView);
             inFavCardView = itemView.findViewById(R.id.inFavCardView);
 
-            inFavNameOneTextView = itemView.findViewById(R.id.inFavNameOneTextView);
-            inFavNameTwoTextView = itemView.findViewById(R.id.inFavNameTwoTextView);
+            inFavNameOneTextView = itemView.findViewById(R.id.inCalNameTextView);
+            inFavNameTwoTextView = itemView.findViewById(R.id.inCalPriceTextView);
 
-            inFavAgainButton = itemView.findViewById(R.id.inFavAgainFrameLayoutButton);
+            inFavAgainButton = itemView.findViewById(R.id.inCalCandelFragmentView);
             inFavFavButton = itemView.findViewById(R.id.inFavFavFrameLayoutButton);
 
-            inFavProfileImageView = itemView.findViewById(R.id.inFavProfileImageView);
+            inFavProfileImageView = itemView.findViewById(R.id.inCalProfileImageView);
         }
     }
 

@@ -22,6 +22,7 @@
     <!--Calendar Fragment-->
     <string name="my_reservations">My reservations</string>
     <string name="next">Oncoming event</string>
+    <string name="list_all">See all oncoming reservations</string>
 
     <!--Favorite Fragment-->
     <string name="favorite">Favorite</string>

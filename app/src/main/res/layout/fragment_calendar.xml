@@ -10,108 +10,154 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/fragmentNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="25dp"
-            android:fontFamily="@font/sen_bold"
-            android:text="@string/my_reservations"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="25dp"
-            android:fontFamily="@font/sen"
-            android:text="@string/next"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentNameTextView" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="85dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginBottom="400dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H,1:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            app:shapeAppearanceOverlay="@style/roundImageView"
-            app:srcCompat="@drawable/background" />
-
-        <TextView
-            android:id="@+id/barberNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:fontFamily="@font/sen"
-            android:text="Barbershop Poprad"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/logoImageView"
-            app:layout_constraintTop_toTopOf="@+id/logoImageView" />
-
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/sen"
-            android:text="13,00 €"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/logoImageView"
-            app:layout_constraintTop_toBottomOf="@+id/barberNameTextView" />
-
-        <TextView
-            android:id="@+id/timeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/sen"
-            android:text="16.okt, 2022 17:30"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/logoImageView"
-            app:layout_constraintTop_toBottomOf="@+id/logoImageView" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/inFavAgainButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="35dp"
-            android:layout_marginBottom="400dp"
-            android:src="@drawable/arrow_clockwise"
-            app:backgroundTint="@color/light_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pastReservationRecyclerView"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="350dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constrainLayoutOncomingEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+                    <TextView
+                        android:id="@+id/inCalSeeAllTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/sen"
+                        android:text="@string/list_all"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/inCalDateTimeTextView" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/inCalProfileImageView"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="25dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/roundImageView"
+                        app:srcCompat="@drawable/background" />
+
+                    <TextView
+                        android:id="@+id/inCalNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/sen"
+                        android:maxLines="2"
+                        android:singleLine="false"
+                        android:text="BarberShop Košice"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@+id/inCalProfileImageView"
+                        app:layout_constraintTop_toTopOf="@+id/inCalProfileImageView" />
+
+                    <TextView
+                        android:id="@+id/inCalPriceTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sen"
+                        android:text="13,00 €"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/inCalNameTextView"
+                        app:layout_constraintTop_toBottomOf="@+id/inCalNameTextView" />
+
+                    <FrameLayout
+                        android:id="@+id/inCalCandelFragmentView"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="45dp"
+                        android:layout_marginEnd="25dp"
+                        android:layout_marginBottom="45dp"
+                        android:background="@drawable/oval_shape"
+                        android:backgroundTint="@color/red"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/x" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/inCalDateTimeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/sen"
+                        android:text="16.okt, 2022 17:30"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/inCalProfileImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/inCalProfileImageView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="@string/my_reservations"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/pastReservationRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constrainLayoutOncomingEvent"
+                    tools:listitem="@layout/reservations_card" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/sen"
+                    android:text="@string/next"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView3"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

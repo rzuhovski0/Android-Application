@@ -2,7 +2,6 @@ package com.btproject.barberise.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             usernameTextView = itemView.findViewById(R.id.nameTextView);
-            profilePictureImageView = itemView.findViewById(R.id.inFavProfileImageView);
+            profilePictureImageView = itemView.findViewById(R.id.inCalProfileImageView);
             cardView = itemView.findViewById(R.id.cardView);
         }
     }

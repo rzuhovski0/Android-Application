@@ -27,8 +27,8 @@
                 android:text="BarberShop Kosice"
                 android:textColor="#000000"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/inFavProfileImageView"
-                app:layout_constraintTop_toBottomOf="@+id/inFavProfileImageView" />
+                app:layout_constraintStart_toStartOf="@+id/inCalProfileImageView"
+                app:layout_constraintTop_toBottomOf="@+id/inCalProfileImageView" />
 
             <TextView
                 android:id="@+id/shopRatingTextView"
@@ -38,11 +38,11 @@
                 android:text="★4.0"
                 android:textColor="#000000"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/inFavProfileImageView"
-                app:layout_constraintTop_toBottomOf="@+id/inFavProfileImageView" />
+                app:layout_constraintEnd_toEndOf="@+id/inCalProfileImageView"
+                app:layout_constraintTop_toBottomOf="@+id/inCalProfileImageView" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/inFavProfileImageView"
+                android:id="@+id/inCalProfileImageView"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"

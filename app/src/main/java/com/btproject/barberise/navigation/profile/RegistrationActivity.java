@@ -71,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        profileImageView = findViewById(R.id.inFavProfileImageView);
+        profileImageView = findViewById(R.id.inCalProfileImageView);
         saveChangesTextView = findViewById(R.id.saveChangesTextView);
         name = findViewById(R.id.shopNameEditText);
         checkBox = findViewById(R.id.checkBox);
