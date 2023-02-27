@@ -28,6 +28,12 @@
     <string name="name_reminder">Názov, ktorý zvolíte, bude zobrazený v aplikácií</string>
     <string name="default_time">Ponechať základnú otváraciu dobu</string>
     <string name="save_changes">Uložit nastavenia ›</string>
+    <string name="promo_code">promo kód</string>
+    <string name="invalid_code">Promo kód je neplatný</string>
+    <string name="name">Meno</string>
+    <string name="surname">Priezvisko</string>
+    <string name="sign_out">Odhlásiť sa</string>
+    <string name="delete_acc">Vymazať údaje</string>
     <string name="Monday">Pondelok</string>
     <string name="Tuesday">Utorok</string>
     <string name="Wednesday">Streda</string>
@@ -53,4 +59,5 @@
         kliknutím sem</string>
     <string name="opening_hours">Otváracie hodiny</string>
     <string name="tel_number">Telefón :</string>
+    <string name="use">Použiť</string>
 </resources>

@@ -364,7 +364,6 @@ public class ReservationTestingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-
         if (currentStep > 1) {
             currentStep--;
             updateRadioGroupVisibility();

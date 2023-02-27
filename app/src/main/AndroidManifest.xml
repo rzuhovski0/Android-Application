@@ -19,6 +19,12 @@
         android:theme="@style/Theme.Barberiseapp"
         tools:targetApi="31">
         <activity
+            android:name=".settings.ProfileSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".settings.PromoActivity"
+            android:exported="false" />
+        <activity
             android:name=".reservation.ContactInfoActivity"
             android:exported="false" />
         <activity
@@ -192,7 +198,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAXDcH3TsxVlx2p8ObPNP8pPZxUPWxXB98" />
-
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.btproject.barberise.navigation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import com.btproject.barberise.R;
 import com.btproject.barberise.navigation.profile.PartnerProfileActivity;
+import com.btproject.barberise.settings.ProfileSettingsActivity;
+import com.btproject.barberise.settings.PromoActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +33,8 @@ public class ProfileFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference dbReference;
 
-    private TextView partnerProfileTextView;
+    private Context context;
+    private TextView partnerProfileTextView,promoTextView,profileTextView;
     private TextView usrNameTextView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -82,45 +86,42 @@ public class ProfileFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        authUser();
-
-        getDatabase();
-
-        getUser();
-
-        partnerProfileTextView = rootView.findViewById(R.id.partnerTextView);
-        usrNameTextView = rootView.findViewById(R.id.usrNameTextView);
-
+        initItems(rootView);
         partnerProfileTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PartnerProfileActivity.class);
+                Intent intent = new Intent(context, PartnerProfileActivity.class);
                 startActivity(intent);
             }
         });
 
-        usrNameTextView.setText(user.getDisplayName());
+        promoTextView.setOnClickListener(view ->
+        {
+            Intent intent = new Intent(context, PromoActivity.class);
+            startActivity(intent);
+        });
+
+        profileTextView.setOnClickListener(View ->
+        {
+            Intent intent = new Intent(context, ProfileSettingsActivity.class);
+            startActivity(intent);
+        });
 
         return rootView;
     }
 
-    private void authUser()
+    private void initItems(View rootView)
     {
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-        if(user != null)
-            userUID = user.getUid();
+        context = requireActivity().getApplicationContext();
+
+        partnerProfileTextView = rootView.findViewById(R.id.partnerTextView);
+        usrNameTextView = rootView.findViewById(R.id.usrNameTextView);
+        promoTextView = rootView.findViewById(R.id.promoTextView);
+        profileTextView = rootView.findViewById(R.id.profileTextView);
+        /**Set the correct color for */
+
     }
 
-    private void getDatabase()
-    {
-        database = FirebaseDatabase.getInstance();
-        dbReference = database.getReference();
-    }
 
-    private void getUser()
-    {
-        dbReference.child("users").child(userUID);
-    }
 
 }

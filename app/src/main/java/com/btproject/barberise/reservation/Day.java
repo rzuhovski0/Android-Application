@@ -1,5 +1,7 @@
 package com.btproject.barberise.reservation;
 
+import static com.btproject.barberise.utils.ReservationUtils.hasTimeAlreadyHappened;
+
 public class Day {
 
     private String date;

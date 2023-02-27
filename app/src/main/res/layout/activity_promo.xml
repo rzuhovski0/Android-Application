@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".settings.PromoActivity">
+
+    <EditText
+        android:id="@+id/promoCodeEditText"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/round_corners_stroke"
+        android:fontFamily="@font/sen"
+        android:hint="@string/promo_code"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#000000"
+        android:textColorHint="#80000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/usePromoCodeButton"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="150dp"
+        android:background="@drawable/rounded_button_25dp"
+        android:backgroundTint="@color/orange"
+        android:fontFamily="@font/sen_bold"
+        android:text="@string/use"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

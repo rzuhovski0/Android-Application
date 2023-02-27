@@ -42,6 +42,17 @@
     <string name="business_name">Name of the shop</string>
     <string name="name_reminder">This name will be displayed in the app</string>
 
+    <!--PromoCode-->
+    <string name="promo_code">promo code</string>
+    <string name="use">Use</string>
+    <string name="invalid_code">Promo code is invalid</string>
+
+    <!--ProfileSettings-->
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="sign_out">Sign out</string>
+    <string name="delete_acc">Delete account</string>
+
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
     <string name="Wednesday">Wednesday</string>
