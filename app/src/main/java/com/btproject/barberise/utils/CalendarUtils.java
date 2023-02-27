@@ -1,5 +1,7 @@
 package com.btproject.barberise.utils;
 
+import static com.btproject.barberise.utils.ReservationUtils.hasTimeAlreadyHappened;
+
 import android.graphics.Color;
 
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
@@ -157,9 +159,8 @@ public class CalendarUtils {
 
         for(Day day : unavailableDays)
         {
-            if(!day.isAvailable()){
+            if(!day.isAvailable())
                 disabledDates.add(day.getSelectedDate());
-            }
         }
 
         return disabledDates;
@@ -176,6 +177,12 @@ public class CalendarUtils {
                     String s1 = allAvailableHours.get(i);
                     for (int j = 0; j < day.getTimes().length; j++) {
                         String s2 = day.getTimes()[j];
+
+                        /**Filter those time, that has already passed*/
+                        removeTimeIfAlreadyHappened(s2,allAvailableHours,i);
+
+                        /**Remove those times, that are in days(already stored reservations)
+                         * and availableHours (available times for the day)*/
                         if (s1.equals(s2)) {
                             allAvailableHours.remove(i);
                             i--; // decrement i to account for the removed element
@@ -188,6 +195,15 @@ public class CalendarUtils {
         return allAvailableHours;
     }
 
+    private static void removeTimeIfAlreadyHappened(String s2, ArrayList<String> allAvailableHours, int i)
+    {
+        try{
+            if(hasTimeAlreadyHappened(s2))
+                allAvailableHours.remove(i);
+        }catch (Exception ignored){
+
+        }
+    }
 
 
 }

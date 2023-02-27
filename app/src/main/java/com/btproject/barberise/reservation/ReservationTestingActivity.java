@@ -468,7 +468,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
         // Sort hours chronologically
         Collections.sort(availableHours);
 
-
+        //TODO, it can happen, that availableHours might be completely empty due to all available times have already passed -> Needs fix
+        //TODO -> times are already displayed, even when should be unavailable if user press "Choose date" too fast -> Needs callback
         return availableHours;
     }
 
