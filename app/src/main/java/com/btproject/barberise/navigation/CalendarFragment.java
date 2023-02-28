@@ -212,7 +212,7 @@ public class CalendarFragment extends Fragment {
 
     private void initAdapter(ArrayList<Reservation> reservations){
         if(isAdded()) {
-            reservationCardAdapter = new ReservationCardAdapter(reservations, requireActivity().getApplicationContext());
+            reservationCardAdapter = new ReservationCardAdapter(reservations, requireActivity().getApplicationContext(),getResources(), requireActivity().getTheme());
             pastReservationsRecyclerView.setAdapter(reservationCardAdapter);
         }
     }

@@ -89,8 +89,13 @@
     <string name="reservation_notification">We\'ll send confirmation of the reservation
         to your email.</string>
     <string name="check_reservation">You can check your reservation clicking here</string>
+    <!--Contact Info-->
     <string name="opening_hours">Opening hours</string>
     <string name="tel_number">Phone number :</string>
     <string name="email" translatable="false">Email :</string>
-
+    <!--Cancel Reservation Dialog-->
+    <string name="cancel_reservation_header">Cancel reservation</string>
+    <string name="cancel_reservation">Are you sure you want to discard this reservation?</string>
+    <string name="go_back">Go back</string>
+    <string name="cancel">Cancel</string>
 </resources>

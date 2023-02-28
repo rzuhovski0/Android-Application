@@ -60,4 +60,8 @@
     <string name="opening_hours">Otváracie hodiny</string>
     <string name="tel_number">Telefón :</string>
     <string name="use">Použiť</string>
+    <string name="cancel_reservation">Naozaj chcete zrušit túto rezerváciu ?</string>
+    <string name="cancel_reservation_header">Zrušit rezerváciu</string>
+    <string name="go_back">Naspať</string>
+    <string name="cancel">Zrušit</string>
 </resources>

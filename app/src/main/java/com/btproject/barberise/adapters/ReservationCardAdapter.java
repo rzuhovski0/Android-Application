@@ -1,14 +1,18 @@
 package com.btproject.barberise.adapters;
 
+import static androidx.core.content.res.ResourcesCompat.getDrawable;
 import static com.btproject.barberise.utils.DatabaseUtils.removeReservation;
 import static com.btproject.barberise.utils.DatabaseUtils.removeUserFromFavorites;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,10 +36,16 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
     private ArrayList<Reservation> reservations;
     private Context mContext;
 
-    public ReservationCardAdapter(ArrayList<Reservation> reservations,Context context)
+    private Resources resources;
+
+    private Resources.Theme theme;
+
+    public ReservationCardAdapter(ArrayList<Reservation> reservations,Context context,Resources resources,Resources.Theme theme)
     {
         this.reservations = reservations;
         mContext = context;
+        resources = resources;
+        theme = theme;
     }
 
     @NonNull
@@ -90,7 +100,12 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
                     intent.putExtra("id", reservations.get(position).getServiceProviderId());
                     mContext.startActivity(intent);
                 }else{
-                    removeReservation(reservations.get(position).getId());
+
+                    Context parentContext = holder.itemView.getContext();
+                    Dialog dialog = getCustomDialog(parentContext, position);
+                    dialog.show();
+
+
                 }
             } catch (ParseException e) {
                 throw new RuntimeException(e);
@@ -102,6 +117,30 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
     @Override
     public int getItemCount() {
         return reservations.size();
+    }
+
+    private Dialog getCustomDialog(Context parentContext,int position)
+    {
+        //Create the Dialog here
+        Dialog dialog = new Dialog(parentContext);
+        dialog.setContentView(R.layout.reservation_confirm_cancel_dialog);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(parentContext.getResources(),R.drawable.dialog_background,theme));
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false); //Optional
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+
+        Button Okay = dialog.findViewById(R.id.btn_okay);
+        Button Cancel = dialog.findViewById(R.id.btn_cancel);
+
+        Okay.setOnClickListener(v -> {
+            removeReservation(reservations.get(position).getId());
+            dialog.dismiss();
+        });
+
+        Cancel.setOnClickListener(v -> dialog.dismiss());
+
+        return dialog;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
