@@ -44,12 +44,31 @@ public class ReservationUtils {
 
 
     /**Sort reservations based on their timeInMilliseconds*/
-    public static void sortReservations(ArrayList<Reservation> reservations)
-    {
+    public static void sortReservations(ArrayList<Reservation> reservations) {
         // Define a custom Comparator for Reservation objects based on the timeInMilliseconds attribute
         Comparator<Reservation> comparator = new Comparator<Reservation>() {
             @Override
             public int compare(Reservation r1, Reservation r2) {
+                // Check if either reservation has passed
+                boolean r1Passed = false;
+                try {
+                    r1Passed = r1.hasPassed();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+                boolean r2Passed = false;
+                try {
+                    r2Passed = r2.hasPassed();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // If only one reservation has passed, the non-passed reservation should come first
+                if (r1Passed != r2Passed) {
+                    return r1Passed ? 1 : -1;
+                }
+
+                // If both reservations have not passed or both have passed, sort based on timeInMilliseconds
                 return Long.compare(r1.getTimeInMilliseconds(), r2.getTimeInMilliseconds());
             }
         };
@@ -57,6 +76,7 @@ public class ReservationUtils {
         // Sort the reservations ArrayList using the custom Comparator
         Collections.sort(reservations, comparator);
     }
+
 
     public static boolean hasTimeAlreadyHappened(@NonNull String timeString) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");

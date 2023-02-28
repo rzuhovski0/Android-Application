@@ -10,11 +10,13 @@ import com.btproject.barberise.reservation.DataFetchCallback;
 import com.btproject.barberise.reservation.Reservation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,11 +46,20 @@ public class DatabaseUtils {
         favDatabaseReference.removeValue();
     }
 
-    public static void removeReservation(String reservationId)
+    public static void removeReservation(String reservationId,String barberShopId)
     {
         FirebaseUser currentUser = getCurrentUser();
+
+        /**Remove reservation from user db*/
+        if(currentUser != null) {
+            DatabaseReference resRef = FirebaseDatabase.getInstance().getReference().child("users")
+                    .child(currentUser.getUid()).child("reservations").child(reservationId);
+            resRef.removeValue();
+        }
+
+        /**Remove reservation from barber db*/
         DatabaseReference resRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(currentUser.getUid()).child("reservations").child(reservationId);
+                .child(barberShopId).child("reservations").child(reservationId);
         resRef.removeValue();
     }
 
@@ -87,6 +98,79 @@ public class DatabaseUtils {
         } else {
             // User is not authenticated, so we cannot save the reservation
             Toast.makeText(context, "You must be logged in to add a barber shop to favorites", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void getReservationsRealTime(ArrayList<Reservation> reservations, DataFetchCallback callback) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            String currentUserId = currentUser.getUid();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference resRef = database.getReference().child("users").child(currentUserId).child("reservations");
+
+            resRef.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Reservation reservation = snapshot.getValue(Reservation.class);
+                    reservations.add(reservation);
+                    callback.onReservationsLoaded(reservations);
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Reservation updatedReservation = snapshot.getValue(Reservation.class);
+
+                    // Find the index of the updated reservation in the list
+                    String reservationKey = snapshot.getKey();
+                    int index = -1;
+                    for (int i = 0; i < reservations.size(); i++) {
+                        Reservation reservation = reservations.get(i);
+                        if (reservation.getId().equals(reservationKey)) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    // Update the reservation in the list and notify the adapter of the change
+                    if (index != -1) {
+                        reservations.set(index, updatedReservation);
+                        callback.onReservationsLoaded(reservations);
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    String reservationKey = snapshot.getKey();
+
+                    // Find the index of the removed reservation in the list
+                    int index = -1;
+                    for (int i = 0; i < reservations.size(); i++) {
+                        Reservation reservation = reservations.get(i);
+                        if (reservation.getId().equals(reservationKey)) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    // Remove the reservation from the list and notify the adapter of the change
+                    if (index != -1) {
+                        reservations.remove(index);
+                        callback.onReservationsLoaded(reservations);
+                    }
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Handle moved reservation
+                }
+
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle error
+                }
+            });
         }
     }
 

@@ -36,16 +36,10 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
     private ArrayList<Reservation> reservations;
     private Context mContext;
 
-    private Resources resources;
-
-    private Resources.Theme theme;
-
-    public ReservationCardAdapter(ArrayList<Reservation> reservations,Context context,Resources resources,Resources.Theme theme)
+    public ReservationCardAdapter(ArrayList<Reservation> reservations,Context context)
     {
         this.reservations = reservations;
         mContext = context;
-        resources = resources;
-        theme = theme;
     }
 
     @NonNull
@@ -124,17 +118,19 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
         //Create the Dialog here
         Dialog dialog = new Dialog(parentContext);
         dialog.setContentView(R.layout.reservation_confirm_cancel_dialog);
-        dialog.getWindow().setBackgroundDrawable(getDrawable(parentContext.getResources(),R.drawable.dialog_background,theme));
-
+        dialog.getWindow().setBackgroundDrawable(getDrawable(parentContext.getResources(),R.drawable.dialog_background,parentContext.getTheme()));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false); //Optional
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
+        /**Init buttons*/
         Button Okay = dialog.findViewById(R.id.btn_okay);
         Button Cancel = dialog.findViewById(R.id.btn_cancel);
 
         Okay.setOnClickListener(v -> {
-            removeReservation(reservations.get(position).getId());
+            String reservationId = reservations.get(position).getId();
+            String barberShopId = reservations.get(position).getServiceProviderId();
+            removeReservation(reservationId,barberShopId);
             dialog.dismiss();
         });
 
@@ -145,6 +141,7 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView inCalNameTextView,inCalPriceTextView,inCalDateTimeTextView;
+
         public ShapeableImageView inCalProfileImageView;
         public ImageView imageViewSrc;
         public FrameLayout inCalAgainFragmentView;

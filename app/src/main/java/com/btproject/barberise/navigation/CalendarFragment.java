@@ -1,6 +1,6 @@
 package com.btproject.barberise.navigation;
 
-import static com.btproject.barberise.utils.DatabaseUtils.getReservationsFromDatabase;
+import static com.btproject.barberise.utils.DatabaseUtils.getReservationsRealTime;
 import static com.btproject.barberise.utils.ReservationUtils.sortReservations;
 
 import android.os.Bundle;
@@ -120,90 +120,12 @@ public class CalendarFragment extends Fragment {
         return rootView;
     }
 
-    public static void getReservationsRealTime(ArrayList<Reservation> reservations, DataFetchCallback callback) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (currentUser != null) {
-            String currentUserId = currentUser.getUid();
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference resRef = database.getReference().child("users").child(currentUserId).child("reservations");
-
-            resRef.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    Reservation reservation = snapshot.getValue(Reservation.class);
-                    reservations.add(reservation);
-                    callback.onReservationsLoaded(reservations);
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    Reservation updatedReservation = snapshot.getValue(Reservation.class);
-
-                    // Find the index of the updated reservation in the list
-                    String reservationKey = snapshot.getKey();
-                    int index = -1;
-                    for (int i = 0; i < reservations.size(); i++) {
-                        Reservation reservation = reservations.get(i);
-                        if (reservation.getId().equals(reservationKey)) {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    // Update the reservation in the list and notify the adapter of the change
-                    if (index != -1) {
-                        reservations.set(index, updatedReservation);
-                        callback.onReservationsLoaded(reservations);
-                    }
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                    String reservationKey = snapshot.getKey();
-
-                    // Find the index of the removed reservation in the list
-                    int index = -1;
-                    for (int i = 0; i < reservations.size(); i++) {
-                        Reservation reservation = reservations.get(i);
-                        if (reservation.getId().equals(reservationKey)) {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    // Remove the reservation from the list and notify the adapter of the change
-                    if (index != -1) {
-                        reservations.remove(index);
-                        callback.onReservationsLoaded(reservations);
-                    }
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    // Handle moved reservation
-                }
-
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Handle error
-                }
-            });
-        }
-    }
 
 
 
     private void initComponents(View rootView) {
         reservations = new ArrayList<>();
-
-        nameTextView = (TextView)rootView.findViewById(R.id.barberNameTextView);//textView
-        priceTextView = (TextView)rootView.findViewById(R.id.priceTextView);//textView
-        timeTextView = (TextView)rootView.findViewById(R.id.inCalDateTimeTextView);//textView
-
-        seeAllOncomingTextView = rootView.findViewById(R.id.inCalSeeAllTextView);
-        buttonCancelFrameLayout = rootView.findViewById(R.id.inCalAgainFragmentView);
 
         pastReservationsRecyclerView = (RecyclerView)rootView.findViewById(R.id.pastReservationRecyclerView);
         pastReservationsRecyclerView.setHasFixedSize(true);
@@ -212,7 +134,7 @@ public class CalendarFragment extends Fragment {
 
     private void initAdapter(ArrayList<Reservation> reservations){
         if(isAdded()) {
-            reservationCardAdapter = new ReservationCardAdapter(reservations, requireActivity().getApplicationContext(),getResources(), requireActivity().getTheme());
+            reservationCardAdapter = new ReservationCardAdapter(reservations, requireActivity().getApplicationContext());
             pastReservationsRecyclerView.setAdapter(reservationCardAdapter);
         }
     }
