@@ -1,5 +1,6 @@
 package com.btproject.barberise;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -22,6 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         hideSystemUI();
         splashCountdown();
+
     }
 
     private void splashCountdown()

@@ -1,11 +1,15 @@
 package com.btproject.barberise.utils;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.btproject.barberise.navigation.profile.User;
+import com.btproject.barberise.reservation.Category;
 import com.btproject.barberise.reservation.DataFetchCallback;
 import com.btproject.barberise.reservation.Reservation;
 import com.google.firebase.auth.FirebaseAuth;
@@ -199,6 +203,30 @@ public class DatabaseUtils {
                 }
             });
         }
+    }
+
+    /**Test methods*/
+    public static void addAttributesToUsers(Map<String,ArrayList<String>> openingHours,ArrayList<Category> categories)
+    {
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference usersReference = dbReference.child("users");
+
+        ValueEventListener usersListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    // Add the attributes to each user node
+                    userSnapshot.getRef().child("categories").setValue(categories);
+                    userSnapshot.getRef().child("opening_hours").setValue(openingHours);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "loadUsers:onCancelled", databaseError.toException());
+            }
+        };
+        usersReference.addListenerForSingleValueEvent(usersListener);
     }
 
 }

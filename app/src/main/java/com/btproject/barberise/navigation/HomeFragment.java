@@ -56,9 +56,7 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase database;
     String userName;
 
-    List<User> recommendedUsers,ratedUsers,availableUsers,otherUsers;
-
-
+    private static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -141,12 +139,20 @@ public class HomeFragment extends Fragment {
         otherRecView.setHasFixedSize(true);
         otherRecView.setLayoutManager(new RecyclerViewUtils.CustomGridLayoutManager(getContext()));
 
-        recommendedUsers = new ArrayList<>();
-        ratedUsers = new ArrayList<>();
-        availableUsers = new ArrayList<>();
-        otherUsers = new ArrayList<>();
+        if(recommendedUsers == null)
+            recommendedUsers = new ArrayList<>();
 
-        fetchUsers();
+        if(ratedUsers == null)
+            ratedUsers = new ArrayList<>();
+
+        if(availableUsers == null)
+            availableUsers = new ArrayList<>();
+
+        if(otherUsers == null)
+            otherUsers = new ArrayList<>();
+
+        if(recommendedUsers.isEmpty() || ratedUsers.isEmpty() || availableUsers.isEmpty())
+            fetchUsers();
 
         myUsersAdapter = new MyUsersAdapter(recommendedUsers,requireActivity().getApplicationContext());
         otherAdapter = new MyUsersAdapter(otherUsers,requireActivity().getApplicationContext());
