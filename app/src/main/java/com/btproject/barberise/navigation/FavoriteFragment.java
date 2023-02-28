@@ -15,6 +15,7 @@ import com.btproject.barberise.adapters.FavoriteCardAdapter;
 import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.reservation.DataFetchCallback;
 import com.btproject.barberise.reservation.Reservation;
+import com.btproject.barberise.utils.RecyclerViewUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;

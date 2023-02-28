@@ -16,6 +16,7 @@ import com.btproject.barberise.MyCallback;
 import com.btproject.barberise.R;
 import com.btproject.barberise.adapters.MyUsersAdapter;
 import com.btproject.barberise.navigation.profile.User;
+import com.btproject.barberise.utils.RecyclerViewUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -138,7 +139,7 @@ public class HomeFragment extends Fragment {
         //Best Rated RecyclerView
         otherRecView = (RecyclerView) rootView.findViewById(R.id.otherRecycleView);
         otherRecView.setHasFixedSize(true);
-        otherRecView.setLayoutManager(new CustomGridLayoutManager(getContext()));
+        otherRecView.setLayoutManager(new RecyclerViewUtils.CustomGridLayoutManager(getContext()));
 
         recommendedUsers = new ArrayList<>();
         ratedUsers = new ArrayList<>();
@@ -297,42 +298,6 @@ public class HomeFragment extends Fragment {
         return index;
     }
 
-    private void fillAttrib()
-    {
-        ratings.add("4.6");
-        ratings.add("4.1");
-        ratings.add("5.2");
-        ratings.add("3.9");
-        ratings.add("0.0");
 
-        names.add("BARBER1");
-        names.add("BARBER2");
-        names.add("BARBER3");
-        names.add("BARBERSHOPKOSICE");
-        names.add("BarberClub");
-
-        images.add(R.drawable.background);
-        images.add(R.drawable.background);
-        images.add(R.drawable.background);
-        images.add(R.drawable.background);
-        images.add(R.drawable.background);
-    }
-
-    public class CustomGridLayoutManager  extends LinearLayoutManager {
-        private boolean isScrollEnabled = true;
-
-        public CustomGridLayoutManager (Context context) {
-            super(context);
-        }
-
-        public void setScrollEnabled(boolean flag) {
-            this.isScrollEnabled = flag;
-        }
-
-        @Override
-        public boolean canScrollVertically() {
-            return false;
-        }
-    }
 
 }

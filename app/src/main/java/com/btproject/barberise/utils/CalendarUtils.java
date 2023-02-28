@@ -179,7 +179,8 @@ public class CalendarUtils {
                         String s2 = day.getTimes()[j];
 
                         /**Filter those time, that has already passed*/
-                        removeTimeIfAlreadyHappened(s2,allAvailableHours,i);
+                        // NOT FUNCTIONAL -> NEEDS REPAIR
+//                        i = removeTimeIfAlreadyHappened(s2,allAvailableHours,i);
 
                         /**Remove those times, that are in days(already stored reservations)
                          * and availableHours (available times for the day)*/
@@ -195,14 +196,17 @@ public class CalendarUtils {
         return allAvailableHours;
     }
 
-    private static void removeTimeIfAlreadyHappened(String s2, ArrayList<String> allAvailableHours, int i)
+    private static int removeTimeIfAlreadyHappened(String s2, ArrayList<String> allAvailableHours, int i)
     {
         try{
-            if(hasTimeAlreadyHappened(s2))
+            if(hasTimeAlreadyHappened(s2)) {
                 allAvailableHours.remove(i);
+                i--;
+            }
         }catch (Exception ignored){
 
         }
+        return i;
     }
 
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,14 @@ import com.btproject.barberise.adapters.ReservationCardAdapter;
 import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.reservation.DataFetchCallback;
 import com.btproject.barberise.reservation.Reservation;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 //import com.btproject.barberise.adapters.PastReservationsAdapter;
 
 import java.util.ArrayList;
@@ -106,11 +115,83 @@ public class CalendarFragment extends Fragment {
                 initAdapter(reservations);
             }
         };
-        getReservationsFromDatabase(reservations,callback);
+        getReservationsRealTime(reservations,callback);
 
         return rootView;
     }
 
+    public static void getReservationsRealTime(ArrayList<Reservation> reservations, DataFetchCallback callback) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            String currentUserId = currentUser.getUid();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference resRef = database.getReference().child("users").child(currentUserId).child("reservations");
+
+            resRef.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Reservation reservation = snapshot.getValue(Reservation.class);
+                    reservations.add(reservation);
+                    callback.onReservationsLoaded(reservations);
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Reservation updatedReservation = snapshot.getValue(Reservation.class);
+
+                    // Find the index of the updated reservation in the list
+                    String reservationKey = snapshot.getKey();
+                    int index = -1;
+                    for (int i = 0; i < reservations.size(); i++) {
+                        Reservation reservation = reservations.get(i);
+                        if (reservation.getId().equals(reservationKey)) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    // Update the reservation in the list and notify the adapter of the change
+                    if (index != -1) {
+                        reservations.set(index, updatedReservation);
+                        callback.onReservationsLoaded(reservations);
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    String reservationKey = snapshot.getKey();
+
+                    // Find the index of the removed reservation in the list
+                    int index = -1;
+                    for (int i = 0; i < reservations.size(); i++) {
+                        Reservation reservation = reservations.get(i);
+                        if (reservation.getId().equals(reservationKey)) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    // Remove the reservation from the list and notify the adapter of the change
+                    if (index != -1) {
+                        reservations.remove(index);
+                        callback.onReservationsLoaded(reservations);
+                    }
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Handle moved reservation
+                }
+
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle error
+                }
+            });
+        }
+    }
 
 
 
