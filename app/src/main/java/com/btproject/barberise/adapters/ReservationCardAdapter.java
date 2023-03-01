@@ -2,13 +2,11 @@ package com.btproject.barberise.adapters;
 
 import static androidx.core.content.res.ResourcesCompat.getDrawable;
 import static com.btproject.barberise.utils.DatabaseUtils.removeReservation;
-import static com.btproject.barberise.utils.DatabaseUtils.removeUserFromFavorites;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,13 +149,13 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
             super(itemView);
             inCalCardView = itemView.findViewById(R.id.inCalCardView);
 
-            inCalNameTextView = itemView.findViewById(R.id.inCalNameTextView);
+            inCalNameTextView = itemView.findViewById(R.id.inSearchNameTextView);
             inCalPriceTextView = itemView.findViewById(R.id.inCalPriceTextView);
             inCalDateTimeTextView = itemView.findViewById(R.id.inCalDateTimeTextView);
 
             inCalAgainFragmentView = itemView.findViewById(R.id.inCalAgainFragmentView);
 
-            inCalProfileImageView = itemView.findViewById(R.id.inCalProfileImageView);
+            inCalProfileImageView = itemView.findViewById(R.id.inSearchProfileImageView);
             imageViewSrc = itemView.findViewById(R.id.srcDrawable);
         }
     }

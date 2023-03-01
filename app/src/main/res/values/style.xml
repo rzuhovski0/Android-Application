@@ -22,6 +22,14 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+    <style name="CustomSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@null</item>
+        <item name="submitBackground">@null</item>
+        <item name="searchHintIcon">@null</item>
+        <item name="closeIcon">@null</item>
+        <item name="goIcon">@null</item>
+    </style>
+
 
 
 </resources>

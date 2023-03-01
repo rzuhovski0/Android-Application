@@ -120,7 +120,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             cardView = itemView.findViewById(R.id.cardView);
             textViewShopName = itemView.findViewById(R.id.nameTextView);
             textViewRating = itemView.findViewById(R.id.RatingTextView);
-            imageView = itemView.findViewById(R.id.inCalProfileImageView);
+            imageView = itemView.findViewById(R.id.inSearchProfileImageView);
         }
     }
 }

@@ -17,6 +17,7 @@ import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHolder> {
@@ -29,28 +30,28 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             usernameTextView = itemView.findViewById(R.id.nameTextView);
-            profilePictureImageView = itemView.findViewById(R.id.inCalProfileImageView);
+            profilePictureImageView = itemView.findViewById(R.id.inSearchProfileImageView);
             cardView = itemView.findViewById(R.id.cardView);
         }
     }
 
-
-
     private List<User> mUsers;
     private Context mContext;
 
-    public MyUsersAdapter(List<User> users,Context mContext) {
+
+    public MyUsersAdapter(List<User> users, Context mContext) {
         this.mContext = mContext;
         this.mUsers = users;
     }
 
 
+
     @NonNull
     @Override
     public MyUsersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shop_display, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        View view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shop_display, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override

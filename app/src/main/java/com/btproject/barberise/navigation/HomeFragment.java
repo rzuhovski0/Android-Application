@@ -5,16 +5,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.btproject.barberise.MyCallback;
 import com.btproject.barberise.R;
 import com.btproject.barberise.adapters.MyUsersAdapter;
+import com.btproject.barberise.adapters.SearchAdapter;
 import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.utils.RecyclerViewUtils;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +54,7 @@ public class HomeFragment extends Fragment {
     MyUsersAdapter bestRatedAdapter;
     MyUsersAdapter availableTodayAdapter;
     MyUsersAdapter otherAdapter;
+    SearchAdapter searchAdapter;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -56,7 +62,10 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase database;
     String userName;
 
-    private static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers = new ArrayList<>();
+    private SearchView searchView;
+    private RecyclerView searchRecyclerView;
+
+    private static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers,allUsers = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -108,6 +117,10 @@ public class HomeFragment extends Fragment {
 
     private void initComponents(View rootView)
     {
+        searchView = rootView.findViewById(R.id.searchView);
+        searchRecyclerView = rootView.findViewById(R.id.searchRecyclerView);
+
+        initSearchView();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -150,6 +163,8 @@ public class HomeFragment extends Fragment {
 
         if(otherUsers == null)
             otherUsers = new ArrayList<>();
+        if(allUsers == null)
+            allUsers = new ArrayList<>();
 
         if(recommendedUsers.isEmpty() || ratedUsers.isEmpty() || availableUsers.isEmpty())
             fetchUsers();
@@ -163,6 +178,75 @@ public class HomeFragment extends Fragment {
         otherRecView.setAdapter(otherAdapter);
         discountRecView.setAdapter(availableTodayAdapter);
         ratedRecView.setAdapter(bestRatedAdapter);
+    }
+
+    private ArrayList<User> getMergedUsers(){
+        ArrayList<User> mergedList = new ArrayList<>();
+
+        mergedList.addAll(recommendedUsers);
+        mergedList.addAll(ratedUsers);
+        mergedList.addAll(availableUsers);
+
+        return mergedList;
+    }
+
+    private void initSearchView() {
+
+        /**Older Android APIs tend to push cursor on searchView after the initial start of the app
+         * this removes the cursor*/
+        searchView.clearFocus();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // No need to implement
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchRecyclerView.setVisibility(View.VISIBLE);
+                filterText(newText);
+                return true;
+            }
+        });
+
+    }
+    private void updateVisibility()
+    {
+        recommendedRecView.setVisibility(View.GONE);
+        recommendedTextView.setVisibility(View.GONE);
+
+        discountRecView.setVisibility(View.GONE);
+        ratedTextView.setVisibility(View.GONE);
+
+        ratedRecView.setVisibility(View.GONE);
+        discountTextView.setVisibility(View.GONE);
+
+        otherRecView.setVisibility(View.GONE);
+    }
+
+
+    private void filterText(String text)
+    {
+        ArrayList<User> filteredList = new ArrayList<>();
+        Context context = requireActivity().getApplicationContext();
+
+        for(User user : allUsers)
+        {
+            if(user.getUsername().toLowerCase().contains(text.toLowerCase()))
+                filteredList.add(user);
+        }
+
+        if(!filteredList.isEmpty()) {
+            searchAdapter = new SearchAdapter(filteredList, context);
+            searchRecyclerView.setHasFixedSize(true);
+            searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            searchAdapter.setFilteredList(filteredList);
+            searchRecyclerView.setAdapter(searchAdapter);
+            updateVisibility();
+        }
     }
 
     private void fetchUsers()
@@ -180,18 +264,22 @@ public class HomeFragment extends Fragment {
                     switch(user.getCategory()){
                         case "recommended":
                             recommendedUsers.add(user);
+                            allUsers.add(user);
                             myUsersAdapter.notifyItemInserted(getItemIndex(user,recommendedUsers));
                             break;
                         case "best_rated":
                             ratedUsers.add(user);
+                            allUsers.add(user);
                             myUsersAdapter.notifyItemInserted(getItemIndex(user,ratedUsers));
                             break;
                         case "available_today":
                             availableUsers.add(user);
+                            allUsers.add(user);
                             myUsersAdapter.notifyItemInserted(getItemIndex(user,availableUsers));
                             break;
                         default:
                             otherUsers.add(user);
+                            allUsers.add(user);
                             myUsersAdapter.notifyItemInserted(getItemIndex(user,otherUsers));
                     }
 

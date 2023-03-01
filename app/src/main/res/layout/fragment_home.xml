@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         tools:context=".navigation.HomeActivity">
 
+
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
@@ -21,28 +22,30 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrainLayoutCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/editTextSearch"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/searchRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
                     android:layout_width="300dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="25dp"
                     android:background="@drawable/round_shape_shadows"
                     android:backgroundTint="#D9D9D9"
-                    android:drawableEnd="@drawable/search"
-                    android:ems="10"
-                    android:hint="@string/search"
-                    android:inputType="textPersonName"
-                    android:minHeight="48dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:textAlignment="viewStart"
-                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/usrName" />
+                    app:layout_constraintTop_toBottomOf="@+id/usrName"
+                    style="@style/CustomSearchViewStyle"/>
+
 
                 <TextView
                     android:id="@+id/usrName"
@@ -62,14 +65,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="25dp"
                     android:fontFamily="@font/sen_bold"
                     android:paddingTop="30dp"
                     android:text="@string/recommendedItems"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
+                    app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recommendedRecyclerView"

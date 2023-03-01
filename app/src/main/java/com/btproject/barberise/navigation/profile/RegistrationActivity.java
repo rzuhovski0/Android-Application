@@ -1,9 +1,5 @@
 package com.btproject.barberise.navigation.profile;
 
-import static android.content.ContentValues.TAG;
-
-import static com.btproject.barberise.utils.DatabaseUtils.addAttributesToUsers;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,7 +18,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,11 +29,8 @@ import com.btproject.barberise.reservation.Category;
 import com.btproject.barberise.reservation.Subcategory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -83,7 +75,7 @@ public class RegistrationActivity extends AppCompatActivity {
         /** Helper method to fill users with attributes*/
 //        addAttributesToUsers(getOpeningHours(),getCategories());
 
-        profileImageView = findViewById(R.id.inCalProfileImageView);
+        profileImageView = findViewById(R.id.inSearchProfileImageView);
         saveChangesTextView = findViewById(R.id.saveChangesTextView);
         name = findViewById(R.id.shopNameEditText);
         checkBox = findViewById(R.id.checkBox);

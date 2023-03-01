@@ -41,8 +41,8 @@ public class testing_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
 
-        calendarView = findViewById(R.id.cosmo_calendar);
-        button = findViewById(R.id.selectButton);
+//        calendarView = findViewById(R.id.cosmo_calendar);
+//        button = findViewById(R.id.selectButton);
 
         //Set First day of the week
         calendarView.setFirstDayOfWeek(Calendar.MONDAY);
