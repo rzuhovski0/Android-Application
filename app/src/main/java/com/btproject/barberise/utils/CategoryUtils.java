@@ -4,6 +4,7 @@ import com.btproject.barberise.reservation.Category;
 import com.btproject.barberise.reservation.Subcategory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CategoryUtils {
 
@@ -21,6 +22,21 @@ public class CategoryUtils {
             }
         }
         return 0.0;
+    }
+
+    public static ArrayList<HashMap<String,ArrayList<Subcategory>>> getSubcategoriesFromCategories(ArrayList<Category> categories)
+    {
+
+        ArrayList<HashMap<String,ArrayList<Subcategory>>> subcategories = new ArrayList<>();
+        HashMap<String,ArrayList<Subcategory>> subcategoriesMap;
+
+        for(Category category : categories)
+        {
+            subcategoriesMap = new HashMap<>();
+            subcategoriesMap.put(category.getName(),category.getSubcategories());
+            subcategories.add(subcategoriesMap);
+        }
+        return subcategories;
     }
 
 }

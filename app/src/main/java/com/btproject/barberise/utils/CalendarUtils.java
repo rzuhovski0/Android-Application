@@ -3,7 +3,10 @@ package com.btproject.barberise.utils;
 import static com.btproject.barberise.utils.ReservationUtils.hasTimeAlreadyHappened;
 
 import android.graphics.Color;
+import android.net.ParseException;
+import android.view.View;
 
+import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
 import com.btproject.barberise.reservation.Day;
@@ -17,12 +20,41 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class CalendarUtils {
+
+    public static void setUpCalendar(CalendarView calendarView)
+    {
+        // Initially hide the CalendarView
+        calendarView.setVisibility(View.GONE);
+
+        //Set First day of the week
+        calendarView.setFirstDayOfWeek(Calendar.MONDAY);
+
+        //Set Orientation 0 = Horizontal | 1 = Vertical
+        calendarView.setCalendarOrientation(0);
+
+        //add Weekends
+        calendarView.setWeekendDays(new HashSet() {{
+            add(Calendar.SATURDAY);
+            add(Calendar.SUNDAY);
+        }});
+
+        //Range Selection
+        calendarView.setSelectionType(SelectionType.SINGLE);
+
+        int orangeColor = Color.parseColor("#FF7235");
+
+        //Set palette-colors
+        CalendarUtils.setCalendarColors(orangeColor,calendarView);
+
+        calendarView.update();
+    }
 
     // Version 1.0 -> Slow
     public static Set<Long> getPreviousDays()
@@ -169,45 +201,46 @@ public class CalendarUtils {
 
     public static ArrayList<String> getFilteredHours(ArrayList<String> allAvailableHours, ArrayList<Day> days,String dayString)
     {
+        ArrayList<String> filteredHours = new ArrayList<>(allAvailableHours);
+
         for(Day day : days)
         {
             if(day.isAvailable() && day.getDay().equals(dayString)) {
-                // iterate through both arrays
-                for (int i = 0; i < allAvailableHours.size(); i++) {
-                    String s1 = allAvailableHours.get(i);
+                for (int i = 0; i < filteredHours.size(); i++) {
+                    String s1 = filteredHours.get(i);
                     for (int j = 0; j < day.getTimes().length; j++) {
                         String s2 = day.getTimes()[j];
 
-                        /**Filter those time, that has already passed*/
-                        // NOT FUNCTIONAL -> NEEDS REPAIR
-//                        i = removeTimeIfAlreadyHappened(s2,allAvailableHours,i);
-
-                        /**Remove those times, that are in days(already stored reservations)
-                         * and availableHours (available times for the day)*/
                         if (s1.equals(s2)) {
-                            allAvailableHours.remove(i);
-                            i--; // decrement i to account for the removed element
-                            break; // break out of the inner loop since the element was removed
+                            filteredHours.remove(i);
+                            i--;
+                            break;
                         }
                     }
                 }
             }
         }
+        return filteredHours;
+    }
+
+
+    public static ArrayList<String> getHoursWithoutPassedHours(ArrayList<String> allAvailableHours) {
+        Iterator<String> iterator = allAvailableHours.iterator();
+        while (iterator.hasNext()) {
+            String time = iterator.next();
+            try {
+                boolean condition = hasTimeAlreadyHappened(time);
+                if (condition) {
+                    iterator.remove();
+                }
+            } catch (ParseException | java.text.ParseException e) {
+                // handle the ParseException if necessary
+            }
+        }
         return allAvailableHours;
     }
 
-    private static int removeTimeIfAlreadyHappened(String s2, ArrayList<String> allAvailableHours, int i)
-    {
-        try{
-            if(hasTimeAlreadyHappened(s2)) {
-                allAvailableHours.remove(i);
-                i--;
-            }
-        }catch (Exception ignored){
 
-        }
-        return i;
-    }
 
 
 }

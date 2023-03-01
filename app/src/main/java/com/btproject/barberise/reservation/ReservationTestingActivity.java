@@ -3,12 +3,18 @@ package com.btproject.barberise.reservation;
 import static com.btproject.barberise.utils.CalendarUtils.getDisabledDates;
 import static com.btproject.barberise.utils.CalendarUtils.getDays;
 import static com.btproject.barberise.utils.CalendarUtils.getFilteredHours;
+import static com.btproject.barberise.utils.CalendarUtils.getHoursWithoutPassedHours;
+import static com.btproject.barberise.utils.CalendarUtils.setUpCalendar;
+import static com.btproject.barberise.utils.CategoryUtils.getSubcategoriesFromCategories;
 import static com.btproject.barberise.utils.CategoryUtils.getSubcategoryPriceString;
 import static com.btproject.barberise.utils.DatabaseUtils.addUserToFavorites;
 import static com.btproject.barberise.utils.DatabaseUtils.removeUserFromFavorites;
+import static com.btproject.barberise.utils.DayUtils.CurrentDayEqualsDayOfReservation;
 import static com.btproject.barberise.utils.LayoutUtils.getEmptyButton;
 import static com.btproject.barberise.utils.LayoutUtils.getGridLayoutParams;
 import static com.btproject.barberise.utils.LayoutUtils.prettifyButton;
+import static com.btproject.barberise.utils.OpeningHoursUtils.getAvailableHours;
+import static com.btproject.barberise.utils.ReservationUtils.getReservationsFromDatabase;
 import static com.btproject.barberise.utils.ReservationUtils.selectCorrectTextColor;
 
 import androidx.annotation.NonNull;
@@ -20,6 +26,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -49,9 +56,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.TreeSet;
 
@@ -193,7 +202,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
         updateRadioGroupVisibility();
 
         /**Calendar attributes*/
-        setUpCalendar();
+        setUpCalendar(calendarView);
 
         DataFetchCallback callback = new DataFetchCallback() {
             @Override
@@ -251,7 +260,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
          * from HashMap using keys. Thus, the only option is to fetch the reservations again (even though they are already fetched) and using
          * datasnapshot.getChildren() method to fill the ArrayList<Reservation> reservations from children of the node.
          */
-        getReservationsFromDatabase(callback);
+        getReservationsFromDatabase(callback,barberShopId,reservationsArray);
 
 
         reserveButton.setOnClickListener(view -> {
@@ -280,27 +289,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
         return bundle;
     }
 
-    private void getReservationsFromDatabase(DataFetchCallback callback)
-    {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userRef = database.getReference().child("users").child(barberShopId).child("reservations");
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot reservationSnapshot : snapshot.getChildren()) {
-                    Reservation reservation = reservationSnapshot.getValue(Reservation.class);
-                    reservationsArray.add(reservation);
-                }
-                callback.onReservationsLoaded(reservationsArray);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle the error
-            }
-        });
-    }
 
     private void makeReservationWithAuth(Reservation reservation)
     {
@@ -430,7 +419,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 // Method to get a dd.MM.yyyy format from milliseconds
                 String dateStringFormat = CalendarUtils.getDateInString(selectedDate);
 
-                /** Store date in dd.MM.yyyy format*/
+                /** Store date in dd-MM-yyyy format*/
                 reservation.setDate(dateStringFormat);
 
                 /** Save selected date in milliseconds format*/
@@ -451,25 +440,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
     private void requestTimeFromUser()
     {
         opening_hour_radio_group.removeAllViews();
-        populateOpeningHoursRadioGroup(opening_hour_radio_group,getAvailableHours(selectedDayString));
+        populateOpeningHoursRadioGroup(opening_hour_radio_group,getAvailableHours(selectedDayString,openingHours,reservation,allDays));
         updateRadioGroupVisibility();
-    }
-
-    private ArrayList<String> getAvailableHours(String day)
-    {
-        ArrayList<String> availableHoursForDay = openingHours.get(day);
-
-        /**Filter available hours*/
-        ArrayList<String> availableHours = getFilteredHours(availableHoursForDay,allDays,day);
-
-        assert availableHours != null;
-
-        // Sort hours chronologically
-        Collections.sort(availableHours);
-
-        //TODO, it can happen, that availableHours might be completely empty due to all available times have already passed -> Needs fix
-        //TODO -> times are already displayed, even when should be unavailable if user press "Choose date" too fast -> Needs callback
-        return availableHours;
     }
 
     private void populateOpeningHoursRadioGroup(RadioGroup radioGroup, ArrayList<String> openingHours)
@@ -590,48 +562,9 @@ public class ReservationTestingActivity extends AppCompatActivity {
         return fadeOut;
     }
 
-    private void setUpCalendar()
-    {
-        // Initially hide the CalendarView
-        calendarView.setVisibility(View.GONE);
 
-        //Set First day of the week
-        calendarView.setFirstDayOfWeek(Calendar.MONDAY);
 
-        //Set Orientation 0 = Horizontal | 1 = Vertical
-        calendarView.setCalendarOrientation(0);
 
-        //add Weekends
-        calendarView.setWeekendDays(new HashSet() {{
-            add(Calendar.SATURDAY);
-            add(Calendar.SUNDAY);
-        }});
-
-        //Range Selection
-        calendarView.setSelectionType(SelectionType.SINGLE);
-
-        int orangeColor = Color.parseColor("#FF7235");
-
-        //Set palette-colors
-        CalendarUtils.setCalendarColors(orangeColor,calendarView);
-
-        calendarView.update();
-    }
-
-    private ArrayList<HashMap<String,ArrayList<Subcategory>>> getSubcategoriesFromCategories(ArrayList<Category> categories)
-    {
-
-        ArrayList<HashMap<String,ArrayList<Subcategory>>> subcategories = new ArrayList<>();
-        HashMap<String,ArrayList<Subcategory>> subcategoriesMap;
-
-        for(Category category : categories)
-        {
-            subcategoriesMap = new HashMap<>();
-            subcategoriesMap.put(category.getName(),category.getSubcategories());
-            subcategories.add(subcategoriesMap);
-        }
-        return subcategories;
-    }
 
     private void getUserFromDatabase(DataFetchCallback callback)
     {
