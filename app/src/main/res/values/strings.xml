@@ -89,6 +89,8 @@
     <string name="reservation_notification">We\'ll send confirmation of the reservation
         to your email.</string>
     <string name="check_reservation">You can check your reservation clicking here</string>
+    <string name="no_hours_available">Ups, seems like there are no any available times.</string>
+
     <!--Contact Info-->
     <string name="opening_hours">Opening hours</string>
     <string name="tel_number">Phone number :</string>

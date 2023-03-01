@@ -2,14 +2,11 @@ package com.btproject.barberise.reservation;
 
 import static com.btproject.barberise.utils.CalendarUtils.getDisabledDates;
 import static com.btproject.barberise.utils.CalendarUtils.getDays;
-import static com.btproject.barberise.utils.CalendarUtils.getFilteredHours;
-import static com.btproject.barberise.utils.CalendarUtils.getHoursWithoutPassedHours;
 import static com.btproject.barberise.utils.CalendarUtils.setUpCalendar;
 import static com.btproject.barberise.utils.CategoryUtils.getSubcategoriesFromCategories;
 import static com.btproject.barberise.utils.CategoryUtils.getSubcategoryPriceString;
 import static com.btproject.barberise.utils.DatabaseUtils.addUserToFavorites;
 import static com.btproject.barberise.utils.DatabaseUtils.removeUserFromFavorites;
-import static com.btproject.barberise.utils.DayUtils.CurrentDayEqualsDayOfReservation;
 import static com.btproject.barberise.utils.LayoutUtils.getEmptyButton;
 import static com.btproject.barberise.utils.LayoutUtils.getGridLayoutParams;
 import static com.btproject.barberise.utils.LayoutUtils.prettifyButton;
@@ -18,6 +15,7 @@ import static com.btproject.barberise.utils.ReservationUtils.getReservationsFrom
 import static com.btproject.barberise.utils.ReservationUtils.selectCorrectTextColor;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -26,7 +24,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -38,7 +35,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
 import com.btproject.barberise.navigation.profile.User;
@@ -55,12 +51,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.TreeSet;
 
@@ -84,6 +76,9 @@ public class ReservationTestingActivity extends AppCompatActivity {
     private HashMap<String,ArrayList<String>> openingHours;
     private ArrayList<Reservation> reservationsArray;
     private HashMap<String,Object> reservationsMap;
+
+    // Helper array
+    private ArrayList<String> finalAvailableHours;
 
     /** Reservation */
     private Reservation reservation;
@@ -440,12 +435,13 @@ public class ReservationTestingActivity extends AppCompatActivity {
     private void requestTimeFromUser()
     {
         opening_hour_radio_group.removeAllViews();
-        populateOpeningHoursRadioGroup(opening_hour_radio_group,getAvailableHours(selectedDayString,openingHours,reservation,allDays));
+        finalAvailableHours = getAvailableHours(selectedDayString,openingHours,reservation,allDays);
+        populateOpeningHoursRadioGroup(opening_hour_radio_group,finalAvailableHours);
         updateRadioGroupVisibility();
     }
 
-    private void populateOpeningHoursRadioGroup(RadioGroup radioGroup, ArrayList<String> openingHours)
-    {
+    private void populateOpeningHoursRadioGroup(RadioGroup radioGroup, ArrayList<String> openingHours) {
+
         // Set up the GridLayout
         GridLayout gridLayout = new GridLayout(this);
         gridLayout.setColumnCount(5);
@@ -483,7 +479,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
                     }
 
                     // Change the text color of the selected RadioButton to orange
-                    selectedRadioButton.setTextColor(getResources().getColor(R.color.orange,getTheme()));
+                    selectedRadioButton.setTextColor(getResources().getColor(R.color.orange, getTheme()));
 
                     /** RESERVATION Time*/
                     reservation.setTime(selectedRadioButton.getText().toString());
@@ -493,6 +489,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
         // Add the GridLayout to the RadioGroup
         radioGroup.addView(gridLayout);
+
     }
 
     private void getRadioButtonsReady(RadioButton[] radioButtonsArray, ArrayList<? extends Options> options, RadioGroup radioGroup)
@@ -639,10 +636,16 @@ public class ReservationTestingActivity extends AppCompatActivity {
         reservationsArray = new ArrayList<>();
         reservationsMap = new HashMap<>();
         allDays = new ArrayList<>();
+
+        //Helper
+        finalAvailableHours = new ArrayList<>();
     }
 
     private void updateRadioGroupVisibility()
     {
+        /**If no hours are available, this is helper TextView*/
+        TextView no_hours_availableTextView = findViewById(R.id.no_hours_availableTextView);
+
         updateRequestTextView();
         switch (currentStep) {
             case 1:
@@ -679,6 +682,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 saveDateTextView.setVisibility(View.VISIBLE);
                 reserveButton.setVisibility(View.GONE);
 
+                /**Hide helper TextView*/
+                no_hours_availableTextView.setVisibility(View.GONE);
 
                 break;
             case 4:
@@ -690,6 +695,16 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 calendarView.setVisibility(View.GONE);
                 saveDateTextView.setVisibility(View.GONE);
                 reserveButton.setVisibility(View.VISIBLE);
+
+                /**If available hours after all filtration are empty, set visibility VISIBLE for no_hours_availableTextView*/
+                if(finalAvailableHours.isEmpty()){
+                    no_hours_availableTextView.setText(R.string.no_hours_available);
+                    no_hours_availableTextView.setVisibility(View.VISIBLE);
+                    reserveButton.setVisibility(View.GONE);
+                }else{
+                    no_hours_availableTextView.setVisibility(View.GONE);
+                    reserveButton.setVisibility(View.VISIBLE);
+                }
 
                 break;
         }

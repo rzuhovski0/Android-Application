@@ -57,6 +57,7 @@
     <string name="reservation_notification">Potvrdenie rezervácie Vám zašleme mailom</string>
     <string name="check_reservation">Svoju rezerváciu si môžte skontrolovať
         kliknutím sem</string>
+    <string name="no_hours_available">Ups, tu už je všetko obsadené..</string>
     <string name="opening_hours">Otváracie hodiny</string>
     <string name="tel_number">Telefón :</string>
     <string name="use">Použiť</string>
