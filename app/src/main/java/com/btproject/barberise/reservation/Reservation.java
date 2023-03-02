@@ -51,7 +51,7 @@ public class Reservation {
     public boolean hasPassed() throws ParseException {
         long currentTime = System.currentTimeMillis();
         /**We check if the time has already passed as well as date*/
-        return timeInMilliseconds < currentTime && hasTimeAlreadyHappened(time);
+        return timeInMilliseconds < currentTime;
     }
 
     public String getId() {

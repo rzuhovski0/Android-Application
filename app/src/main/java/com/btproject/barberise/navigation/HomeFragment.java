@@ -42,7 +42,6 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recommendedRecView,ratedRecView,discountRecView,otherRecView;
     private TextView recommendedTextView,ratedTextView, discountTextView;
-
     private TextView usrName;
 
     private ArrayList<String> names = new ArrayList<>();
@@ -64,6 +63,8 @@ public class HomeFragment extends Fragment {
 
     private SearchView searchView;
     private RecyclerView searchRecyclerView;
+
+    private boolean searchViewOpened = false;
 
     private static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers,allUsers = new ArrayList<>();
 
@@ -180,15 +181,6 @@ public class HomeFragment extends Fragment {
         ratedRecView.setAdapter(bestRatedAdapter);
     }
 
-    private ArrayList<User> getMergedUsers(){
-        ArrayList<User> mergedList = new ArrayList<>();
-
-        mergedList.addAll(recommendedUsers);
-        mergedList.addAll(ratedUsers);
-        mergedList.addAll(availableUsers);
-
-        return mergedList;
-    }
 
     private void initSearchView() {
 
@@ -213,18 +205,19 @@ public class HomeFragment extends Fragment {
         });
 
     }
-    private void updateVisibility()
+    private void updateVisibility(int visibility)
     {
-        recommendedRecView.setVisibility(View.GONE);
-        recommendedTextView.setVisibility(View.GONE);
+        recommendedRecView.setVisibility(visibility);
+        recommendedTextView.setVisibility(visibility);
 
-        discountRecView.setVisibility(View.GONE);
-        ratedTextView.setVisibility(View.GONE);
+        discountRecView.setVisibility(visibility);
+        ratedTextView.setVisibility(visibility);
 
-        ratedRecView.setVisibility(View.GONE);
-        discountTextView.setVisibility(View.GONE);
+        ratedRecView.setVisibility(visibility);
+        discountTextView.setVisibility(visibility);
 
-        otherRecView.setVisibility(View.GONE);
+        otherRecView.setVisibility(visibility);
+
     }
 
 
@@ -245,7 +238,7 @@ public class HomeFragment extends Fragment {
             searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             searchAdapter.setFilteredList(filteredList);
             searchRecyclerView.setAdapter(searchAdapter);
-            updateVisibility();
+            updateVisibility(View.GONE);
         }
     }
 
