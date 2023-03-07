@@ -1,6 +1,8 @@
 package com.btproject.barberise;
 
 
+import static com.btproject.barberise.database.UserDAO.getUser;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -10,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.btproject.barberise.navigation.MenuActivity;
 import com.btproject.barberise.utils.CalendarUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Set;
 
@@ -35,8 +39,14 @@ public class SplashActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {    //What happens after time expires
-                    startActivity(new Intent(SplashActivity.this, MenuActivity.class));
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if(firebaseUser != null){
+                    Intent intent = new Intent(SplashActivity.this,MenuActivity.class);
+                    startActivity(intent);
+                }else{
+                    startActivity(new Intent(SplashActivity.this, VerifyPhoneNoActivity.class));
                     finish();   //removes current activity from backstack
+                }
             }
         }.start();  //starts countdown
     }

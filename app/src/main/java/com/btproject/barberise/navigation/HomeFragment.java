@@ -5,13 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +17,6 @@ import com.btproject.barberise.R;
 import com.btproject.barberise.adapters.MyUsersAdapter;
 import com.btproject.barberise.adapters.SearchAdapter;
 import com.btproject.barberise.navigation.profile.User;
-import com.btproject.barberise.utils.RecyclerViewUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -28,10 +24,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,14 +37,9 @@ import java.util.Locale;
 public class HomeFragment extends Fragment {
 
     private RecyclerView recommendedRecView,ratedRecView,discountRecView,otherRecView;
-    private TextView recommendedTextView,ratedTextView, discountTextView;
+    private TextView recommendedTextView,ratedTextView, discountTextView, otherTextView;
     private TextView usrName;
 
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<String>ratings = new ArrayList<>();
-    private ArrayList<Integer>images = new ArrayList<>();
-    //    ShopsViewAdapter shopsViewAdapter;
-//    UsersAdapter usersAdapter;
     MyUsersAdapter myUsersAdapter;
     MyUsersAdapter bestRatedAdapter;
     MyUsersAdapter availableTodayAdapter;
@@ -112,9 +103,69 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
         initComponents(rootView);
+        OnUserNameRetrievedListener listener =
+                userName -> usrName.setText(userName);
+        setUserName(listener);
+
         return rootView;
     }
+
+//    private String setUserName()
+//    {
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        FirebaseUser user = auth.getCurrentUser();
+//
+//        if(user == null)
+//            return;
+//
+//        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+//        DatabaseReference userNameRef = dbRef.child("users").child(user.getUid()).child("username");
+//        userNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                return snapshot;
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//    }
+
+    private void setUserName(final OnUserNameRetrievedListener listener) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user == null) {
+            // User is not logged in, return null
+            listener.onUserNameRetrieved(null);
+            return;
+        }
+
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userNameRef = dbRef.child("users").child(user.getUid()).child("username");
+        userNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String userName = (String) snapshot.getValue();
+                listener.onUserNameRetrieved(userName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onUserNameRetrieved(null);
+            }
+        });
+    }
+
+    public interface OnUserNameRetrievedListener {
+        void onUserNameRetrieved(String userName);
+    }
+
 
     private void initComponents(View rootView)
     {
@@ -123,12 +174,9 @@ public class HomeFragment extends Fragment {
 
         initSearchView();
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-
         usrName = (TextView)rootView.findViewById(R.id.usrName);
-        assert user != null;
-        usrName.setText(user.getUid());
+//        assert user != null;
+//        usrName.setText(user.getUid());
 
         //Recommended Recycler & TextView
         recommendedTextView = (TextView)rootView.findViewById(R.id.recommendedTextView);//textView
@@ -149,9 +197,15 @@ public class HomeFragment extends Fragment {
         discountRecView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
 
         //Best Rated RecyclerView
+        otherTextView = rootView.findViewById(R.id.otherTextView);
         otherRecView = (RecyclerView) rootView.findViewById(R.id.otherRecycleView);
         otherRecView.setHasFixedSize(true);
-        otherRecView.setLayoutManager(new RecyclerViewUtils.CustomGridLayoutManager(getContext()));
+
+        // If this recyclerView should be vertical, use this CustomGridLayoutManager + disabled scroll
+        //otherRecView.setLayoutManager(new RecyclerViewUtils.CustomGridLayoutManager(getContext()));
+
+        otherRecView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
+
 
         if(recommendedUsers == null)
             recommendedUsers = new ArrayList<>();
@@ -164,16 +218,17 @@ public class HomeFragment extends Fragment {
 
         if(otherUsers == null)
             otherUsers = new ArrayList<>();
+
         if(allUsers == null)
             allUsers = new ArrayList<>();
 
-        if(recommendedUsers.isEmpty() || ratedUsers.isEmpty() || availableUsers.isEmpty())
+        if(recommendedUsers.isEmpty() || ratedUsers.isEmpty() || availableUsers.isEmpty() || otherUsers.isEmpty())
             fetchUsers();
 
         myUsersAdapter = new MyUsersAdapter(recommendedUsers,requireActivity().getApplicationContext());
-        otherAdapter = new MyUsersAdapter(otherUsers,requireActivity().getApplicationContext());
         availableTodayAdapter = new MyUsersAdapter(availableUsers,requireActivity().getApplicationContext());
         bestRatedAdapter = new MyUsersAdapter(ratedUsers,requireActivity().getApplicationContext());
+        otherAdapter = new MyUsersAdapter(otherUsers,requireActivity().getApplicationContext());
 
         recommendedRecView.setAdapter(myUsersAdapter);
         otherRecView.setAdapter(otherAdapter);
@@ -182,7 +237,8 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void initSearchView() {
+    private void initSearchView()
+    {
 
         /**Older Android APIs tend to push cursor on searchView after the initial start of the app
          * this removes the cursor*/
@@ -217,10 +273,9 @@ public class HomeFragment extends Fragment {
         discountTextView.setVisibility(visibility);
 
         otherRecView.setVisibility(visibility);
+        otherTextView.setVisibility(visibility);
 
     }
-
-
     private void filterText(String text)
     {
         ArrayList<User> filteredList = new ArrayList<>();

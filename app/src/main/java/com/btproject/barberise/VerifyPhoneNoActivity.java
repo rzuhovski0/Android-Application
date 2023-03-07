@@ -2,7 +2,6 @@ package com.btproject.barberise;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.arch.core.executor.TaskExecutor;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import com.btproject.barberise.navigation.MenuActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class VerifyPhoneNoActivity extends AppCompatActivity {
 
     private String verificationCodeBySystem;
-    private Button verify_btn;
+    private Button verify_btn,send_btn;
     private EditText phoneNoEnteredByTheUser;
     private ProgressBar progressBar;
     FirebaseAuth mAuth;
@@ -39,13 +37,20 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verify_phone_no);
 
         verify_btn = findViewById(R.id.verify_btn);
-        phoneNoEnteredByTheUser = findViewById(R.id.verification_code_entered_by_user);
+        phoneNoEnteredByTheUser = findViewById(R.id.phone_entered_by_user);
         progressBar = findViewById(R.id.progress_bar);
-        mAuth = FirebaseAuth.getInstance();
+        send_btn = findViewById(R.id.send_btn);
 
-        String phoneNo = getIntent().getStringExtra("phoneNo");
-
-        sendVerificationCodeToUser(phoneNo);
+                mAuth = FirebaseAuth.getInstance();
+        send_btn.setOnClickListener(view -> {
+            String phoneNo = phoneNoEnteredByTheUser.getText().toString();
+            if(!phoneNo.isEmpty())
+                sendVerificationCodeToUser(phoneNo);
+            else {
+                phoneNoEnteredByTheUser.setError("Phone number is required");
+                phoneNoEnteredByTheUser.requestFocus();
+            }
+        });
 
     }
 

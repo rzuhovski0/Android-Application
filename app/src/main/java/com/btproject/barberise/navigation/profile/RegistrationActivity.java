@@ -17,7 +17,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,8 +33,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +66,9 @@ public class RegistrationActivity extends AppCompatActivity {
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
 
+    //Image resolution
+    private static final int MAX_IMAGE_WIDTH = 1080;
+    private static final int MAX_IMAGE_HEIGHT = 710;
 
 
     @Override
@@ -75,7 +79,7 @@ public class RegistrationActivity extends AppCompatActivity {
         /** Helper method to fill users with attributes*/
 //        addAttributesToUsers(getOpeningHours(),getCategories());
 
-        profileImageView = findViewById(R.id.inSearchProfileImageView);
+        profileImageView = findViewById(R.id.ProfileImageView);
         saveChangesTextView = findViewById(R.id.saveChangesTextView);
         name = findViewById(R.id.shopNameEditText);
         checkBox = findViewById(R.id.checkBox);
@@ -224,45 +228,6 @@ public class RegistrationActivity extends AppCompatActivity {
         return categories;
     }
 
-    public void register(String email,String password,String userName,String category) {
-
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        FirebaseUser user = auth.getCurrentUser();
-                        assert user != null;
-                        final String userId = user.getUid();
-
-                        StorageReference storageRef = firebaseStorage.getReference().child("users").child(userId).child("profile_picture.jpg");
-                        storageRef.putFile(imageUri)
-                                .addOnSuccessListener(taskSnapshot -> {
-                                    StorageReference storageReference = firebaseStorage.getReference().child("users").child(userId).child("profile_picture.jpg");
-                                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                        String profilePictureUrl = uri.toString();
-
-                                        DatabaseReference databaseReference = db.getReference().child("users").child(userId);
-                                        Map<String, Object> userData = new HashMap<>();
-                                        userData.put("email", email);
-                                        userData.put("username", userName);
-                                        userData.put("profile_picture", profilePictureUrl);
-                                        //Temporary solution of categories
-                                        userData.put("category",category);
-                                        databaseReference.setValue(userData);
-                                    });
-                                })
-                                .addOnFailureListener(e -> Toast.makeText(RegistrationActivity.this, "Failed to upload profile picture", Toast.LENGTH_SHORT).show());
-                        Intent intent = new Intent(RegistrationActivity.this, PartnerProfileActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(RegistrationActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
     public void myImageChooser()
     {
         //if we don't have permission -> we ask for it
@@ -295,20 +260,19 @@ public class RegistrationActivity extends AppCompatActivity {
                                         getContentResolver(),
                                         data.getData()
                                 );
-                                int newWidth = getScreenWidth();
-                                int newHeight = getScreenHeight();
 
-                                //scale the image height and width
-                                selectedImage = Bitmap.createScaledBitmap(selectedImage,newWidth,newHeight / 3,true);
+                                /** Scale the image height & width to proper values*/
+                                selectedImage = Bitmap.createScaledBitmap(selectedImage,MAX_IMAGE_WIDTH,MAX_IMAGE_HEIGHT,true);
 
-                                //round the corners -> use in reservation activity
-//                                selectedImage = getRoundCornerBitmap(selectedImage,120);
-
+                                // Display newly created Image to imageView
                                 profileImageView.setImageBitmap(selectedImage);
 
-                                //imageUri = getImageUri(getApplicationContext(),selectedImage);
-                                imageUri = data.getData();
+                                /**Load the selectedImage to Uri for further storage*/
+                                imageUri = getImageUri(getApplicationContext(),selectedImage);
+
+                                // Image have been chosen
                                 imageControl = true;
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -318,6 +282,24 @@ public class RegistrationActivity extends AppCompatActivity {
                 });
     }
 
+    public Uri getImageUri(Context context, Bitmap bitmap) {
+        File tempFile = null;
+        try {
+            tempFile = File.createTempFile("temp", ".jpg", context.getCacheDir());
+            OutputStream os = Files.newOutputStream(tempFile.toPath());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (tempFile != null) {
+            return Uri.fromFile(tempFile);
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -325,27 +307,6 @@ public class RegistrationActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             activityResultLauncher.launch(intent);
         }
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
-    private int getScreenHeight()
-    {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        return displayMetrics.heightPixels;
-    }
-
-    private int getScreenWidth()
-    {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        return displayMetrics.widthPixels;
     }
 
     public void register(String email, String password, String userName, ArrayList<Category> categories,Map<String, ArrayList<String>> openingHours) {
@@ -368,7 +329,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                         userData.put("email", email);
                                         userData.put("username", userName);
                                         userData.put("profile_picture", profilePictureUrl);
-                                        userData.put("category","available_today");
+                                        userData.put("category","other");
                                         userData.put("opening_hours",openingHours);
                                         userData.put("categories", categories);
 

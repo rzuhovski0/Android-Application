@@ -1,5 +1,6 @@
 package com.btproject.barberise.adapters;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,12 +18,12 @@ import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         public TextView usernameTextView;
         public ImageView profilePictureImageView;
         public CardView cardView;
@@ -30,7 +31,7 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             usernameTextView = itemView.findViewById(R.id.nameTextView);
-            profilePictureImageView = itemView.findViewById(R.id.inSearchProfileImageView);
+            profilePictureImageView = itemView.findViewById(R.id.ProfileImageView);
             cardView = itemView.findViewById(R.id.cardView);
         }
     }
@@ -67,6 +68,7 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
                     .load(R.drawable.user)
                     .into(holder.profilePictureImageView);
         }
+
         holder.cardView.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, ReservationTestingActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -155,7 +155,7 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
 
             inCalAgainFragmentView = itemView.findViewById(R.id.inCalAgainFragmentView);
 
-            inCalProfileImageView = itemView.findViewById(R.id.inSearchProfileImageView);
+            inCalProfileImageView = itemView.findViewById(R.id.ProfileImageView);
             imageViewSrc = itemView.findViewById(R.id.srcDrawable);
         }
     }

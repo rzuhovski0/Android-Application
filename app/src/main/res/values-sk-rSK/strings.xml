@@ -10,6 +10,7 @@
     <string name="ratedItems">Najlepšie hodnotené</string>
     <string name="availableToday">Dostupné dnes</string>
     <string name="search">hľadať</string>
+    <string name="all">Všetko</string>
     <string name="partnerprofile">Partnerský profil</string>
     <string name="promocode">Promo kódy</string>
     <string name="profile">Profil</string>
@@ -63,6 +64,6 @@
     <string name="use">Použiť</string>
     <string name="cancel_reservation">Naozaj chcete zrušit túto rezerváciu ?</string>
     <string name="cancel_reservation_header">Zrušit rezerváciu</string>
-    <string name="go_back">Naspať</string>
-    <string name="cancel">Zrušit</string>
+    <string name="go_back">späť</string>
+    <string name="cancel">zrušit</string>
 </resources>

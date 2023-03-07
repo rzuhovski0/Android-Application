@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.FontRes;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.btproject.barberise.R;
@@ -80,6 +82,14 @@ public class LayoutUtils {
         layoutParams.setMargins(getPx(12,resources), 0, getPx(12,resources), getPx(20,resources));
 
         return layoutParams;
+    }
+
+    public static ConstraintSet getConstraintSet(ConstraintLayout constraintLayout,int viewId)
+    {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+        constraintSet.centerHorizontally(viewId, ConstraintSet.PARENT_ID);
+        return constraintSet;
     }
 
 }

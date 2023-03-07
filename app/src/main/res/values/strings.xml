@@ -8,8 +8,9 @@
     <string name="send">Send</string>
 
 
-    <!--Home Activity-->
+    <!--Home Fragment-->
     <string name="search">Search</string>
+    <string name="all">All</string>
 
     <!--Profile Fragment-->
     <string name="partnerprofile">Partner profile</string>

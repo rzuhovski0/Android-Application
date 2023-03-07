@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp">
@@ -22,7 +21,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/inSearchProfileImageView"
+                android:id="@+id/ProfileImageView"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
@@ -40,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12.5dp"
                 android:fontFamily="@font/sen"
                 android:maxLines="2"
                 android:singleLine="false"
@@ -48,7 +47,7 @@
                 android:textColor="#000000"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inSearchProfileImageView" />
+                app:layout_constraintTop_toBottomOf="@+id/ProfileImageView" />
 
             <TextView
                 android:id="@+id/inCalPriceTextView"
@@ -66,13 +65,13 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/oval_shape"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/inCalAgainFragmentView"
-                app:layout_constraintTop_toBottomOf="@+id/inSearchProfileImageView">
+                app:layout_constraintTop_toBottomOf="@+id/ProfileImageView">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -86,14 +85,14 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/oval_shape"
                 android:backgroundTint="@color/light_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inSearchProfileImageView">
+                app:layout_constraintTop_toBottomOf="@+id/ProfileImageView">
 
                 <ImageView
                     android:layout_width="20dp"

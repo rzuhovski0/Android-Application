@@ -24,7 +24,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/inSearchProfileImageView"
+                android:id="@+id/ProfileImageView"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
@@ -50,7 +50,7 @@
                 android:textColor="#000000"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inSearchProfileImageView" />
+                app:layout_constraintTop_toBottomOf="@+id/ProfileImageView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -131,15 +131,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/availableTodayTextView" />
 
+                <TextView
+                    android:id="@+id/otherTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/sen_bold"
+                    android:paddingTop="45dp"
+                    android:text="@string/all"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/availableTodayRecyclerView" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/otherRecycleView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/availableTodayRecyclerView" />
+                    app:layout_constraintTop_toBottomOf="@+id/otherTextView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

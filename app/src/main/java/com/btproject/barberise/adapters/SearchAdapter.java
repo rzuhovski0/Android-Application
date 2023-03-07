@@ -18,7 +18,6 @@ import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
@@ -81,7 +80,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
             inSearchNameTextView = itemView.findViewById(R.id.inSearchNameTextView);
-            inSearchProfileImageView = itemView.findViewById(R.id.inSearchProfileImageView);
+            inSearchProfileImageView = itemView.findViewById(R.id.ProfileImageView);
             cardView = itemView.findViewById(R.id.inSeachCardView);
         }
     }

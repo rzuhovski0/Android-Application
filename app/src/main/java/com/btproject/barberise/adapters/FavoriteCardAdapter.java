@@ -80,7 +80,7 @@ public class FavoriteCardAdapter extends RecyclerView.Adapter<FavoriteCardAdapte
             inFavAgainButton = itemView.findViewById(R.id.inCalAgainFragmentView);
             inFavFavButton = itemView.findViewById(R.id.inFavFavFrameLayoutButton);
 
-            inFavProfileImageView = itemView.findViewById(R.id.inSearchProfileImageView);
+            inFavProfileImageView = itemView.findViewById(R.id.ProfileImageView);
         }
     }
 
