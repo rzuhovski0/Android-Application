@@ -321,7 +321,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
             });
 
             /**Store to user database*/
-            DatabaseReference userResRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
+            DatabaseReference userResRef = FirebaseDatabase.getInstance().getReference().child("clients").child(currentUser.getUid())
                     .child("reservations").child(reservationId);
 
             userResRef.setValue(reservation);

@@ -3,6 +3,9 @@ package com.btproject.barberise;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +30,7 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
 
     private String verificationCodeBySystem;
     private Button verify_btn,send_btn;
-    private EditText phoneNoEnteredByTheUser;
+    private EditText phoneNoEnteredByTheUser,code_entered_by_user;
     private ProgressBar progressBar;
     FirebaseAuth mAuth;
 
@@ -38,20 +41,67 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
 
         verify_btn = findViewById(R.id.verify_btn);
         phoneNoEnteredByTheUser = findViewById(R.id.phone_entered_by_user);
+        code_entered_by_user = findViewById(R.id.code_entered_by_user);
         progressBar = findViewById(R.id.progress_bar);
         send_btn = findViewById(R.id.send_btn);
 
-                mAuth = FirebaseAuth.getInstance();
+        // Hide progress bar
+        progressBar.setVisibility(View.GONE);
+        verify_btn.setVisibility(View.GONE);
+        code_entered_by_user.setVisibility(View.GONE);
+
+        mAuth = FirebaseAuth.getInstance();
         send_btn.setOnClickListener(view -> {
+
             String phoneNo = phoneNoEnteredByTheUser.getText().toString();
-            if(!phoneNo.isEmpty())
+
+            if(!phoneNo.isEmpty()) {
+                progressBar.setVisibility(View.VISIBLE);
+                animateVerifyButtonAndTextView();
                 sendVerificationCodeToUser(phoneNo);
-            else {
+            } else {
                 phoneNoEnteredByTheUser.setError("Phone number is required");
-                phoneNoEnteredByTheUser.requestFocus();
+//                phoneNoEnteredByTheUser.requestFocus();
             }
         });
 
+    }
+
+    private void animateVerifyButtonAndTextView()
+    {
+        // Calculate the animation distance
+        int distance = 300;
+
+        // Set the initial translationY value of the views to be below the screen
+        code_entered_by_user.setTranslationY(distance);
+        verify_btn.setTranslationY(distance);
+
+        // Create the animation objects
+        ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(code_entered_by_user, "translationY", 0);
+        ObjectAnimator buttonAnimator = ObjectAnimator.ofFloat(verify_btn, "translationY", 0);
+
+        // Set the visibility of the views to visible after the animations end
+        textViewAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                code_entered_by_user.setVisibility(View.VISIBLE);
+            }
+        });
+        buttonAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                verify_btn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // Set the animation duration
+        long duration = 1000;
+        textViewAnimator.setDuration(duration);
+        buttonAnimator.setDuration(duration);
+
+        // Start the animations
+        textViewAnimator.start();
+        buttonAnimator.start();
     }
 
     private void sendVerificationCodeToUser(String phoneNo) {
@@ -87,7 +137,7 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
                     if(code == null)
                         return;
 
-                    progressBar.setVisibility(View.VISIBLE);
+                    code_entered_by_user.setText(code);
                     verifyCode(code);
 
                 }

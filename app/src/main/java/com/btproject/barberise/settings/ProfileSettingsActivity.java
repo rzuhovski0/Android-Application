@@ -4,6 +4,7 @@ import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -13,12 +14,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.btproject.barberise.R;
+import com.btproject.barberise.SplashActivity;
+import com.btproject.barberise.VerifyPhoneNoActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileSettingsActivity extends AppCompatActivity {
 
     private Button signOutButton,removeAccButton;
 
     private EditText nameEditText,surnameEditText,emailEditText,phoneEditText;
+
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +43,18 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 
         signOutButton.setOnClickListener(view ->
         {
-            Toast.makeText(getApplicationContext(),"Not implemented yet",Toast.LENGTH_SHORT).show();
+            mAuth.signOut();
+            // Add any additional code to handle the sign out process, such as navigating back to the login screen
+            startActivity(new Intent(ProfileSettingsActivity.this, VerifyPhoneNoActivity.class));
+            finish();   //removes current activity from backstack
         });
 
     }
 
     private void initItems()
     {
+        mAuth = FirebaseAuth.getInstance();
+
         signOutButton = findViewById(R.id.signOutButton);
         removeAccButton = findViewById(R.id.deleteAccountButton);
         /**Set correct color for remove acc button*/

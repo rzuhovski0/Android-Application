@@ -7,7 +7,13 @@
     <string name="phone_no">Your phone number here</string>
     <string name="send">Send</string>
 
+    <!--SMS activity-->
+    <string name="welcome">Hey there
+    , welcome back</string>
 
+    <string name="phone" translatable="false">phone number</string>
+    <string name="code" translatable="false">Enter code</string>
+    <string name="verify" translatable="false">Verify</string>
     <!--Home Fragment-->
     <string name="search">Search</string>
     <string name="all">All</string>

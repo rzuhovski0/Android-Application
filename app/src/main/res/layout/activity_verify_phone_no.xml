@@ -6,51 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".VerifyPhoneNoActivity">
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/phone_entered_by_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:hint="Enter OTP"
+        android:layout_width="260dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/rounded"
+        android:backgroundTint="@color/light_gray"
+        android:fontFamily="@font/sen"
+        android:hint="@string/phone"
         android:inputType="phone"
-        android:minHeight="48dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/send_btn"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="+421"
+        android:fontFamily="@font/sen"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/phone_entered_by_user"
+        app:layout_constraintEnd_toStartOf="@+id/phone_entered_by_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/phone_entered_by_user" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/send_btn"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
         android:layout_marginTop="50dp"
-        android:background="#fece2f"
-        android:text="Send"
-        android:textColor="#455A64"
+        android:background="@drawable/round_shape_shadows"
+        android:backgroundTint="@color/orange"
+        android:fontFamily="@font/sen"
+        android:text="@string/send"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone_entered_by_user" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/code_entered_by_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="325dp"
-        android:hint="Enter code"
+        android:layout_width="260dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/rounded"
+        android:backgroundTint="@color/dark_gray"
+        android:fontFamily="@font/sen"
+        android:hint="@string/code"
+        android:inputType="number"
         android:minHeight="48dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textAlignment="center"
+        android:textColor="#F8F8F8"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:inputType="phone"/>
+        app:layout_constraintTop_toBottomOf="@+id/send_btn" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/verify_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
         android:layout_marginTop="50dp"
-        android:background="#fece2f"
-        android:text="Verify"
+        android:background="@drawable/round_shape_shadows"
+        android:backgroundTint="@color/orange"
+        android:fontFamily="@font/sen"
+        android:text="@string/verify"
         android:textColor="#455A64"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/code_entered_by_user" />
@@ -60,8 +91,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/code_entered_by_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/verify_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/send_btn" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

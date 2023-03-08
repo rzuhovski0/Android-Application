@@ -105,36 +105,14 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         initComponents(rootView);
+
+        /**Set username of the current user*/
         OnUserNameRetrievedListener listener =
                 userName -> usrName.setText(userName);
         setUserName(listener);
 
         return rootView;
     }
-
-//    private String setUserName()
-//    {
-//        FirebaseAuth auth = FirebaseAuth.getInstance();
-//        FirebaseUser user = auth.getCurrentUser();
-//
-//        if(user == null)
-//            return;
-//
-//        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
-//        DatabaseReference userNameRef = dbRef.child("users").child(user.getUid()).child("username");
-//        userNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                return snapshot;
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//    }
 
     private void setUserName(final OnUserNameRetrievedListener listener) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -147,7 +125,7 @@ public class HomeFragment extends Fragment {
         }
 
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference userNameRef = dbRef.child("users").child(user.getUid()).child("username");
+        DatabaseReference userNameRef = dbRef.child("clients").child(user.getUid()).child("username");
         userNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
