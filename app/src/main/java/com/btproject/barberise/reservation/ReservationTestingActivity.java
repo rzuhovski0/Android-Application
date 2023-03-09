@@ -141,7 +141,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
         // Check if the user is authenticated
         if (currentUser != null) {
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("clients").child(currentUser.getUid())
                     .child("favorites").child(barberShopId);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

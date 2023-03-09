@@ -1,8 +1,6 @@
 package com.btproject.barberise;
 
 
-import static com.btproject.barberise.database.UserDAO.getUser;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -11,11 +9,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.btproject.barberise.navigation.MenuActivity;
-import com.btproject.barberise.utils.CalendarUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Set;
 
 
 public class SplashActivity extends AppCompatActivity {

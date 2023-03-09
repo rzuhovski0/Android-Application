@@ -80,20 +80,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 }
                 else
                 {
-//                    holder.imageViewUsers.setImageResource(R.drawable.account);
                     Picasso.get().load(imageURL).into(holder.imageView);
                 }
-
-//                holder.cardView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(mContext,MyChatActivity.class);
-//                        intent.putExtra("userName",userName);
-//                        intent.putExtra("otherName",otherName);
-//                        mContext.startActivity(intent);
-//                    }
-//                });
-
             }
 
             @Override

@@ -1,5 +1,7 @@
 package com.btproject.barberise.navigation;
 
+import static com.btproject.barberise.utils.DatabaseUtils.getCurrentUser;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,16 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.btproject.barberise.R;
+import com.btproject.barberise.database.clientDAO;
 import com.btproject.barberise.navigation.profile.PartnerProfileActivity;
 import com.btproject.barberise.settings.ProfileSettingsActivity;
 import com.btproject.barberise.settings.PromoActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,8 +43,13 @@ public class ProfileFragment extends Fragment {
     DatabaseReference dbReference;
 
     private Context context;
+
+    // Helper val for getting name and surname
+    private String returnValue;
     private TextView partnerProfileTextView,promoTextView,profileTextView;
     private TextView usrNameTextView;
+
+    private HashMap<String, String> credentials = new HashMap<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,6 +101,17 @@ public class ProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
         initItems(rootView);
+
+
+
+        clientDAO.DataExistsCallback dataExistsCallback = new clientDAO.DataExistsCallback() {
+            @Override
+            public void onDataInvalid(boolean userExists) {
+                usrNameTextView.setText(getInitials(credentials));
+            }
+        };getClientInfo(dataExistsCallback);
+
+
         partnerProfileTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +135,34 @@ public class ProfileFragment extends Fragment {
         return rootView;
     }
 
+    private String getClientInfo(clientDAO.DataExistsCallback dataExistsCallback)
+    {
+        FirebaseUser user = getCurrentUser();
+
+        if(user == null)
+            return "";
+
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("clients").child(user.getUid());
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.child("name").getValue(String.class);
+                String surname = snapshot.child("surname").getValue(String.class);
+
+                credentials.put("name",name);
+                credentials.put("surname",surname);
+                dataExistsCallback.onDataInvalid(true);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return returnValue;
+    }
+
     private void initItems(View rootView)
     {
         context = requireActivity().getApplicationContext();
@@ -120,6 +173,24 @@ public class ProfileFragment extends Fragment {
         profileTextView = rootView.findViewById(R.id.profileTextView);
         /**Set the correct color for */
 
+    }
+
+    public String getInitials(HashMap<String,String> credentials) {
+
+        String name = credentials.get("name");
+        String surname = credentials.get("surname");
+
+        if(name == null || surname == null)
+            return "";
+
+        // Get the first name
+        String firstName = name.split("\\s+")[0];
+
+        // Get the first letter of the surname
+        String surnameInitial = surname.substring(0, 1);
+
+        // Combine the first name and surname initial with a space in between
+        return firstName + " " + surnameInitial + ".";
     }
 
 

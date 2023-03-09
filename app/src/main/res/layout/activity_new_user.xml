@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".settings.ProfileSettingsActivity">
+    tools:context=".registration.NewUserActivity">
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/firstnameEditText"
@@ -75,63 +75,36 @@
     <TextView
         android:id="@+id/phoneTextView"
         android:layout_width="320dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:background="@drawable/rounded"
         android:backgroundTint="#D9D9D9"
         android:fontFamily="@font/sen"
         android:hint="@string/phone_no"
         android:minHeight="48dp"
+        android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:gravity="center_vertical"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/gray"
+        android:textColor="#BF000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
     <Button
-        android:id="@+id/saveChangesButton"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/rounded_button_25dp"
-        android:fontFamily="@font/sen_bold"
-        android:text="@string/save_changes"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/singInButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/singInButton"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="75dp"
         android:background="@drawable/rounded_button_25dp"
         android:fontFamily="@font/sen_bold"
-        android:text="@string/sign_out"
+        android:text="Sign In"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/deleteAccountButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/deleteAccountButton"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="75dp"
-        android:background="@drawable/rounded_button_25dp"
-        android:backgroundTint="@null"
-        android:fontFamily="@font/sen_bold"
-        android:text="@string/delete_acc"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

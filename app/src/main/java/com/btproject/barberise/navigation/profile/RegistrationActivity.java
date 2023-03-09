@@ -329,7 +329,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                         userData.put("email", email);
                                         userData.put("username", userName);
                                         userData.put("profile_picture", profilePictureUrl);
-                                        userData.put("category","other");
+                                        userData.put("category","recommended");
                                         userData.put("opening_hours",openingHours);
                                         userData.put("categories", categories);
 

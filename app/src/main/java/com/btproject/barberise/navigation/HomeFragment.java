@@ -57,6 +57,8 @@ public class HomeFragment extends Fragment {
 
     private boolean searchViewOpened = false;
 
+    private static boolean isUsersFetched = false;
+
     private static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers,allUsers = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -125,7 +127,7 @@ public class HomeFragment extends Fragment {
         }
 
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference userNameRef = dbRef.child("clients").child(user.getUid()).child("username");
+        DatabaseReference userNameRef = dbRef.child("clients").child(user.getUid()).child("name");
         userNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -277,6 +279,11 @@ public class HomeFragment extends Fragment {
 
     private void fetchUsers()
     {
+
+        if (isUsersFetched) {
+            return;
+        }
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ref.addChildEventListener(new ChildEventListener() {
             @Override
@@ -368,7 +375,7 @@ public class HomeFragment extends Fragment {
                 // TODO: handle error
             }
         });
-
+        isUsersFetched = true;
     }
 
     private void notifyCorrectList(User user,int index,String operation)

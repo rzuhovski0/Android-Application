@@ -67,4 +67,9 @@
     <string name="cancel_reservation_header">Zrušit rezerváciu</string>
     <string name="go_back">späť</string>
     <string name="cancel">zrušit</string>
+    <string name="set_name">Pridaj si meno</string>
+    <string name="set_surname">Pridaj si aj priezvisko</string>
+    <string name="data_update">Údaje úspešne zmené</string>
+    <string name="data_update_error">Nepodarilo sa zmeniť údaje</string>
+
 </resources>

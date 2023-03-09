@@ -40,7 +40,7 @@ public class DatabaseUtils {
     public static DatabaseReference getFavoritesDbReference(FirebaseUser currentUser)
     {
         return FirebaseDatabase.getInstance().getReference()
-                .child("users").child(currentUser.getUid()).child("favorites");
+                .child("clients").child(currentUser.getUid()).child("favorites");
     }
 
     public static void removeUserFromFavorites(String barberShopId)
@@ -56,7 +56,7 @@ public class DatabaseUtils {
 
         /**Remove reservation from user db*/
         if(currentUser != null) {
-            DatabaseReference resRef = FirebaseDatabase.getInstance().getReference().child("users")
+            DatabaseReference resRef = FirebaseDatabase.getInstance().getReference().child("clients")
                     .child(currentUser.getUid()).child("reservations").child(reservationId);
             resRef.removeValue();
         }
@@ -80,7 +80,7 @@ public class DatabaseUtils {
         // Check if the user is authenticated
         if (currentUser != null) {
 
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("favorites");
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("clients").child(currentUser.getUid()).child("favorites");
 
 
             // Create a Map object with the values you want to store
@@ -111,7 +111,7 @@ public class DatabaseUtils {
         if (currentUser != null) {
             String currentUserId = currentUser.getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference resRef = database.getReference().child("users").child(currentUserId).child("reservations");
+            DatabaseReference resRef = database.getReference().child("clients").child(currentUserId).child("reservations");
 
             resRef.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -173,33 +173,6 @@ public class DatabaseUtils {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     // Handle error
-                }
-            });
-        }
-    }
-
-    public static void getReservationsFromDatabase(ArrayList<Reservation> reservations, DataFetchCallback callback)
-    {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(currentUser != null) {
-            String currentUserId = currentUser.getUid();
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference resRef = database.getReference().child("users").child(currentUserId).child("reservations");
-
-            resRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot reservationSnapshot : snapshot.getChildren()) {
-                        Reservation reservation = reservationSnapshot.getValue(Reservation.class);
-                        reservations.add(reservation);
-                    }
-                    callback.onReservationsLoaded(reservations);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
         }

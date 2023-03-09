@@ -59,6 +59,8 @@
     <string name="surname">Surname</string>
     <string name="sign_out">Sign out</string>
     <string name="delete_acc">Delete account</string>
+    <string name="data_update">Data updated successfully</string>
+    <string name="data_update_error">Couldn\'t update data</string>
 
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
@@ -107,4 +109,9 @@
     <string name="cancel_reservation">Are you sure you want to discard this reservation?</string>
     <string name="go_back">Go back</string>
     <string name="cancel">Cancel</string>
+
+    <!--New User Activity-->
+    <string name="set_name">Name must be set</string>
+    <string name="set_surname">Surname must be set</string>
+
 </resources>

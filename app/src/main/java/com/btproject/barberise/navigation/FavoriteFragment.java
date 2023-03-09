@@ -105,7 +105,7 @@ public class FavoriteFragment extends Fragment {
         FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("clients").child(user.getUid());
             DatabaseReference favRef = ref.child("favorites");
 
             favRef.addChildEventListener(new ChildEventListener() {

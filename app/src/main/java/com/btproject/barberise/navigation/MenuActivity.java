@@ -1,32 +1,29 @@
 package com.btproject.barberise.navigation;
 
+import static com.btproject.barberise.database.clientDAO.clientDataValid;
+import static com.btproject.barberise.database.clientDAO.getAuthUser;
+
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.btproject.barberise.R;
+import com.btproject.barberise.database.clientDAO;
 import com.btproject.barberise.databinding.ActivityMenuBinding;
-import com.btproject.barberise.navigation.profile.User;
-import com.btproject.barberise.reservation.DataFetchCallback;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.btproject.barberise.registration.NewUserActivity;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
 
     ActivityMenuBinding binding;
     FirebaseDatabase database;
     DatabaseReference reference;
-
-    public static ArrayList<User> recommendedUsers,ratedUsers,availableUsers,otherUsers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +36,37 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         boolean openReservations = getIntent().getBooleanExtra("openReservations",false);
+
+        boolean REGISTER_FLAG = getIntent().getBooleanExtra("REGISTER_FLAG",false);
+
+        /**If opened from VerifyPhoneNumberActivity*/
+        if(REGISTER_FLAG) {
+
+            // Firstly, get the user who signed-in
+            FirebaseUser currentUser = getAuthUser();
+
+            if(currentUser == null)
+                return;
+
+            // Get the phone number
+            String phoneNo = getIntent().getStringExtra("PHONE_NUMBER");
+
+            // Get the user id
+            String currentUserId = currentUser.getUid();
+
+            // Check whether the user already has any name, surname, email
+            clientDAO.DataExistsCallback dataExistsCallback = dataExists -> {
+                if(dataExists)
+                    replaceFragment(new HomeFragment());
+                else{
+                    launchNewUserActivity(currentUserId,phoneNo);
+                }
+            };
+            // Call the check method
+            clientDataValid(currentUserId,dataExistsCallback);
+        }else {
+            replaceFragment(new HomeFragment());
+        }
 
         /**If opened from ReservationSuccessfulActivity*/
         if(openReservations) {
@@ -66,6 +94,17 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
+    private void launchNewUserActivity(String currentUserId,String phoneNo)
+    {
+        Intent intent = new Intent(MenuActivity.this, NewUserActivity.class);
+        intent.putExtra("USER_ID", currentUserId);
+        intent.putExtra("PHONE_NUMBER",phoneNo);
+
+        //To prevent user from going back to previous activity by clicking back button
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     private void replaceFragment(Fragment fragment)
     {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -74,55 +113,5 @@ public class MenuActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    private void getUsersFromDatabase(DataFetchCallback callback)
-    {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    User user = snapshot.getValue(User.class);
-                    assert user != null;
 
-                    user.setId(snapshot.getKey());
-
-                    switch(user.getCategory()){
-                        case "recommended":
-                            recommendedUsers.add(user);
-                            break;
-                        case "best_rated":
-                            ratedUsers.add(user);
-                            break;
-                        case "available_today":
-                            availableUsers.add(user);
-                            break;
-                        default:
-                            otherUsers.add(user);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        callback.onDataLoaded(null);
-    }
-
-    public static ArrayList<User> getRecommendedUsers() {
-        return recommendedUsers;
-    }
-
-    public static ArrayList<User> getRatedUsers() {
-        return ratedUsers;
-    }
-
-    public static ArrayList<User> getAvailableUsers() {
-        return availableUsers;
-    }
-
-    public static ArrayList<User> getOtherUsers() {
-        return otherUsers;
-    }
 }

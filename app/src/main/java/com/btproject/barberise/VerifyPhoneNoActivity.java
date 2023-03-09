@@ -33,6 +33,7 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
     private EditText phoneNoEnteredByTheUser,code_entered_by_user;
     private ProgressBar progressBar;
     FirebaseAuth mAuth;
+    private String phoneNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         send_btn.setOnClickListener(view -> {
 
-            String phoneNo = phoneNoEnteredByTheUser.getText().toString();
+            phoneNo = phoneNoEnteredByTheUser.getText().toString();
 
             if(!phoneNo.isEmpty()) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -63,6 +64,17 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
                 phoneNoEnteredByTheUser.setError("Phone number is required");
 //                phoneNoEnteredByTheUser.requestFocus();
             }
+        });
+
+        verify_btn.setOnClickListener(view -> {
+            /**Update this part*/
+            String code = code_entered_by_user.getText().toString().trim();
+            if (code.isEmpty() || code.length() < 6) {
+                code_entered_by_user.setError("Enter valid code");
+                return;
+            }
+            verifyCode(code);
+
         });
 
     }
@@ -103,6 +115,8 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
         textViewAnimator.start();
         buttonAnimator.start();
     }
+
+
 
     private void sendVerificationCodeToUser(String phoneNo) {
 
@@ -152,27 +166,24 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
     private void verifyCode(String codeByUser)
     {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationCodeBySystem,codeByUser);
+
         signIn(credential);
     }
 
     private void signIn(PhoneAuthCredential credential) {
-
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            Intent intent = new Intent(VerifyPhoneNoActivity.this, MenuActivity.class);
-
-                            //To prevent user from going back to previous activity by clicking back button
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                            startActivity(intent);
-                        }else{
-                            Toast.makeText(VerifyPhoneNoActivity.this,
-                                    task.getException().getMessage(),Toast.LENGTH_LONG).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful())
+                    {
+                        Intent intent = new Intent(VerifyPhoneNoActivity.this, MenuActivity.class);
+                        //To prevent user from going back to previous activity by clicking back button
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("REGISTER_FLAG",true);
+                        intent.putExtra("PHONE_NUMBER","+421 "+phoneNo);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(VerifyPhoneNoActivity.this,
+                                task.getException().getMessage(),Toast.LENGTH_LONG).show();
                     }
                 });
 
