@@ -35,19 +35,17 @@ import java.util.HashMap;
  */
 public class ProfileFragment extends Fragment {
 
-    FirebaseAuth auth;
-    FirebaseUser user;
-    String userUID;
-
-    FirebaseDatabase database;
-    DatabaseReference dbReference;
-
     private Context context;
 
     // Helper val for getting name and surname
     private String returnValue;
+
+
+    //Buttons
     private TextView partnerProfileTextView,promoTextView,profileTextView;
-    private TextView usrNameTextView;
+
+    //Client Info
+    private TextView usrNameTextView,phoneNoTextView;
 
     private HashMap<String, String> credentials = new HashMap<>();
 
@@ -103,21 +101,32 @@ public class ProfileFragment extends Fragment {
         initItems(rootView);
 
 
+        /**Get the singleton object*/
+        if(MenuActivity.getDatabaseData() != null){
 
-        clientDAO.DataExistsCallback dataExistsCallback = new clientDAO.DataExistsCallback() {
-            @Override
-            public void onDataInvalid(boolean userExists) {
-                usrNameTextView.setText(getInitials(credentials));
+            String name = MenuActivity.databaseData.getClient().getName();
+            String surname = MenuActivity.databaseData.getClient().getSurname();
+            String phoneNo = MenuActivity.databaseData.getClient().getPhoneNo();
+
+            if(name != null && surname != null)
+                usrNameTextView.setText(getInitials(name,surname));
+
+            if(phoneNo != null)
+                phoneNoTextView.setText(phoneNo);
+
+            else{
+                /**
+                 * If singleton object not available, fetch the data from db
+                 * */
+                clientDAO.DataExistsCallback dataExistsCallback = userExists ->
+                        usrNameTextView.setText(getInitials(credentials));
+                getClientInfoFromDatabase(dataExistsCallback);
             }
-        };getClientInfo(dataExistsCallback);
+        }
 
-
-        partnerProfileTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, PartnerProfileActivity.class);
-                startActivity(intent);
-            }
+        partnerProfileTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, PartnerProfileActivity.class);
+            startActivity(intent);
         });
 
         promoTextView.setOnClickListener(view ->
@@ -129,46 +138,48 @@ public class ProfileFragment extends Fragment {
         profileTextView.setOnClickListener(View ->
         {
             Intent intent = new Intent(context, ProfileSettingsActivity.class);
+            intent.putExtra("DB_DATA",MenuActivity.databaseData);
             startActivity(intent);
         });
 
         return rootView;
     }
 
-    private String getClientInfo(clientDAO.DataExistsCallback dataExistsCallback)
+    private void getClientInfoFromDatabase(clientDAO.DataExistsCallback dataExistsCallback)
     {
         FirebaseUser user = getCurrentUser();
+        if(user != null) {
+            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("clients").child(user.getUid());
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String name = snapshot.child("name").getValue(String.class);
+                    String surname = snapshot.child("surname").getValue(String.class);
 
-        if(user == null)
-            return "";
+                    credentials.put("name", name);
+                    credentials.put("surname", surname);
+                    dataExistsCallback.onDataInvalid(true);
 
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("clients").child(user.getUid());
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = snapshot.child("name").getValue(String.class);
-                String surname = snapshot.child("surname").getValue(String.class);
+                }
 
-                credentials.put("name",name);
-                credentials.put("surname",surname);
-                dataExistsCallback.onDataInvalid(true);
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return returnValue;
+                }
+            });
+        }else{
+            credentials.put("name", null);
+            credentials.put("surname", null);
+        }
     }
 
     private void initItems(View rootView)
     {
         context = requireActivity().getApplicationContext();
 
-        partnerProfileTextView = rootView.findViewById(R.id.partnerTextView);
         usrNameTextView = rootView.findViewById(R.id.usrNameTextView);
+        phoneNoTextView = rootView.findViewById(R.id.usrPhoneTextView);
+        partnerProfileTextView = rootView.findViewById(R.id.partnerTextView);
         promoTextView = rootView.findViewById(R.id.promoTextView);
         profileTextView = rootView.findViewById(R.id.profileTextView);
         /**Set the correct color for */
@@ -192,6 +203,22 @@ public class ProfileFragment extends Fragment {
         // Combine the first name and surname initial with a space in between
         return firstName + " " + surnameInitial + ".";
     }
+
+    private String getInitials(String name, String surname)
+    {
+        if(name == null || surname == null)
+            return "";
+
+        // Get the first name
+        String firstName = name.split("\\s+")[0];
+
+        // Get the first letter of the surname
+        String surnameInitial = surname.substring(0, 1);
+
+        // Combine the first name and surname initial with a space in between
+        return firstName + " " + surnameInitial + ".";
+    }
+
 
 
 

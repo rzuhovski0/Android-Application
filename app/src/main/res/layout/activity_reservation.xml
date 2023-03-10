@@ -6,4 +6,197 @@
     android:layout_height="match_parent"
     tools:context=".reservation.ReservationActivity">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserTextView">
+
+        <TextView
+            android:id="@+id/currentStepTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/reservation_circle_one"
+            android:drawablePadding="17dp"
+            android:fontFamily="@font/sen"
+            android:text="@string/choose_category"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/categoryRadioGroup"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/serviceRadioGroup"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/opening_hour_radio_group"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView" />
+
+        <com.applikeysolutions.cosmocalendar.view.CalendarView
+            android:id="@+id/cosmo_calendar"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView" />
+
+        <TextView
+            android:id="@+id/saveDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="25dp"
+            android:fontFamily="@font/sen"
+            android:text="@string/save_date"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/reserveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@drawable/round_shape_shadows"
+            android:drawableLeft="@drawable/calendar_check_white"
+            android:text="@string/reserve"
+            android:fontFamily="@font/sen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/opening_hour_radio_group" />
+
+        <TextView
+            android:id="@+id/no_hours_availableTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            app:layout_constraintEnd_toEndOf="@+id/cosmo_calendar"
+            app:layout_constraintStart_toStartOf="@+id/cosmo_calendar"
+            app:layout_constraintTop_toBottomOf="@+id/opening_hour_radio_group" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TableRow
+        android:id="@+id/hr"
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="#CCCCCC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contactInfoTextView"></TableRow>
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/backgroundImageView"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundImageView"
+        app:srcCompat="@drawable/background" />
+
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/sen_bold"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backgroundImageView" />
+
+    <TextView
+        android:id="@+id/adressTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/sen"
+        android:text="Alžbetina 9,Košice"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/usernameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
+
+    <TextView
+        android:id="@+id/contactInfoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/sen"
+        android:text="@string/contact_info"
+        app:layout_constraintStart_toStartOf="@+id/adressTextView"
+        app:layout_constraintTop_toBottomOf="@+id/adressTextView" />
+
+    <TextView
+        android:id="@+id/aboutUserTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/sen"
+        android:text="@string/about_us"
+        app:layout_constraintStart_toStartOf="@+id/contactInfoTextView"
+        app:layout_constraintTop_toBottomOf="@+id/hr" />
+
+
+    <TextView
+        android:id="@+id/addToFavTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:drawableLeft="@drawable/heart_orange"
+        android:text=""
+        android:textColor="#FFAD33"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backgroundImageView" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserTextView">
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

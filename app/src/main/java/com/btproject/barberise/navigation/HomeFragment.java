@@ -17,6 +17,7 @@ import com.btproject.barberise.R;
 import com.btproject.barberise.adapters.MyUsersAdapter;
 import com.btproject.barberise.adapters.SearchAdapter;
 import com.btproject.barberise.navigation.profile.User;
+import com.btproject.barberise.users.PseudoUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -275,6 +276,27 @@ public class HomeFragment extends Fragment {
             searchRecyclerView.setAdapter(searchAdapter);
             updateVisibility(View.GONE);
         }
+    }
+
+    private static ArrayList<PseudoUser> pseudoUsers;
+    private void getPseudoUsers()
+    {
+        if(pseudoUsers == null)
+            pseudoUsers = new ArrayList<>();
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void fetchUsers()

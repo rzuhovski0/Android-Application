@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -37,6 +38,7 @@ import android.widget.Toast;
 
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
+import com.btproject.barberise.SplashActivity;
 import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.utils.CalendarUtils;
 import com.bumptech.glide.Glide;
@@ -174,31 +176,9 @@ public class ReservationTestingActivity extends AppCompatActivity {
         }
     }
 
-
     private boolean alreadyIsAdded = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reservation_testing);
-
-        barberShopId = getIntent().getStringExtra("id");
-        resources = getResources();
-        context = getApplicationContext();
-
-
-        /**Initialize UI components*/
-        initUIComponents();
-
-        /**Initialize lists*/
-        initLists();
-
-        /**Set iInitial visibility*/
-        updateRadioGroupVisibility();
-
-        /**Calendar attributes*/
-        setUpCalendar(calendarView);
-
+    private String performLongOperation() {
         DataFetchCallback callback = new DataFetchCallback() {
             @Override
             public void onDataLoaded(User barberShop) {
@@ -237,7 +217,6 @@ public class ReservationTestingActivity extends AppCompatActivity {
             public void onReservationsLoaded(ArrayList<Reservation> reservations) {
 
                 /**Get days which are fully reserved*/
-
                 allDays = getDays(reservations,openingHours);
 
                 /**Get dates in Long format from all days which are fully reserved*/
@@ -256,6 +235,46 @@ public class ReservationTestingActivity extends AppCompatActivity {
          * datasnapshot.getChildren() method to fill the ArrayList<Reservation> reservations from children of the node.
          */
         getReservationsFromDatabase(callback,barberShopId,reservationsArray);
+        return "Result of long operation";
+    }
+
+    private void updateUI(String result) {
+        // update your UI here with the result
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reservation_testing);
+
+        barberShopId = getIntent().getStringExtra("id");
+        resources = getResources();
+        context = getApplicationContext();
+
+        /**Initialize UI components*/
+        initUIComponents();
+
+        /**Initialize lists*/
+        initLists();
+
+        /**Set iInitial visibility*/
+        updateRadioGroupVisibility();
+
+        // create a new thread for the long operation
+        new Thread(() -> {
+            // perform the long operation here
+            final String result = performLongOperation();
+
+            // update the UI on the main thread
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // update the UI here with the result
+                    updateUI(result);
+                }
+            });
+        }).start();
+
 
 
         reserveButton.setOnClickListener(view -> {

@@ -11,11 +11,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable {
     private String id;
     private String username;
     private String profile_picture;
@@ -23,9 +24,11 @@ public class User {
 
     /**Data lists*/
     public ArrayList<Category> categories = new ArrayList<>();
-    public HashMap<String,ArrayList<String>> opening_hours  = new HashMap<>();;
+    public HashMap<String,ArrayList<String>> opening_hours  = new HashMap<>();
+
     public HashMap<String,Object> reservations = new HashMap<>();
     public HashMap<String, HashMap<String,String>> favorites = new HashMap<>();
+    private int customPriority;
 
     public User() {
         // default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -41,6 +44,14 @@ public class User {
         this.categories = categories;
         this.opening_hours = opening_hours;
         this.reservations = reservations;
+    }
+
+    public int getCustomPriority() {
+        return customPriority;
+    }
+
+    public void setCustomPriority(int customPriority) {
+        this.customPriority = customPriority;
     }
 
     public HashMap<String, HashMap<String,String>> getFavorites() {

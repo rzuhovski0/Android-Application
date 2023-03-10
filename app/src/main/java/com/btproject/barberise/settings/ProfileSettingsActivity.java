@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.btproject.barberise.R;
 import com.btproject.barberise.VerifyPhoneNoActivity;
 import com.btproject.barberise.database.clientDAO;
+import com.btproject.barberise.splash.DatabaseData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -180,15 +181,30 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 
     private void setClientCredentials()
     {
-        clientDAO.DataExistsCallback dataExistsCallback = userExists -> {
-            nameEditText.setText(clientDataMap.get("name"));
-            surnameEditText.setText(clientDataMap.get("surname"));
-            phoneEditText.setText(clientDataMap.get("phoneNo"));
-            if(clientDataMap.get("email") != null)
-                emailEditText.setText(clientDataMap.get("email"));
+        DatabaseData dbData = (DatabaseData)getIntent().getSerializableExtra("DB_DATA");
+        if(dbData != null){
+            nameEditText.setText(dbData.getClient().getName());
+            surnameEditText.setText(dbData.getClient().getSurname());
+            phoneEditText.setText(dbData.getClient().getPhoneNo());
+            emailEditText.setText(dbData.getClient().getEmail());
+
+            //Apply listener for edits in EditText to display saveChangesButton
             setTextChangedListenerForDataViews();
-        };
-        getClientCredentialsFromDatabase(dataExistsCallback);
+        }else{
+            /**Fetch data from db*/
+            clientDAO.DataExistsCallback dataExistsCallback = userExists -> {
+
+                nameEditText.setText(clientDataMap.get("name"));
+                surnameEditText.setText(clientDataMap.get("surname"));
+                phoneEditText.setText(clientDataMap.get("phoneNo"));
+                emailEditText.setText(clientDataMap.get("email"));
+
+                //Apply listener for edits in EditText to display saveChangesButton
+                setTextChangedListenerForDataViews();
+            };
+            getClientCredentialsFromDatabase(dataExistsCallback);
+        }
+
 
     }
 

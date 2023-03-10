@@ -3,6 +3,7 @@ package com.btproject.barberise.navigation;
 import static com.btproject.barberise.database.clientDAO.clientDataValid;
 import static com.btproject.barberise.database.clientDAO.getAuthUser;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +16,8 @@ import com.btproject.barberise.R;
 import com.btproject.barberise.database.clientDAO;
 import com.btproject.barberise.databinding.ActivityMenuBinding;
 import com.btproject.barberise.registration.NewUserActivity;
+import com.btproject.barberise.reservation.ReservationTestingActivity;
+import com.btproject.barberise.splash.DatabaseData;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,10 +27,13 @@ public class MenuActivity extends AppCompatActivity {
     ActivityMenuBinding binding;
     FirebaseDatabase database;
     DatabaseReference reference;
+    public static DatabaseData databaseData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DatabaseData databaseData = (DatabaseData) getIntent().getSerializableExtra("DB_DATA");
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference();
@@ -114,4 +120,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
+    public static DatabaseData getDatabaseData() {
+        return databaseData;
+    }
+
+    public void setDatabaseData(DatabaseData databaseData) {
+        this.databaseData = databaseData;
+    }
 }

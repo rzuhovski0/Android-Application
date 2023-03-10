@@ -1,19 +1,9 @@
 package com.btproject.barberise;
 
-import android.graphics.Bitmap;
+public interface DatabaseDataCallback {
 
-import com.btproject.barberise.reservation.Reservation;
+    void onClientLoaded();
 
-import java.util.ArrayList;
-
-public interface MyCallback {
-
-    void onProfileDataLoaded(String imageURL, String username, Bitmap imageBitmap);
-
-    void onCategoriesLoaded(ArrayList<String> categoryName);
-
-    void onHoursLoaded();
-
-    void onReservationsLoaded(ArrayList<Reservation> reservationsList);
+    void onUsersLoaded();
 
 }
