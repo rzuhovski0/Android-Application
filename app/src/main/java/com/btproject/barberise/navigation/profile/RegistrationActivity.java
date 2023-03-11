@@ -309,6 +309,8 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    private static int customPriority = 1;
+
     public void register(String email, String password, String userName, ArrayList<Category> categories,Map<String, ArrayList<String>> openingHours) {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -329,10 +331,11 @@ public class RegistrationActivity extends AppCompatActivity {
                                         userData.put("email", email);
                                         userData.put("username", userName);
                                         userData.put("profile_picture", profilePictureUrl);
-                                        userData.put("category","recommended");
-                                        userData.put("opening_hours",openingHours);
+                                        userData.put("category","available_today");
+                                        userData.put("openingHours",openingHours);
                                         userData.put("categories", categories);
-
+                                        userData.put("customPriority",customPriority);
+                                        customPriority++;
                                         databaseReference.setValue(userData);
                                     });
                                 })
@@ -340,7 +343,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(RegistrationActivity.this, PartnerProfileActivity.class);
                         startActivity(intent);
-                        finish();
+//                        finish();
                     } else {
                         Toast.makeText(RegistrationActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }

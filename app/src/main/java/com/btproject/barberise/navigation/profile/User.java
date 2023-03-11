@@ -1,19 +1,11 @@
 package com.btproject.barberise.navigation.profile;
 
-import android.net.Uri;
 //import android.support.annotation.NonNull;
 
 import com.btproject.barberise.reservation.Category;
-import com.btproject.barberise.reservation.Reservation;
-import com.btproject.barberise.reservation.Subcategory;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class User {
     private String id;
@@ -23,9 +15,12 @@ public class User {
 
     /**Data lists*/
     public ArrayList<Category> categories = new ArrayList<>();
-    public HashMap<String,ArrayList<String>> opening_hours  = new HashMap<>();;
+    public HashMap<String,ArrayList<String>> openingHours = new HashMap<>();
+
     public HashMap<String,Object> reservations = new HashMap<>();
     public HashMap<String, HashMap<String,String>> favorites = new HashMap<>();
+
+    private int customPriority;
 
     public User() {
         // default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -39,8 +34,16 @@ public class User {
         this.profile_picture = profilePictureUrl;
         this.category = category;
         this.categories = categories;
-        this.opening_hours = opening_hours;
+        this.openingHours = opening_hours;
         this.reservations = reservations;
+    }
+
+    public void setCustomPriority(int customPriority) {
+        this.customPriority = customPriority;
+    }
+
+    public int getCustomPriority() {
+        return customPriority;
     }
 
     public HashMap<String, HashMap<String,String>> getFavorites() {
@@ -64,7 +67,7 @@ public class User {
     }
 
     public void setOpeningHours(HashMap<String, ArrayList<String>> openingHours) {
-        this.opening_hours = openingHours;
+        this.openingHours = openingHours;
     }
 
     public ArrayList<Category> getCategories() {
@@ -72,7 +75,7 @@ public class User {
     }
 
     public HashMap<String, ArrayList<String>> getOpeningHours() {
-        return opening_hours;
+        return openingHours;
     }
 
     public void setCategory(String category) {
