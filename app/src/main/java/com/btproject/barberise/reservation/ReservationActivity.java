@@ -110,6 +110,8 @@ public class ReservationActivity extends AppCompatActivity {
             @Override
             public void onReservationsLoaded(ArrayList<Reservation> reservations) {
 
+                if(reservations == null)
+                    return;
                 /**Get days which are fully reserved*/
                 allDays = getDays(reservations,openingHours);
 
@@ -423,9 +425,9 @@ public class ReservationActivity extends AppCompatActivity {
         String userName = barberShop.getUsername();
 
         // Update the UI with the imageURL
-        Glide.with(profilePictureImageView.getContext())
-                .load(ImageUrl)
-                .into(profilePictureImageView);
+//        Glide.with(profilePictureImageView.getContext())
+//                .load(ImageUrl)
+//                .into(profilePictureImageView);
 
         barberShopName.setText(userName);
         //TODO address.setText
