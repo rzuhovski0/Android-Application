@@ -147,13 +147,13 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
 
         public ViewHolder(View itemView) {
             super(itemView);
-            inCalCardView = itemView.findViewById(R.id.inCalCardView);
+            inCalCardView = itemView.findViewById(R.id.inResCardUserCardView);
 
             inCalNameTextView = itemView.findViewById(R.id.inSearchNameTextView);
             inCalPriceTextView = itemView.findViewById(R.id.inCalPriceTextView);
             inCalDateTimeTextView = itemView.findViewById(R.id.inCalDateTimeTextView);
 
-            inCalAgainFragmentView = itemView.findViewById(R.id.inCalAgainFragmentView);
+            inCalAgainFragmentView = itemView.findViewById(R.id.inResCardUserFragmentView);
 
             inCalProfileImageView = itemView.findViewById(R.id.ProfileImageView);
             imageViewSrc = itemView.findViewById(R.id.srcDrawable);

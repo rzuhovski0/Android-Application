@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/inCalCardView"
+        android:id="@+id/inResCardUserCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/inSearchNameTextView" />
 
             <FrameLayout
-                android:id="@+id/inCalAgainFragmentView"
+                android:id="@+id/inResCardUserFragmentView"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"

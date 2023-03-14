@@ -105,13 +105,13 @@ public class DatabaseUtils {
         }
     }
 
-    public static void getReservationsRealTime(ArrayList<Reservation> reservations, DataFetchCallback callback) {
+    public static void getReservationsRealTime(ArrayList<Reservation> reservations, DataFetchCallback callback,String userType) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
             String currentUserId = currentUser.getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference resRef = database.getReference().child("clients").child(currentUserId).child("reservations");
+            DatabaseReference resRef = database.getReference().child(userType).child(currentUserId).child("reservations");
 
             resRef.addChildEventListener(new ChildEventListener() {
                 @Override

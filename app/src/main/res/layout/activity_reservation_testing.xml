@@ -37,7 +37,7 @@
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
+            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"/>
 
         <RadioGroup
             android:id="@+id/serviceRadioGroup"
@@ -46,7 +46,7 @@
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"></RadioGroup>
+            app:layout_constraintTop_toBottomOf="@+id/currentStepTextView"/>
 
         <RadioGroup
             android:id="@+id/opening_hour_radio_group"
@@ -69,13 +69,16 @@
 
         <TextView
             android:id="@+id/saveDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="25dp"
+            android:background="@drawable/round_corners_stroke"
             android:fontFamily="@font/sen"
+            android:gravity="center"
             android:text="@string/save_date"
             android:textSize="16sp"
+            android:textColor="@color/orange"
+            app:layout_constraintBottom_toTopOf="@+id/cosmo_calendar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

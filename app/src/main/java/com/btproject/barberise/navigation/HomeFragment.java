@@ -27,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -205,6 +207,12 @@ public class HomeFragment extends Fragment {
         if(recommendedUsers.isEmpty() || ratedUsers.isEmpty() || availableUsers.isEmpty() || otherUsers.isEmpty())
             fetchUsers();
 
+        sortUsers(recommendedUsers);
+        sortUsers(ratedUsers);
+        sortUsers(availableUsers);
+        sortUsers(otherUsers);
+
+
         myUsersAdapter = new MyUsersAdapter(recommendedUsers,requireActivity().getApplicationContext());
         availableTodayAdapter = new MyUsersAdapter(availableUsers,requireActivity().getApplicationContext());
         bestRatedAdapter = new MyUsersAdapter(ratedUsers,requireActivity().getApplicationContext());
@@ -214,6 +222,20 @@ public class HomeFragment extends Fragment {
         otherRecView.setAdapter(otherAdapter);
         discountRecView.setAdapter(availableTodayAdapter);
         ratedRecView.setAdapter(bestRatedAdapter);
+    }
+
+    private void sortUsers(ArrayList<User> users)
+    {
+        // Define a custom Comparator for sorting User objects by their customPriority attribute
+        Comparator<User> customPriorityComparator = new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                return Integer.compare(user1.getCustomPriority(), user2.getCustomPriority());
+            }
+        };
+
+        // Sort the ArrayList of User objects based on their customPriority attribute
+        Collections.sort(users, customPriorityComparator);
     }
 
 

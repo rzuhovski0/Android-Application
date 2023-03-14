@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.btproject.barberise.navigation.MenuActivity;
@@ -35,6 +36,8 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String phoneNo;
 
+    private TextView inVerSkipTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,15 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
         code_entered_by_user = findViewById(R.id.code_entered_by_user);
         progressBar = findViewById(R.id.progress_bar);
         send_btn = findViewById(R.id.send_btn);
+        inVerSkipTextView = findViewById(R.id.inVerSkipTextView);
+
+        inVerSkipTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(VerifyPhoneNoActivity.this,MenuActivity.class));
+                finish();
+            }
+        });
 
         // Hide progress bar
         progressBar.setVisibility(View.GONE);

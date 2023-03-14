@@ -58,28 +58,27 @@ public class PartnerProfileActivity extends AppCompatActivity {
             }
         });
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = emailLoginEditText.getText().toString();
-                String password = passwordLoginEditText.getText().toString();
-                if(!email.equals("") && !password.equals("")) {
-                    signIn(email,password);
-                }else {
-                    Toast.makeText(PartnerProfileActivity.this,
-                            "Please enter an email and password",Toast.LENGTH_LONG).show();
-                }
+        buttonLogin.setOnClickListener(view -> {
+            String email = emailLoginEditText.getText().toString();
+            String password = passwordLoginEditText.getText().toString();
+            if(!email.equals("") && !password.equals("")) {
+                signIn(email,password);
+
+            }else {
+                Toast.makeText(PartnerProfileActivity.this,
+                        "Please enter an email and password",Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void signIn(String email, String password)
     {
+        auth.signOut();
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent i = new Intent(getApplicationContext(), PartnerSignedInActivity.class);
                     Toast.makeText(PartnerProfileActivity.this,"Sign in is successful",Toast.LENGTH_LONG).show();
                     startActivity(i);
                 }else {

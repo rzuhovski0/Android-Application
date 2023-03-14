@@ -115,7 +115,8 @@ public class CalendarFragment extends Fragment {
                 initAdapter(reservations);
             }
         };
-        getReservationsRealTime(reservations,callback);
+
+        getReservationsRealTime(reservations,callback,"clients");
 
         return rootView;
     }

@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -257,7 +258,6 @@ public class ReservationTestingActivity extends AppCompatActivity {
          */
         getReservationsFromDatabase(callback,barberShopId,reservationsArray);
 
-
         reserveButton.setOnClickListener(view -> {
 
             if(reservation.reservationValid())
@@ -410,6 +410,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
             // Iterate over the selected dates
             for (Calendar selectedDate : selectedDates) {
+
+
 
                 // Method to get a dd.MM.yyyy format from milliseconds
                 String dateStringFormat = CalendarUtils.getDateInString(selectedDate);
@@ -680,6 +682,9 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
                 calendarView.setVisibility(View.VISIBLE);
                 saveDateTextView.setVisibility(View.VISIBLE);
+
+//                setTextColorAnimation(saveDateTextView);
+
                 reserveButton.setVisibility(View.GONE);
 
                 /**Hide helper TextView*/
@@ -708,6 +713,17 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
                 break;
         }
+    }
+
+    private void setTextColorAnimation(TextView textView)
+    {
+
+        // Create an ObjectAnimator that animates the textColor property of the TextView
+        ObjectAnimator colorAnimation = ObjectAnimator.ofInt(textView, "textColor", Color.WHITE, getResources().getColor(R.color.orange,getTheme()));
+        colorAnimation.setDuration(1000); // Set the duration of the animation in milliseconds
+
+        // Start the animation
+        colorAnimation.start();
     }
 
     private void updateRequestTextView()
