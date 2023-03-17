@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".navigation.profile.RegistrationActivity">
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ProfileImageView"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundImageView"
+            app:srcCompat="@drawable/background" />
+
+        <TextView
+            android:id="@+id/hintTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="@string/picture_hint"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ProfileImageView" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/shopNameEditText"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rounded"
+            android:backgroundTint="#D9D9D9"
+            android:ems="10"
+            android:fontFamily="@font/sen"
+            android:hint="@string/business_name"
+            android:inputType="textPersonName"
+            android:drawableRight="@drawable/check_circle"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#BF000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hintTextView" />
+
+        <TextView
+            android:id="@+id/shopNameReminderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="@string/name_reminder"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/shopNameEditText"
+            app:layout_constraintTop_toBottomOf="@+id/shopNameEditText" />
+
+        <EditText
+            android:id="@+id/inRegPhoneNoEditText"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/rounded"
+            android:backgroundTint="#D9D9D9"
+            android:hint="@string/phone_no"
+            android:paddingStart="20dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/sen"
+            android:drawableRight="@drawable/check_circle"
+            android:paddingEnd="20dp"
+            app:layout_constraintStart_toStartOf="@+id/shopNameEditText"
+            app:layout_constraintTop_toBottomOf="@+id/shopNameReminderTextView" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This will be your contact phone number"
+            android:fontFamily="@font/sen"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/inRegPhoneNoEditText"
+            app:layout_constraintTop_toBottomOf="@+id/inRegPhoneNoEditText" />
+
+        <TextView
+            android:id="@+id/inRegEmailTextView"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/rounded"
+            android:backgroundTint="#D9D9D9"
+            android:fontFamily="@font/sen"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:drawableRight="@drawable/check_circle"
+            android:paddingEnd="20dp"
+            android:text="@string/youremail_gmail_com"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="This will be your contact email"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/inRegEmailTextView"
+            app:layout_constraintTop_toBottomOf="@+id/inRegEmailTextView" />
+
+        <TextView
+            android:id="@+id/saveChangesTextView"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/round_corners_stroke"
+            android:gravity="center"
+            android:text="@string/register"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/setUpOpeningHoursTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/set_opening_hours"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView25"
+            app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+        <TextView
+            android:id="@+id/setUpServicesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_categories"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="625dp" />
+
+        <TextView
+            android:id="@+id/pictureConfiguredTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/check_circle"
+            app:layout_constraintBottom_toTopOf="@+id/ProfileImageView"
+            app:layout_constraintEnd_toEndOf="@+id/ProfileImageView" />
+
+        <TextView
+            android:id="@+id/servicesConfiguredTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/check_circle"
+            android:paddingEnd="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/inRegEmailTextView"
+            app:layout_constraintTop_toTopOf="@+id/setUpServicesTextView" />
+
+        <TextView
+            android:id="@+id/openingHoursConfiguredTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/check_circle"
+            android:paddingEnd="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/inRegEmailTextView"
+            app:layout_constraintTop_toTopOf="@+id/setUpOpeningHoursTextView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

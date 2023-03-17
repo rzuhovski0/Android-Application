@@ -25,6 +25,8 @@ public class Reservation {
 
     private String subcategoryDescription;
 
+    private Subcategory subcategory;
+
     private String time;
 
     private String date;
@@ -39,6 +41,8 @@ public class Reservation {
 
     private String profilePicture;
 
+    private String clientPhoneNo;
+
     public Reservation()
     {}
 
@@ -52,6 +56,22 @@ public class Reservation {
         long currentTime = System.currentTimeMillis();
         /**We check if the time has already passed as well as date*/
         return timeInMilliseconds < currentTime;
+    }
+
+    public String getClientPhoneNo() {
+        return clientPhoneNo;
+    }
+
+    public void setClientPhoneNo(String clientPhoneNo) {
+        this.clientPhoneNo = clientPhoneNo;
+    }
+
+    public Subcategory getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
     }
 
     public String getId() {

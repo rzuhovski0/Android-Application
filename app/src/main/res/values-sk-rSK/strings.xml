@@ -29,7 +29,7 @@
     <string name="business_name">Názov prevádzky</string>
     <string name="name_reminder">Názov, ktorý zvolíte, bude zobrazený v aplikácií</string>
     <string name="default_time">Ponechať základnú otváraciu dobu</string>
-    <string name="save_changes">Uložit nastavenia ›</string>
+    <string name="save_changes">Uložiť ›</string>
     <string name="promo_code">promo kód</string>
     <string name="invalid_code">Promo kód je neplatný</string>
     <string name="name">Meno</string>
@@ -43,6 +43,9 @@
     <string name="Friday">Piatok</string>
     <string name="Saturday">Sobota</string>
     <string name="Sunday">Nedela</string>
+    <string name="set_opening_hours">Nastaviť otváracie hodiny ›</string>
+    <string name="set_categories">Nastaviť služby ›</string>
+    <string name="check_hours">Skontrolujte prosím, či každý deň má správne nastavené otváracie hodiny</string>
     <string name="contact_info">Kontaktné údaje ›</string>
     <string name="about_us">O nás ›</string>
     <string name="phone_no">Vaše telefónne číslo</string>
@@ -71,5 +74,7 @@
     <string name="set_surname">Pridaj si aj priezvisko</string>
     <string name="data_update">Údaje úspešne zmené</string>
     <string name="data_update_error">Nepodarilo sa zmeniť údaje</string>
+    <string name="default_time_hint">(Po – Pia : 9:00 – 17:00 So – Ne : –––)</string>
+    <string name="default_time_warning">Stlačením uložiť, sa použijú základne otváracie hodiny</string>
 
 </resources>

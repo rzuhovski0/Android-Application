@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/openingHoursFrameLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".navigation.profile.RegistrationActivity">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="150dp"
+            android:fontFamily="@font/sen_bold"
+            android:text="@string/opening_hours"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/mondayOpeningHoursTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edit_text_no_underline"
+            android:fontFamily="@font/sen"
+            android:hint="@string/Monday_hours"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/textView10"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/tuesdayOpeningHoursTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:background="@drawable/edit_text_no_underline"
+            android:fontFamily="@font/sen"
+            android:hint="@string/Tuesday_hours"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/mondayOpeningHoursTextView"
+            app:layout_constraintTop_toBottomOf="@+id/mondayOpeningHoursTextView" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/wednesdayOpeningHoursTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_no_underline"
+            android:fontFamily="@font/sen"
+            android:hint="@string/Wednesday_hours"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/tuesdayOpeningHoursTextView"
+            app:layout_constraintTop_toBottomOf="@+id/tuesdayOpeningHoursTextView" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/thursdayOpeningHoursTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_no_underline"
+            android:fontFamily="@font/sen"
+            android:hint="@string/Thursday_hours"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/wednesdayOpeningHoursTextView"
+            app:layout_constraintTop_toBottomOf="@+id/wednesdayOpeningHoursTextView" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fridayOpeningHoursTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_no_underline"
+            android:fontFamily="@font/sen"
+            android:hint="@string/Friday_hours"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/thursdayOpeningHoursTextView"
+            app:layout_constraintTop_toBottomOf="@+id/thursdayOpeningHoursTextView" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/saturdayOpeningHoursTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_no_underline"
+            android:fontFamily="@font/sen"
+            android:hint="@string/Saturday_hours"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/fridayOpeningHoursTextView"
+            app:layout_constraintTop_toBottomOf="@+id/fridayOpeningHoursTextView" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/sundayOpeningHoursTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_no_underline"
+            android:fontFamily="@font/sen"
+            android:hint="@string/Sunday_hours"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/saturdayOpeningHoursTextView"
+            app:layout_constraintTop_toBottomOf="@+id/saturdayOpeningHoursTextView" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/sen"
+            android:text="@string/default_time"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+        <TextView
+            android:id="@+id/saveChangesTextView"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="150dp"
+            android:background="@drawable/round_corners_stroke"
+            android:gravity="center"
+            android:text="@string/save_changes"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="@string/Tuesday"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/textView10"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/sen"
+            android:text="@string/Monday"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="@string/Thursday"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="@string/Friday"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="@string/Saturday"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/textView14"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="@string/Sunday"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/textView15"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen"
+            android:text="@string/Wednesday"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <Button
+            android:id="@+id/openingHoursQuestionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_no_underline"
+            android:drawableLeft="@drawable/question_circle"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

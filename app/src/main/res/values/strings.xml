@@ -62,6 +62,7 @@
     <string name="data_update">Data updated successfully</string>
     <string name="data_update_error">Couldn\'t update data</string>
 
+    <!--User Registration-->
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
     <string name="Wednesday">Wednesday</string>
@@ -70,16 +71,24 @@
     <string name="Saturday">Saturday</string>
     <string name="Sunday">Sunday</string>
 
-    <string name="Monday_hours" translatable="false">9:00 - 17:00</string>
-    <string name="Tuesday_hours" translatable="false">9:00 - 17:00</string>
-    <string name="Wednesday_hours" translatable="false">9:00 - 17:00</string>
-    <string name="Thursday_hours" translatable="false">9:00 - 17:00</string>
-    <string name="Friday_hours" translatable="false">9:00 - 17:00</string>
+    <string name="Monday_hours" translatable="false">9:00-17:00</string>
+    <string name="Tuesday_hours" translatable="false">9:00-17:00</string>
+    <string name="Wednesday_hours" translatable="false">9:00-17:00</string>
+    <string name="Thursday_hours" translatable="false">9:00-17:00</string>
+    <string name="Friday_hours" translatable="false">9:00-17:00</string>
     <string name="Saturday_hours" translatable="false">---</string>
     <string name="Sunday_hours" translatable="false">---</string>
 
     <string name="default_time">Keep the default opening hours</string>
     <string name="save_changes">Save changes ›</string>
+
+    <string name="set_opening_hours">Set up opening hours ›</string>
+    <string name="set_categories">Set up your services ›</string>
+
+    <string name="check_hours">Please, make sure that opening hours for each day are correctly configured</string>
+    <string name="default_time_hint">(Mo – Fri : 9:00 – 17:00 Sa – Sun : –––)</string>
+    <string name="default_time_warning">This will erase all your configured opening hours, if you click on Save changes ›</string>
+
 
     <!--Chosen user-->
     <string name="contact_info">Contact information ›</string>
@@ -113,5 +122,7 @@
     <!--New User Activity-->
     <string name="set_name">Name must be set</string>
     <string name="set_surname">Surname must be set</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
 
 </resources>

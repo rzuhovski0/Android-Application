@@ -17,7 +17,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.widget.CheckBox;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,11 +54,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     //name,email and password
     private String email,password;
-    private EditText name;
+    private EditText userNameEditText;
+    private TextView emailTextView,PhoneNoEditText;
 
     //buttons
     private TextView saveChangesTextView;
-    private CheckBox checkBox;
 
     //signUp
     FirebaseAuth auth;
@@ -70,19 +72,72 @@ public class RegistrationActivity extends AppCompatActivity {
     private static final int MAX_IMAGE_WIDTH = 1080;
     private static final int MAX_IMAGE_HEIGHT = 710;
 
+    private TextView setUpOpeningHoursTextView,setUpServicesTextView;
+
+    public static Map<String,ArrayList<String>> openingHours = new HashMap<>();
+    public static boolean hoursConfigured = false;
+
+    private TextView openingHoursConfiguredTextView,pictureConfiguredTextView,servicesConfiguredTextView;
+
+    private void setUpUI()
+    {
+        // Email & phone editText
+        emailTextView = findViewById(R.id.inRegEmailTextView);
+        PhoneNoEditText = findViewById(R.id.inRegPhoneNoEditText);
+
+        pictureConfiguredTextView = findViewById(R.id.pictureConfiguredTextView);
+        pictureConfiguredTextView.setVisibility(View.GONE);
+
+        setUpOpeningHoursTextView = findViewById(R.id.setUpOpeningHoursTextView);
+        openingHoursConfiguredTextView = findViewById(R.id.openingHoursConfiguredTextView);
+        openingHoursConfiguredTextView.setVisibility(View.GONE);
+
+        setUpServicesTextView = findViewById(R.id.setUpServicesTextView);
+        servicesConfiguredTextView = findViewById(R.id.servicesConfiguredTextView);
+        servicesConfiguredTextView.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCheckMarks();
+    }
+
+    private void updateCheckMarks()
+    {
+        if(hoursConfigured)
+            openingHoursConfiguredTextView.setVisibility(View.VISIBLE);
+        else
+            openingHoursConfiguredTextView.setVisibility(View.GONE);
+
+        if(imageControl)
+            pictureConfiguredTextView.setVisibility(View.VISIBLE);
+        else
+            pictureConfiguredTextView.setVisibility(View.GONE);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        setUpUI();
+
+        setUpOpeningHoursTextView.setOnClickListener(view ->
+        {
+            startActivity(new Intent(RegistrationActivity.this,SetUpOpeningHoursActivity.class));
+        });
+
+
         /** Helper method to fill users with attributes*/
 //        addAttributesToUsers(getOpeningHours(),getCategories());
 
         profileImageView = findViewById(R.id.ProfileImageView);
         saveChangesTextView = findViewById(R.id.saveChangesTextView);
-        name = findViewById(R.id.shopNameEditText);
-        checkBox = findViewById(R.id.checkBox);
+        userNameEditText = findViewById(R.id.shopNameEditText);
+
 
         //auth + db
         auth = FirebaseAuth.getInstance();
@@ -98,19 +153,71 @@ public class RegistrationActivity extends AppCompatActivity {
         email = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");
 
+        emailTextView.setText(email);
+
+
         //help method for picture choosing
         registerActivityForSelectImage();
         profileImageView.setOnClickListener(view -> myImageChooser());
 
-        //saving changes and registering user
-        saveChangesTextView.setOnClickListener(view -> {
-            String shopName = name.getText().toString();
-            if(!email.equals("") && !password.equals("") && !shopName.equals("")) {
-//                signUp(email, password, shopName);
-//                register(email, password, shopName,"available_today");
-                register(email, password, shopName, getCategories(),getOpeningHours());
+
+        //Add green check mark if name defined
+        userNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Show or hide the DrawableRight based on whether the text is empty or not
+                if (s.length() > 0) {
+                    userNameEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.check_circle, 0);
+                } else {
+                    userNameEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
             }
         });
+
+        //Add green check mark if phoneNo defined
+        PhoneNoEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Show or hide the DrawableRight based on whether the text is empty or not
+                if (s.length() > 0) {
+                    userNameEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.check_circle, 0);
+                } else {
+                    userNameEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
+            }
+        });
+
+        //saving changes and registering user
+        saveChangesTextView.setOnClickListener(view -> {
+            String shopName = userNameEditText.getText().toString();
+            if(!email.equals("") && !password.equals("") && !shopName.equals("")) {
+                if(openingHours != null)
+                    register(email, password, shopName, getCategories(),openingHours);
+            }
+        });
+
+//        saveChangesTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
     }
@@ -199,6 +306,11 @@ public class RegistrationActivity extends AppCompatActivity {
         Subcategory fSubcategory = new Subcategory("Classic Strih",14.0);
         Subcategory sSubcategory = new Subcategory("Dlhé vlasy",20.0);
         Subcategory tSubcategory = new Subcategory("Junior Strih",10.0);
+        fSubcategory.setDescription("Strih strojčekom, nožnicový strih, postupka fade, umytie hlavy,styling s" +
+                " použitím najkvalitejších prípravkov (Clipper cut, scissor cut, fade + servis)");
+        sSubcategory.setDescription("Strih vlasov bez použitia strojčeka (2x umytie vlasov, masáž hlavy, strih - skrátenie, úprava)");
+        tSubcategory.setDescription("Detský strih do 10 rokov (podsedak + detská ochranná zástera)nožnicový" +
+                " strih, postupka-fade s použitím najkvalitnejších prípravkov");
         fsubcategories.add(fSubcategory);
         fsubcategories.add(sSubcategory);
         fsubcategories.add(tSubcategory);
@@ -209,6 +321,11 @@ public class RegistrationActivity extends AppCompatActivity {
         ArrayList<Subcategory> ssubcategories = new ArrayList<>();
         Subcategory ffSubcategory = new Subcategory("Holenie brady",8.0);
         Subcategory ssSubcategory = new Subcategory("Úprava brady",10.0);
+        ffSubcategory.setDescription("Holenie brady s použitím britvy a holiacej štetky " +
+                "na uvolnenie a zjemnenie pokožky a balzam po holení na ukludnenie pokožky");
+
+        ssSubcategory.setDescription("Úprava brady s použitím strojčeka, nožníc alebo britvy podľa želania klienta a aplikacia " +
+                "prvotriedných prípravkov ako je olej a balzman na bradu (Beard trim with clipper and shave with razor + servis)");
         ssubcategories.add(ffSubcategory);
         ssubcategories.add(ssSubcategory);
 
@@ -219,6 +336,8 @@ public class RegistrationActivity extends AppCompatActivity {
         Subcategory tffSubcategory = new Subcategory("Classic strih + úprava brady",24.0);
         Subcategory tssSubcategory = new Subcategory("Holenie hlavy a holenie brady",20.0);
 
+        tffSubcategory.setDescription("Clipper cut, scissor cut, fade, beard trim with clipper and razor + servis");
+        tssSubcategory.setDescription("Tradičné pánske holenie metódou ,,HOT TOWEL''");
         tsubcategories.add(tffSubcategory);
         tsubcategories.add(tssSubcategory);
 

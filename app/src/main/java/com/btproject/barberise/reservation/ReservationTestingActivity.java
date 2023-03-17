@@ -1,11 +1,13 @@
 package com.btproject.barberise.reservation;
 
+import static androidx.core.content.res.ResourcesCompat.getDrawable;
 import static com.btproject.barberise.utils.CalendarUtils.getDisabledDates;
 import static com.btproject.barberise.utils.CalendarUtils.getDays;
 import static com.btproject.barberise.utils.CalendarUtils.setUpCalendar;
 import static com.btproject.barberise.utils.CategoryUtils.getSubcategoriesFromCategories;
 import static com.btproject.barberise.utils.CategoryUtils.getSubcategoryPriceString;
 import static com.btproject.barberise.utils.DatabaseUtils.addUserToFavorites;
+import static com.btproject.barberise.utils.DatabaseUtils.removeReservation;
 import static com.btproject.barberise.utils.DatabaseUtils.removeUserFromFavorites;
 import static com.btproject.barberise.utils.LayoutUtils.getEmptyButton;
 import static com.btproject.barberise.utils.LayoutUtils.getGridLayoutParams;
@@ -17,9 +19,11 @@ import static com.btproject.barberise.utils.ReservationUtils.selectCorrectTextCo
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -27,6 +31,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -39,6 +44,7 @@ import android.widget.Toast;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
 import com.btproject.barberise.navigation.profile.User;
+import com.btproject.barberise.users.ClientUser;
 import com.btproject.barberise.utils.CalendarUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -61,6 +67,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
     private int currentStep = 1;
     private User barberShop;
+
+    private ClientUser clientUser;
     private String barberShopId;
     /** UI Components*/
     private ShapeableImageView profilePictureImageView;
@@ -73,11 +81,10 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
     /**Data lists*/
     private ArrayList<Category> categories;
-    private ArrayList<HashMap<String,ArrayList<Subcategory>>> subcategories;
+//    private ArrayList<HashMap<String,ArrayList<Subcategory>>> subcategories;
     private HashMap<String,ArrayList<String>> openingHours;
     private ArrayList<Reservation> reservationsArray;
     private HashMap<String,Object> reservationsMap;
-
     // Helper array
     private ArrayList<String> finalAvailableHours;
 
@@ -178,6 +185,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
     private boolean alreadyIsAdded = false;
 
+    private String clientName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,7 +216,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
 
                 categories = barberShop.getCategories();
-                subcategories = getSubcategoriesFromCategories(categories);
+//                subcategories = getSubcategoriesFromCategories(categories);
                 openingHours = barberShop.getOpeningHours();
                 reservationsMap = barberShop.getReservations();
 
@@ -219,6 +228,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
 //                reservations = barberShop.getReservations();
                 //TODO implement reservations
+
+
                 reservation = new Reservation("Filip Rzuhovsky",barberShop.getUsername());
                 reservation.setProfilePicture(barberShop.getProfile_picture());
                 reservation.setServiceProviderId(barberShopId);
@@ -246,7 +257,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 disabledDates = getDisabledDates(allDays);
 
                 // Disable all dates past today
-                CalendarUtils.disablePreviousDays(calendarView,disabledDates);
+//                CalendarUtils.disablePreviousDays(calendarView,disabledDates);
             }
         };
         getUserFromDatabase(callback);
@@ -357,6 +368,9 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
     }
     /**Requesters for Reservation attributes*/
+
+    private Subcategory subcategory;
+
     private void requestCategoryFromUser()
     {
         categories_radio_group.setOnCheckedChangeListener((group, checkedId) -> {
@@ -377,8 +391,47 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
         });
     }
+
+    private Dialog getCustomDialog()
+    {
+        //Create the Dialog here
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.subcategory_description_dialog);
+
+        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.dialog_background);
+        dialog.getWindow().setBackgroundDrawable(drawable);
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+
+        /**Init buttons*/
+        TextView subcategory = dialog.findViewById(R.id.dialogSubcategoryTextView);
+        TextView description = dialog.findViewById(R.id.dialogDescriptionTextView);
+
+        subcategory.setText("Classic cut");
+        description.setText("Clipper cut, scissor cut, fade, beard trim with clipper and razor + servis");
+
+        return dialog;
+    }
+
     private void requestSubcategoryFromUser()
     {
+        // Set the OnLongClickListener on each RadioButton in the RadioGroup
+        for (int i = 0; i < subcategories_radio_group.getChildCount(); i++) {
+            if (subcategories_radio_group.getChildAt(i) instanceof RadioButton) {
+                RadioButton radioButton = (RadioButton) subcategories_radio_group.getChildAt(i);
+                radioButton.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        // Show the dialog window here
+                        Dialog dialog = getCustomDialog();
+                        dialog.show();
+                        return true;
+                    }
+                });
+            }
+        }
+
         // Second-step
         subcategories_radio_group.setOnCheckedChangeListener((group, checkedId) -> {
             currentStep++;
@@ -389,6 +442,16 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
             /**RESERVATION SubCategory*/
             reservation.setSubcategoryName(selectedSubcategory);
+
+            for(Category category : categories)
+            {
+                if(category.getName().equals(reservation.getCategoryName())){
+                    for(Subcategory subcategory1 : category.getSubcategories()){
+                        if(subcategory1.getName().equals(selectedSubcategory))
+                            reservation.setSubcategory(subcategory1);
+                    }
+                }
+            }
 
             /**RESERVATION Price*/
             reservation.setPrice(getSubcategoryPriceString(categories,reservation.getCategoryName(),selectedSubcategory));
@@ -590,6 +653,27 @@ public class ReservationTestingActivity extends AppCompatActivity {
         });
     }
 
+    private void getClientFromDatabase(DataFetchCallback dataFetchCallback)
+    {
+        FirebaseUser client = FirebaseAuth.getInstance().getCurrentUser();
+        if(client == null)
+            return;
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("clients").child(client.getUid());
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                clientUser = snapshot.getValue(ClientUser.class);
+                dataFetchCallback.onDataLoaded(null);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+    }
+
     private void updateUIComponents(User barberShop)
     {
         String ImageUrl = barberShop.getProfile_picture();
@@ -633,7 +717,7 @@ public class ReservationTestingActivity extends AppCompatActivity {
     private void initLists()
     {
         categories = new ArrayList<>();
-        subcategories = new ArrayList<>();
+//        subcategories = new ArrayList<>();
         openingHours = new HashMap<>();
         reservationsArray = new ArrayList<>();
         reservationsMap = new HashMap<>();

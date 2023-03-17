@@ -23,9 +23,7 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="45dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginBottom="45dp"
                 android:background="@drawable/oval_shape"
                 android:backgroundTint="@color/red"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -59,11 +57,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/sen"
                 android:text="TextView"
                 android:textColor="#000000"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/inResCardUserResDescTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inResCardUserClientNameTextView" />
 
@@ -75,7 +74,7 @@
                 android:fontFamily="@font/sen"
                 android:text="TextView"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/hr"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inResCardUserFragmentView" />
 
@@ -84,8 +83,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"
+                android:ellipsize="end"
+                android:maxWidth="200dp"
+                android:singleLine="false"
                 android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inResCardUserSubCatNameTextView" />
 
@@ -93,12 +96,22 @@
                 android:id="@+id/hr"
                 android:layout_width="350dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="15dp"
                 android:background="#CCCCCC"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"></TableRow>
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/inResCardUphoneNoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/sen"
+                android:text="@string/phone"
+                app:layout_constraintStart_toEndOf="@+id/inResCardUserClientNameTextView"
+                app:layout_constraintTop_toTopOf="@+id/inResCardUserClientNameTextView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

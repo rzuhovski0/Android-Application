@@ -45,16 +45,17 @@ public class UserResCardAdapter extends RecyclerView.Adapter<UserResCardAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         /**Load username of service provider*/
-
         String clientName = reservations.get(position).getUserName();
         if(clientName != null)
             holder.inResCardUserClientNameTextView.setText(clientName);
 
+        /**Subcategory string*/
         String subcategoryName = reservations.get(position).getSubcategoryName();
         if(subcategoryName != null)
             holder.inResCardUserSubCatNameTextView.setText(subcategoryName);
 
-        String description = reservations.get(position).getSubcategoryDescription();
+        /**Subcategory description string*/
+        String description = reservations.get(position).getSubcategory().getDescription();
         if(description != null)
             holder.inResCardUserResDescTextView.setText(description);
 
@@ -62,7 +63,6 @@ public class UserResCardAdapter extends RecyclerView.Adapter<UserResCardAdapter.
         /**Load Date & Time*/
         //TODO implement Date+Time formation
         try {
-
             String time = reservations.get(position).formatDateAndTime();
             if(time != null)
              holder.inResCardUserTimeTextView.setText(time);
@@ -70,7 +70,6 @@ public class UserResCardAdapter extends RecyclerView.Adapter<UserResCardAdapter.
             holder.inResCardUserTimeTextView.setText("Unable to display date and time");
         }
 
-        //TODO differ listener action based on if the reservation already happened
         /**Set reserve again button listener*/
         String reservationId = reservations.get(position).getId();
         if(reservationId != null) {
@@ -78,6 +77,11 @@ public class UserResCardAdapter extends RecyclerView.Adapter<UserResCardAdapter.
                 removeReservation(reservationId, userId);
             });
         }
+
+        /**Set phone number*/
+        String clientPhoneNo = reservations.get(position).getClientPhoneNo();
+        if(clientPhoneNo != null)
+            holder.phoneNoTextView.setText(clientPhoneNo);
     }
 
     @Override
@@ -89,7 +93,7 @@ public class UserResCardAdapter extends RecyclerView.Adapter<UserResCardAdapter.
 
         public CardView inResCardUserCardView;
         public TextView inResCardUserClientNameTextView,inResCardUserSubCatNameTextView,
-                inResCardUserResDescTextView, inResCardUserTimeTextView;
+                inResCardUserResDescTextView, inResCardUserTimeTextView,phoneNoTextView;
         public FrameLayout inResCardUserFragmentView;
 
         public ViewHolder(View itemView) {
@@ -100,6 +104,7 @@ public class UserResCardAdapter extends RecyclerView.Adapter<UserResCardAdapter.
             inResCardUserSubCatNameTextView = itemView.findViewById(R.id.inResCardUserSubCatNameTextView);
             inResCardUserResDescTextView = itemView.findViewById(R.id.inResCardUserResDescTextView);
             inResCardUserTimeTextView = itemView.findViewById(R.id.inResCardUserTimeTextView);
+            phoneNoTextView = itemView.findViewById(R.id.inResCardUphoneNoTextView);
 
             inResCardUserFragmentView = itemView.findViewById(R.id.inResCardUserFragmentView);
 
