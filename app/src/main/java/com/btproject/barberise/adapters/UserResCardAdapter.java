@@ -106,7 +106,7 @@ public class UserResCardAdapter extends RecyclerView.Adapter<UserResCardAdapter.
             inResCardUserTimeTextView = itemView.findViewById(R.id.inResCardUserTimeTextView);
             phoneNoTextView = itemView.findViewById(R.id.inResCardUphoneNoTextView);
 
-            inResCardUserFragmentView = itemView.findViewById(R.id.inResCardUserFragmentView);
+            inResCardUserFragmentView = itemView.findViewById(R.id.addSubcategoryButton);
 
         }
     }

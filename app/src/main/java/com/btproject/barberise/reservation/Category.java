@@ -15,6 +15,20 @@ public class Category extends Options{
         this.subcategories = subcategories;
     }
 
+    public void setSubcategories(ArrayList<Subcategory> subcategories) {
+        this.subcategories = subcategories;
+    }
+
+    public void addSubcategory(Subcategory subcategory)
+    {
+        if(this.subcategories != null)
+            this.subcategories.add(subcategory);
+        else{
+            this.subcategories = new ArrayList<>();
+            this.subcategories.add(subcategory);
+        }
+    }
+
     public String getName() {
         return name;
     }

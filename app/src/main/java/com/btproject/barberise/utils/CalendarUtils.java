@@ -59,9 +59,9 @@ public class CalendarUtils {
     // Version 1.0 -> Slow
     public static Set<Long> getPreviousDays()
     {
-        // Get start date (January 1, 2020)
         Calendar startDate = Calendar.getInstance();
 
+        // Get start date (January 1, 2020)
         startDate.set(2022, Calendar.JANUARY, 1);
         Date currentDate = new Date();
         Calendar endDate = Calendar.getInstance();

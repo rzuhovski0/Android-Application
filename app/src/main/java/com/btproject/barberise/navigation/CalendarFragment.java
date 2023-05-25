@@ -134,7 +134,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void initAdapter(ArrayList<Reservation> reservations){
-        if(isAdded()) {
+        if(isAdded()) {                                             //getAppli
             reservationCardAdapter = new ReservationCardAdapter(reservations, requireActivity().getApplicationContext());
             pastReservationsRecyclerView.setAdapter(reservationCardAdapter);
         }

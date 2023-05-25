@@ -77,6 +77,8 @@ public class RegistrationActivity extends AppCompatActivity {
     public static Map<String,ArrayList<String>> openingHours = new HashMap<>();
     public static boolean hoursConfigured = false;
 
+    public static ArrayList<Category> categories = new ArrayList<>();
+
     private TextView openingHoursConfiguredTextView,pictureConfiguredTextView,servicesConfiguredTextView;
 
     private void setUpUI()
@@ -130,6 +132,11 @@ public class RegistrationActivity extends AppCompatActivity {
             startActivity(new Intent(RegistrationActivity.this,SetUpOpeningHoursActivity.class));
         });
 
+        setUpServicesTextView.setOnClickListener(view ->
+        {
+            startActivity(new Intent(RegistrationActivity.this,SetUpServicesActivity.class));
+        });
+
 
         /** Helper method to fill users with attributes*/
 //        addAttributesToUsers(getOpeningHours(),getCategories());
@@ -166,11 +173,9 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 // Show or hide the DrawableRight based on whether the text is empty or not
@@ -207,8 +212,10 @@ public class RegistrationActivity extends AppCompatActivity {
         saveChangesTextView.setOnClickListener(view -> {
             String shopName = userNameEditText.getText().toString();
             if(!email.equals("") && !password.equals("") && !shopName.equals("")) {
-                if(openingHours != null)
-                    register(email, password, shopName, getCategories(),openingHours);
+                if(openingHours != null && categories != null)
+                    register(email, password, shopName, categories,openingHours);
+            }else{
+                Toast.makeText(getApplicationContext(),"Check email, password, name",Toast.LENGTH_LONG).show();
             }
         });
 

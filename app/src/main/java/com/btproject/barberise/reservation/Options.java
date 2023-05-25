@@ -18,4 +18,10 @@ public abstract class Options {
         return this.name;
     }
 
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+
 }

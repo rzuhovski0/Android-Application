@@ -180,7 +180,7 @@ public class ProfileFragment extends Fragment {
         String name = credentials.get("name");
         String surname = credentials.get("surname");
 
-        if(name == null || surname == null)
+        if(name == null || surname == null || name.equals("") || surname.equals(""))
             return "";
 
         // Get the first name

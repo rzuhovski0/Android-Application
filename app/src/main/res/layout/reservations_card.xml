@@ -9,6 +9,9 @@
         android:id="@+id/inResCardUserCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="0dp"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/inSearchNameTextView" />
 
             <FrameLayout
-                android:id="@+id/inResCardUserFragmentView"
+                android:id="@+id/addSubcategoryButton"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"

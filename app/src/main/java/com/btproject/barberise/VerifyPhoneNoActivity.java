@@ -19,8 +19,11 @@ import com.btproject.barberise.navigation.MenuActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -170,8 +173,22 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
 
                 @Override
                 public void onVerificationFailed(@NonNull FirebaseException e) {
-                    Toast.makeText(VerifyPhoneNoActivity.this,
-                            e.getMessage(),Toast.LENGTH_LONG).show();
+                    if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                        // Invalid request
+                        Toast.makeText(VerifyPhoneNoActivity.this,
+                        e.getMessage(),Toast.LENGTH_LONG).show();
+                    } else if (e instanceof FirebaseTooManyRequestsException) {
+                        // The SMS quota for the project has been exceeded
+                        Toast.makeText(VerifyPhoneNoActivity.this,
+                        e.getMessage(),Toast.LENGTH_LONG).show();
+                    } else if (e instanceof FirebaseAuthMissingActivityForRecaptchaException) {
+                        // reCAPTCHA verification attempted with null Activity
+                        Toast.makeText(VerifyPhoneNoActivity.this,
+                        e.getMessage(),Toast.LENGTH_LONG).show();
+                    } else{
+                        Toast.makeText(VerifyPhoneNoActivity.this,
+                        e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
                 }
             };
 

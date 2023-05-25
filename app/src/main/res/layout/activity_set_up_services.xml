@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".navigation.profile.SetUpServicesActivity">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/sen"
+        android:text="Here, you can add categories and subcategories"
+        android:ellipsize="end"
+        android:singleLine="false"
+        android:maxWidth="150dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/inServicesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:listitem="@layout/category_card" />
+
+    <Button
+        android:id="@+id/addCategoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded_button_25dp"
+        android:fontFamily="@font/sen"
+        android:text="Add category"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/inSetServicesSaveTextView"
+        android:layout_width="75dp"
+        android:layout_height="48dp"
+        android:text="@string/save"
+        android:background="@drawable/round_corners_stroke"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:fontFamily="@font/sen_bold"
+        app:layout_constraintBottom_toTopOf="@+id/inServicesRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addCategoryButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
