@@ -4,10 +4,13 @@ package com.btproject.barberise.navigation.profile;
 
 import com.btproject.barberise.reservation.Category;
 
-        import java.util.ArrayList;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
+
     private String id;
     private String username;
     private String profile_picture;
@@ -15,11 +18,13 @@ public class User {
 
     /**Data lists*/
     public ArrayList<Category> categories = new ArrayList<>();
+
     public HashMap<String,ArrayList<String>> openingHours = new HashMap<>();
 
     public HashMap<String,Object> reservations = new HashMap<>();
     public HashMap<String, HashMap<String,String>> favorites = new HashMap<>();
 
+    private ArrayList<Integer> ratings = new ArrayList<>();
     private int customPriority;
 
     public User() {
@@ -28,7 +33,8 @@ public class User {
 
     /**Constructor with HashMap reservations*/
     public User(String id, String username, String profilePictureUrl, String category,
-                ArrayList<Category> categories,HashMap<String,ArrayList<String>> opening_hours,HashMap<String,Object> reservations) {
+                ArrayList<Category> categories,HashMap<String,ArrayList<String>> opening_hours,
+                HashMap<String,Object> reservations, ArrayList<Integer> ratings) {
         this.id = id;
         this.username = username;
         this.profile_picture = profilePictureUrl;
@@ -36,6 +42,32 @@ public class User {
         this.categories = categories;
         this.openingHours = opening_hours;
         this.reservations = reservations;
+        this.ratings = ratings;
+    }
+
+    // This function is for User Adapter
+    public float getOverallRating()
+    {
+
+        if(getRatings().isEmpty())
+            return 0.0f;
+
+        int overallRating = 0;
+        int numOfRatings = 0;
+        for (Integer rating : getRatings()) {
+            overallRating += rating;
+            numOfRatings++;
+        }
+
+        return (float) (overallRating / numOfRatings);
+    }
+
+    public ArrayList<Integer> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(ArrayList<Integer> ratings) {
+        this.ratings = ratings;
     }
 
     public void setCustomPriority(int customPriority) {

@@ -43,6 +43,7 @@ public class Reservation {
 
     private String clientPhoneNo;
 
+    private boolean alreadyRated;
     public Reservation()
     {}
 
@@ -50,6 +51,16 @@ public class Reservation {
     {
         this.userName = userName;
         this.serviceProviderName = serviceProviderName;
+    }
+
+    public void setAlreadyRated(boolean alreadyRated)
+    {
+        this.alreadyRated = alreadyRated;
+    }
+
+    public boolean getAlreadyRated()
+    {
+        return this.alreadyRated;
     }
 
     public boolean hasPassed() throws ParseException {

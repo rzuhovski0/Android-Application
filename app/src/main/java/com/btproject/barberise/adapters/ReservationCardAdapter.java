@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -23,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.btproject.barberise.R;
 import com.btproject.barberise.reservation.Reservation;
 import com.btproject.barberise.reservation.ReservationTestingActivity;
+import com.btproject.barberise.utils.DatabaseUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -34,10 +37,13 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
     private ArrayList<Reservation> reservations;
     private Context mContext;
 
-    public ReservationCardAdapter(ArrayList<Reservation> reservations,Context context)
+    private String clientId;
+
+    public ReservationCardAdapter(ArrayList<Reservation> reservations,Context context,String clientId)
     {
         this.reservations = reservations;
-        mContext = context;
+        this.mContext = context;
+        this.clientId = clientId;
     }
 
     @NonNull
@@ -77,6 +83,25 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
                 ColorStateList colorStateList = ContextCompat.getColorStateList(mContext, R.color.red);
                 holder.inCalAgainFragmentView.setBackgroundTintList(colorStateList);
                 holder.imageViewSrc.setImageResource(R.drawable.x);
+
+            /** If reservation has passed && wasn't yet rated, add ability to rate it*/
+            }
+            if(reservations.get(position).hasPassed() && !reservations.get(position).getAlreadyRated()){
+
+                //Update visibility of rateTxtView
+                holder.rateTextView.setVisibility(View.VISIBLE);
+                holder.rateTextView.setOnClickListener(view -> {
+                    // Update visibility
+                    if(holder.ratingBar.getVisibility() == View.GONE){
+                        holder.ratingBar.setVisibility(View.VISIBLE);
+                        animAlphaComponents(holder);
+                        rate(holder,reservations.get(position).getServiceProviderId(),reservations.get(position).getId());
+                    }else{
+                        holder.ratingBar.setVisibility(View.GONE);
+                        animAlphaComponents(holder);
+                    }
+
+                });
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -92,18 +117,60 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
                     intent.putExtra("id", reservations.get(position).getServiceProviderId());
                     mContext.startActivity(intent);
                 }else{
-
                     Context parentContext = holder.itemView.getContext();
                     Dialog dialog = getCustomDialog(parentContext, position);
                     dialog.show();
-
-
                 }
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
 
         });
+    }
+
+    private void rate(ViewHolder holder,String barberId, String reservationId)
+    {
+        holder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                int rating = (int)v;
+
+                // Rate reservation
+                DatabaseUtils.rateBarberShop(barberId,rating);
+
+                // Update reservation alreadyPassed
+                if(clientId != null)
+                    DatabaseUtils.tagReservationAlreadyRated(clientId,reservationId);
+
+                // Notify user
+                Toast.makeText(mContext,R.string.thanks_for_rating,Toast.LENGTH_LONG).show();
+
+                //Update visibility
+                ratingBar.setVisibility(View.GONE);
+                animAlphaComponents(holder);
+            }
+        });
+    }
+
+    private void animAlphaComponents(ViewHolder holder)
+    {
+        if(holder.ratingBar.getVisibility() == View.VISIBLE) {
+            // Animate the alpha property of other views
+            holder.imageViewSrc.animate().alpha(0.2f).setDuration(300).start();
+            holder.inCalNameTextView.animate().alpha(0.2f).setDuration(300).start();
+            holder.inCalDateTimeTextView.animate().alpha(0.2f).setDuration(300).start();
+            holder.inCalAgainFragmentView.animate().alpha(0.2f).setDuration(300).start();
+            holder.inCalProfileImageView.animate().alpha(0.2f).setDuration(300).start();
+            holder.inCalPriceTextView.animate().alpha(0.2f).setDuration(300).start();
+        }else{
+            // Hide other components
+            holder.imageViewSrc.animate().alpha(1f).setDuration(300).start();
+            holder.inCalNameTextView.animate().alpha(1f).setDuration(300).start();
+            holder.inCalDateTimeTextView.animate().alpha(1f).setDuration(300).start();
+            holder.inCalAgainFragmentView.animate().alpha(1f).setDuration(300).start();
+            holder.inCalProfileImageView.animate().alpha(1f).setDuration(300).start();
+            holder.inCalPriceTextView.animate().alpha(1f).setDuration(300).start();
+        }
     }
 
     @Override
@@ -138,8 +205,8 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView inCalNameTextView,inCalPriceTextView,inCalDateTimeTextView;
-
+        public TextView inCalNameTextView,inCalPriceTextView,inCalDateTimeTextView,rateTextView;
+        public RatingBar ratingBar;
         public ShapeableImageView inCalProfileImageView;
         public ImageView imageViewSrc;
         public FrameLayout inCalAgainFragmentView;
@@ -152,6 +219,11 @@ public class ReservationCardAdapter extends RecyclerView.Adapter<ReservationCard
             inCalNameTextView = itemView.findViewById(R.id.inSearchNameTextView);
             inCalPriceTextView = itemView.findViewById(R.id.inCalPriceTextView);
             inCalDateTimeTextView = itemView.findViewById(R.id.inCalDateTimeTextView);
+            rateTextView = itemView.findViewById(R.id.rateTextView);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
+
+            ratingBar.setVisibility(View.GONE);
+            rateTextView.setVisibility(View.GONE);
 
             inCalAgainFragmentView = itemView.findViewById(R.id.addSubcategoryButton);
 

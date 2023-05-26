@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
@@ -203,6 +204,48 @@ public class DatabaseUtils {
     }
 
     /**Reservation Activity*/
+
+    /**Rate barbershop*/
+    public static void rateBarberShop(String barberId, int rating)
+    {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = db.getReference();
+
+        DatabaseReference userRef = dbRef.child("users").child(barberId);
+        userRef.child("ratings").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // User already has ratings, retrieve the existing array list
+                    ArrayList<Integer> existingRatings = dataSnapshot.getValue(new GenericTypeIndicator<ArrayList<Integer>>() {});
+                    existingRatings.add(rating); // Add the new rating
+                    userRef.child("ratings").setValue(existingRatings); // Update the ratings array list
+                } else {
+                    // User doesn't have any ratings, create a new array list with the first rating
+                    ArrayList<Integer> newRatings = new ArrayList<>();
+                    newRatings.add(rating);
+                    userRef.child("ratings").setValue(newRatings); // Set the ratings array list
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled event if needed
+            }
+        });
+
+
+    }
+
+    public static void tagReservationAlreadyRated(String clientId, String reservationId)
+    {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = db.getReference();
+        DatabaseReference userReservationsRef = dbRef.child("clients")
+                .child(clientId)
+                .child("reservations");
+        userReservationsRef.child(reservationId).child("alreadyRated").setValue(true);
+    }
 
 
 }

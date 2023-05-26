@@ -19,6 +19,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class MenuActivity extends AppCompatActivity {
 
     ActivityMenuBinding binding;
@@ -36,8 +40,8 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         boolean openReservations = getIntent().getBooleanExtra("openReservations",false);
-
         boolean REGISTER_FLAG = getIntent().getBooleanExtra("REGISTER_FLAG",false);
+
 
         /**If opened from VerifyPhoneNumberActivity*/
         if(REGISTER_FLAG) {

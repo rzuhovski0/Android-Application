@@ -20,7 +20,7 @@
 
     <!--Profile Fragment-->
     <string name="partnerprofile">Partner profile</string>
-    <string name="promocode">Promo code</string>
+    <string name="register_code">Registration code</string>
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
     <string name="aboutus">About us</string>
@@ -53,7 +53,7 @@
     <!--PromoCode-->
     <string name="promo_code">promo code</string>
     <string name="use">Use</string>
-    <string name="invalid_code">Promo code is invalid</string>
+    <string name="invalid_code">Registration code is invalid</string>
 
     <!--ProfileSettings-->
     <string name="name">Name</string>
@@ -109,6 +109,10 @@
         to your email.</string>
     <string name="check_reservation">You can check your reservation clicking here</string>
     <string name="no_hours_available">Ups, seems like there are no any available times.</string>
+
+    <!--Reservation card-->
+    <string name="rate">Rate</string>
+    <string name="thanks_for_rating">Thanks for your feedback!</string>
 
     <!--Contact Info-->
     <string name="opening_hours">Opening hours</string>

@@ -13,7 +13,6 @@
     <string name="search">hľadať</string>
     <string name="all">Všetko</string>
     <string name="partnerprofile">Partnerský profil</string>
-    <string name="promocode">Promo kódy</string>
     <string name="profile">Profil</string>
     <string name="settings">Nastavenia</string>
     <string name="aboutus">O nás</string>
@@ -32,7 +31,7 @@
     <string name="default_time">Ponechať základnú otváraciu dobu</string>
     <string name="save_changes">Uložiť ›</string>
     <string name="promo_code">promo kód</string>
-    <string name="invalid_code">Promo kód je neplatný</string>
+    <string name="invalid_code">Registračný kód je neplatný</string>
     <string name="name">Meno</string>
     <string name="surname">Priezvisko</string>
     <string name="sign_out">Odhlásiť sa</string>
@@ -64,6 +63,7 @@
     <string name="check_reservation">Svoju rezerváciu si môžte skontrolovať
         kliknutím sem</string>
     <string name="no_hours_available">Ups, tu už je všetko obsadené..</string>
+    <string name="rate">Ohodnoť</string>
     <string name="opening_hours">Otváracie hodiny</string>
     <string name="tel_number">Telefón :</string>
     <string name="use">Použiť</string>
@@ -77,5 +77,7 @@
     <string name="data_update_error">Nepodarilo sa zmeniť údaje</string>
     <string name="default_time_hint">(Po – Pia : 9:00 – 17:00 So – Ne : –––)</string>
     <string name="default_time_warning">Stlačením uložiť, sa použijú základne otváracie hodiny</string>
+    <string name="thanks_for_rating">Ďakujeme za tvoj názor!</string>
+    <string name="register_code">Registračný kód</string>
 
 </resources>

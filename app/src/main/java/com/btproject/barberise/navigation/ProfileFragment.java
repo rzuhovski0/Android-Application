@@ -35,19 +35,12 @@ import java.util.HashMap;
  */
 public class ProfileFragment extends Fragment {
 
-    FirebaseAuth auth;
-    FirebaseUser user;
-    String userUID;
-
-    FirebaseDatabase database;
-    DatabaseReference dbReference;
-
     private Context context;
 
     // Helper val for getting name and surname
     private String returnValue;
-    private TextView partnerProfileTextView,promoTextView,profileTextView;
-    private TextView usrNameTextView;
+    private TextView partnerProfileTextView,profileTextView,secondProfileTextView;
+    private TextView usrNameTextView,usrPhoneTextView;
 
     private HashMap<String, String> credentials = new HashMap<>();
 
@@ -102,31 +95,28 @@ public class ProfileFragment extends Fragment {
 
         initItems(rootView);
 
-
-
-        clientDAO.DataExistsCallback dataExistsCallback = new clientDAO.DataExistsCallback() {
-            @Override
-            public void onDataInvalid(boolean userExists) {
-                usrNameTextView.setText(getInitials(credentials));
-            }
+        clientDAO.DataExistsCallback dataExistsCallback = userExists -> {
+            // After data loaded update name and phone number
+            usrNameTextView.setText(getInitials(credentials));
+            usrPhoneTextView.setText(credentials.get("phoneNo"));
         };getClientInfo(dataExistsCallback);
 
 
         partnerProfileTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, PartnerProfileActivity.class);
+                Intent intent = new Intent(context, PromoActivity.class);
                 startActivity(intent);
             }
         });
 
-        promoTextView.setOnClickListener(view ->
+        profileTextView.setOnClickListener(View ->
         {
-            Intent intent = new Intent(context, PromoActivity.class);
+            Intent intent = new Intent(context, ProfileSettingsActivity.class);
             startActivity(intent);
         });
 
-        profileTextView.setOnClickListener(View ->
+        secondProfileTextView.setOnClickListener(View ->
         {
             Intent intent = new Intent(context, ProfileSettingsActivity.class);
             startActivity(intent);
@@ -148,9 +138,11 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.child("name").getValue(String.class);
                 String surname = snapshot.child("surname").getValue(String.class);
+                String phoneNo = snapshot.child("phoneNo").getValue(String.class);
 
                 credentials.put("name",name);
                 credentials.put("surname",surname);
+                credentials.put("phoneNo",phoneNo);
                 dataExistsCallback.onDataInvalid(true);
 
             }
@@ -166,11 +158,14 @@ public class ProfileFragment extends Fragment {
     private void initItems(View rootView)
     {
         context = requireActivity().getApplicationContext();
-
-        partnerProfileTextView = rootView.findViewById(R.id.partnerTextView);
+        // Client name and password
         usrNameTextView = rootView.findViewById(R.id.usrNameTextView);
-        promoTextView = rootView.findViewById(R.id.promoTextView);
+        usrPhoneTextView = rootView.findViewById(R.id.usrPhoneTextView);
+
+        // Other buttons
+        partnerProfileTextView = rootView.findViewById(R.id.partnerTextView);
         profileTextView = rootView.findViewById(R.id.profileTextView);
+        secondProfileTextView = rootView.findViewById(R.id.secondProfileTextView);
         /**Set the correct color for */
 
     }

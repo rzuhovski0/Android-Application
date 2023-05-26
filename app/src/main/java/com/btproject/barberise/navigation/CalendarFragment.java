@@ -33,6 +33,7 @@ import com.google.firebase.database.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -134,8 +135,10 @@ public class CalendarFragment extends Fragment {
     }
 
     private void initAdapter(ArrayList<Reservation> reservations){
-        if(isAdded()) {                                             //getAppli
-            reservationCardAdapter = new ReservationCardAdapter(reservations, requireActivity().getApplicationContext());
+        if(isAdded()) {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            String clientId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+            reservationCardAdapter = new ReservationCardAdapter(reservations, requireActivity().getApplicationContext(),clientId);
             pastReservationsRecyclerView.setAdapter(reservationCardAdapter);
         }
     }

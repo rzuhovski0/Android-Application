@@ -19,18 +19,20 @@ import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView usernameTextView;
+        public TextView usernameTextView,ratingTextView;
         public ImageView profilePictureImageView;
         public CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             usernameTextView = itemView.findViewById(R.id.nameTextView);
+            ratingTextView = itemView.findViewById(R.id.ratingTextView);
             profilePictureImageView = itemView.findViewById(R.id.ProfileImageView);
             cardView = itemView.findViewById(R.id.cardView);
         }
@@ -76,6 +78,10 @@ public class MyUsersAdapter extends RecyclerView.Adapter<MyUsersAdapter.ViewHold
             intent.putExtra("username", user.getUsername());
             mContext.startActivity(intent);
         });
+
+        float rating = user.getOverallRating();
+        String formattedRating = String.format(Locale.US,"%.1f", rating);
+        holder.ratingTextView.setText(formattedRating);
     }
 
     @Override

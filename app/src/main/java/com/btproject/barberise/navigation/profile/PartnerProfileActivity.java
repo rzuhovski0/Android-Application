@@ -63,7 +63,6 @@ public class PartnerProfileActivity extends AppCompatActivity {
             String password = passwordLoginEditText.getText().toString();
             if(!email.equals("") && !password.equals("")) {
                 signIn(email,password);
-
             }else {
                 Toast.makeText(PartnerProfileActivity.this,
                         "Please enter an email and password",Toast.LENGTH_LONG).show();

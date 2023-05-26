@@ -9,11 +9,17 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.btproject.barberise.navigation.MenuActivity;
+import com.btproject.barberise.utils.CalendarUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Set;
+
 
 public class SplashActivity extends AppCompatActivity {
+
+    private Set<Long> previousDays;
+    private Long[] previousDaysArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +27,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         hideSystemUI();
+//        previousDays = CalendarUtils.getPreviousDays();
+//        previousDaysArray = previousDays.toArray(new Long[previousDays.size()]);
         splashCountdown();
-
     }
 
     private void splashCountdown()
@@ -37,6 +44,7 @@ public class SplashActivity extends AppCompatActivity {
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(firebaseUser != null){
                     Intent intent = new Intent(SplashActivity.this,MenuActivity.class);
+//                    intent.putExtra("previousDays",previousDaysArray);
                     startActivity(intent);
                 }else{
                     startActivity(new Intent(SplashActivity.this, VerifyPhoneNoActivity.class));

@@ -249,14 +249,13 @@ public class ReservationTestingActivity extends AppCompatActivity {
             public void onReservationsLoaded(ArrayList<Reservation> reservations) {
 
                 /**Get days which are fully reserved*/
-
                 allDays = getDays(reservations,openingHours);
 
                 /**Get dates in Long format from all days which are fully reserved*/
                 TreeSet<Long> disabledDates = new TreeSet<>();
                 disabledDates = getDisabledDates(allDays);
 
-                // Disable all dates past today
+//                 Disable all dates past today
 //                CalendarUtils.disablePreviousDays(calendarView,disabledDates);
             }
         };
@@ -473,8 +472,6 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
             // Iterate over the selected dates
             for (Calendar selectedDate : selectedDates) {
-
-
 
                 // Method to get a dd.MM.yyyy format from milliseconds
                 String dateStringFormat = CalendarUtils.getDateInString(selectedDate);
