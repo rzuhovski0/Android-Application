@@ -46,6 +46,7 @@
     <string name="set_opening_hours">Nastaviť otváracie hodiny ›</string>
     <string name="set_categories">Nastaviť služby ›</string>
     <string name="check_hours">Skontrolujte prosím, či každý deň má správne nastavené otváracie hodiny</string>
+    <string name="forgot_password">Zabudnuté heslo?</string>
     <string name="contact_info">Kontaktné údaje ›</string>
     <string name="about_us">O nás ›</string>
     <string name="phone_no">Vaše telefónne číslo</string>
@@ -79,5 +80,11 @@
     <string name="default_time_warning">Stlačením uložiť, sa použijú základne otváracie hodiny</string>
     <string name="thanks_for_rating">Ďakujeme za tvoj názor!</string>
     <string name="register_code">Registračný kód</string>
+    <string name="reset_pass">Výtvoriť nové heslo</string>
+    <string name="empty_email">Prosím zadajte email.</string>
+    <string name="valid_email">Prosím skontrolujte či ste zadali email v správnom formáte..</string>
+    <string name="check_email">Pre obnovenie hesla skontrolujte prosím svoj email</string>
+    <string name="sth_went_wrong">Skúste znovu, niečo sa pokazilo..</string>
+    <string name="back_to_login">Prejsť na login</string>
 
 </resources>

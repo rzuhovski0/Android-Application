@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.btproject.barberise.R;
 import com.btproject.barberise.partner.MainActivity;
+import com.btproject.barberise.registration.ResetPasswordActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,6 +25,7 @@ public class PartnerProfileActivity extends AppCompatActivity {
     private EditText emailRegisterEditText,passwordRegisterEditText;
     private EditText emailLoginEditText,passwordLoginEditText;
 
+    private TextView forgotPasswordTextView;
     FirebaseAuth auth;
 
     @Override
@@ -39,22 +42,21 @@ public class PartnerProfileActivity extends AppCompatActivity {
         emailLoginEditText = findViewById(R.id.emailLoginEditText);
         passwordLoginEditText = findViewById(R.id.passwordLoginEditText);
 
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
+
         auth = FirebaseAuth.getInstance();
 
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = emailRegisterEditText.getText().toString();
-                String password = passwordRegisterEditText.getText().toString();
+        buttonRegister.setOnClickListener(view -> {
+            String email = emailRegisterEditText.getText().toString();
+            String password = passwordRegisterEditText.getText().toString();
 
-                if(!email.equals("") && !password.equals("")){
-                    Intent intent = new Intent(PartnerProfileActivity.this,RegistrationActivity.class);
-                    intent.putExtra("email",email);
-                    intent.putExtra("password",password);
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(PartnerProfileActivity.this, "Email and password mustn't be empty", Toast.LENGTH_SHORT).show();
-                }
+            if(!email.equals("") && !password.equals("")){
+                Intent intent = new Intent(PartnerProfileActivity.this,RegistrationActivity.class);
+                intent.putExtra("email",email);
+                intent.putExtra("password",password);
+                startActivity(intent);
+            }else {
+                Toast.makeText(PartnerProfileActivity.this, "Email and password mustn't be empty", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -67,6 +69,12 @@ public class PartnerProfileActivity extends AppCompatActivity {
                 Toast.makeText(PartnerProfileActivity.this,
                         "Please enter an email and password",Toast.LENGTH_LONG).show();
             }
+        });
+
+        forgotPasswordTextView.setOnClickListener(view ->
+        {
+            Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
+            startActivity(intent);
         });
     }
 

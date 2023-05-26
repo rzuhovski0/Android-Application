@@ -121,4 +121,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/passwordLoginEditText" />
 
+    <TextView
+        android:id="@+id/forgotPasswordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:fontFamily="@font/sen"
+        android:text="@string/forgot_password"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonLogin"
+        app:layout_constraintStart_toStartOf="@+id/passwordLoginEditText"
+        app:layout_constraintTop_toTopOf="@+id/buttonLogin" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
