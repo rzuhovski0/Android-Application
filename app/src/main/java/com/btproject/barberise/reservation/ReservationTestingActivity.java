@@ -67,7 +67,6 @@ public class ReservationTestingActivity extends AppCompatActivity {
 
     private int currentStep = 1;
     private User barberShop;
-
     private ClientUser clientUser;
     private String barberShopId;
     /** UI Components*/
@@ -288,9 +287,30 @@ public class ReservationTestingActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
 
         bundle.putSerializable("openingHours",openingHours);
-        bundle.putString("email","+421 09 999 999");
-        bundle.putString("phone","barbercontact@gmail.com");
-        bundle.putString("address","Alžbetina 9,Košice");
+
+        String name = barberShop.getUsername();
+        if(name != null)
+            bundle.putString("name",name);
+        else
+            bundle.putString("name","undefined");
+
+        String phoneNo = barberShop.getPhoneNo();
+        if(phoneNo != null)
+            bundle.putString("phone",phoneNo);
+        else
+            bundle.putString("phone","undefined");
+
+        String email = barberShop.getEmail();
+        if(email != null)
+            bundle.putString("email",email);
+        else
+            bundle.putString("email","undefined");
+
+        String address = barberShop.getAddress();
+        if(address != null)
+            bundle.putString("address",address);
+        else
+            bundle.putString("address","undefined");
         return bundle;
     }
 

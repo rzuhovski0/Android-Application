@@ -15,6 +15,10 @@ public class User {
     private String username;
     private String profile_picture;
     private String category;
+    private String address;
+    private String phoneNo;
+
+    private String email;
 
     /**Data lists*/
     public ArrayList<Category> categories = new ArrayList<>();
@@ -23,7 +27,6 @@ public class User {
 
     public HashMap<String,Object> reservations = new HashMap<>();
     public HashMap<String, HashMap<String,String>> favorites = new HashMap<>();
-
     private ArrayList<Integer> ratings = new ArrayList<>();
     private int customPriority;
 
@@ -43,6 +46,36 @@ public class User {
         this.openingHours = opening_hours;
         this.reservations = reservations;
         this.ratings = ratings;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public String getEmail()
+    {
+        return this.email;
+    }
+
+    public void setPhoneNo(String phoneNo)
+    {
+        this.phoneNo = phoneNo;
+    }
+
+    public String getPhoneNo()
+    {
+        return this.phoneNo;
+    }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
+
+    public String getAddress()
+    {
+        return this.address;
     }
 
     // This function is for User Adapter

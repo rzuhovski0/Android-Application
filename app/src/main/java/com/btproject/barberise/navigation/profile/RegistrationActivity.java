@@ -43,7 +43,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class
+RegistrationActivity extends AppCompatActivity {
 
     //profile picture
     private ImageView profileImageView;
@@ -54,8 +55,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     //name,email and password
     private String email,password;
-    private EditText userNameEditText;
-    private TextView emailTextView,PhoneNoEditText;
+    private EditText userNameEditText,PhoneNoEditText,AddressEditText;
+    private TextView emailTextView;
 
     //buttons
     private TextView saveChangesTextView;
@@ -86,6 +87,7 @@ public class RegistrationActivity extends AppCompatActivity {
         // Email & phone editText
         emailTextView = findViewById(R.id.inRegEmailTextView);
         PhoneNoEditText = findViewById(R.id.inRegPhoneNoEditText);
+        AddressEditText = findViewById(R.id.inRegAddressEditTextView);
 
         pictureConfiguredTextView = findViewById(R.id.pictureConfiguredTextView);
         pictureConfiguredTextView.setVisibility(View.GONE);
@@ -162,11 +164,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
         emailTextView.setText(email);
 
-
         //help method for picture choosing
         registerActivityForSelectImage();
         profileImageView.setOnClickListener(view -> myImageChooser());
-
 
         //Add green check mark if name defined
         userNameEditText.addTextChangedListener(new TextWatcher() {
@@ -201,9 +201,28 @@ public class RegistrationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 // Show or hide the DrawableRight based on whether the text is empty or not
                 if (s.length() > 0) {
-                    userNameEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.check_circle, 0);
+                    PhoneNoEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.check_circle, 0);
                 } else {
-                    userNameEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    PhoneNoEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
+            }
+        });
+
+        //Address green checkmark
+        AddressEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.length() > 0) {
+                    AddressEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.check_circle, 0);
+                } else {
+                    AddressEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }
             }
         });
@@ -211,21 +230,15 @@ public class RegistrationActivity extends AppCompatActivity {
         //saving changes and registering user
         saveChangesTextView.setOnClickListener(view -> {
             String shopName = userNameEditText.getText().toString();
-            if(!email.equals("") && !password.equals("") && !shopName.equals("")) {
+            String address = AddressEditText.getText().toString();
+            String phoneNo = PhoneNoEditText.getText().toString();
+            if(!email.equals("") && !password.equals("") && !shopName.equals("") && !address.equals("") && !phoneNo.equals("")) {
                 if(openingHours != null && categories != null)
-                    register(email, password, shopName, categories,openingHours);
+                    register(email, password, shopName, categories,openingHours,address,phoneNo);
             }else{
-                Toast.makeText(getApplicationContext(),"Check email, password, name",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.check_info,Toast.LENGTH_LONG).show();
             }
         });
-
-//        saveChangesTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
 
     }
 
@@ -437,7 +450,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private static int customPriority = 1;
 
-    public void register(String email, String password, String userName, ArrayList<Category> categories,Map<String, ArrayList<String>> openingHours) {
+    public void register(String email, String password, String userName, ArrayList<Category> categories,
+                         Map<String, ArrayList<String>> openingHours, String address, String phoneNo) {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -456,6 +470,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                         Map<String, Object> userData = new HashMap<>();
                                         userData.put("email", email);
                                         userData.put("username", userName);
+                                        userData.put("address",address);
+                                        userData.put("phoneNo",phoneNo);
                                         userData.put("profile_picture", profilePictureUrl);
                                         userData.put("category","available_today");
                                         userData.put("openingHours",openingHours);

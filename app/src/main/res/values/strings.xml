@@ -52,6 +52,11 @@
     <string name="picture_hint">Choose your profile picture by clicking on the gray area above</string>
     <string name="business_name">Name of the shop</string>
     <string name="name_reminder">This name will be displayed in the app</string>
+    <string name="phone_reminder">This will be your contact phone number</string>
+    <string name="email_reminder">This will be your contact email</string>
+    <string name="address_reminder">This will be your address displayed in app</string>
+    <string name="address_format">Street no., City, State</string>
+    <string name="check_info">Please, make sure that all contact information is valid!</string>
 
     <!--PromoCode-->
     <string name="promo_code">promo code</string>

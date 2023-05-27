@@ -27,9 +27,12 @@
     <string name="login">Prihlásiť sa</string>
     <string name="picture_hint">Zvolte si profilový obrázok kliknutím na sivú plochu vyššie</string>
     <string name="business_name">Názov prevádzky</string>
-    <string name="name_reminder">Názov, ktorý zvolíte, bude zobrazený v aplikácií</string>
+    <string name="name_reminder">Názov, ktorý zvolíte bude zobrazený v aplikácií</string>
     <string name="default_time">Ponechať základnú otváraciu dobu</string>
     <string name="save_changes">Uložiť ›</string>
+    <string name="phone_reminder">Vaše kontaktné tel. číslo</string>
+    <string name="email_reminder">Váš kontaktný email</string>
+    <string name="address_reminder">Vaša adresa, ktorá bude zobrazená v appke</string>
     <string name="promo_code">promo kód</string>
     <string name="invalid_code">Registračný kód je neplatný</string>
     <string name="name">Meno</string>
@@ -86,5 +89,7 @@
     <string name="check_email">Pre obnovenie hesla skontrolujte prosím svoj email</string>
     <string name="sth_went_wrong">Skúste znovu, niečo sa pokazilo..</string>
     <string name="back_to_login">Prejsť na login</string>
+    <string name="address_format">Ulica č., Mesto, Štát</string>
+    <string name="check_info">Skontrolujte prosím či ste zadali všetky potrebné údaje</string>
 
 </resources>

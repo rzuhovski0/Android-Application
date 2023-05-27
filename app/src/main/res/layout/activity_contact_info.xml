@@ -12,13 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="Address"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/barberShopNameTextView" />
 
     <TextView
         android:id="@+id/textView5"
@@ -27,7 +26,7 @@
         android:layout_marginTop="50dp"
         android:fontFamily="@font/sen"
         android:text="@string/opening_hours"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/addressTextView"
         app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
@@ -39,7 +38,7 @@
         android:layout_marginTop="25dp"
         android:fontFamily="@font/sen"
         android:text="@string/Monday"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -50,7 +49,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
         android:text="@string/Tuesday"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/mondayTextView"
         app:layout_constraintTop_toBottomOf="@+id/mondayTextView" />
@@ -61,7 +60,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
         android:text="@string/Wednesday"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tuesdayTextView"
         app:layout_constraintTop_toBottomOf="@+id/tuesdayTextView" />
@@ -72,7 +71,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
         android:text="@string/Thursday"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/wednesdayTextView"
         app:layout_constraintTop_toBottomOf="@+id/wednesdayTextView" />
@@ -83,7 +82,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
         android:text="@string/Friday"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/thursdayTextView"
         app:layout_constraintTop_toBottomOf="@+id/thursdayTextView" />
@@ -94,10 +93,20 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
         android:text="@string/Saturday"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/fridayTextView"
         app:layout_constraintTop_toBottomOf="@+id/fridayTextView" />
+
+    <TableRow
+        android:id="@+id/hr"
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:background="#CCCCCC"
+        app:layout_constraintBottom_toTopOf="@+id/numberTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sundayTextView" />
 
     <TextView
         android:id="@+id/sundayTextView"
@@ -105,7 +114,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
         android:text="@string/Sunday"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/saturdayTextView"
         app:layout_constraintTop_toBottomOf="@+id/saturdayTextView" />
@@ -116,8 +125,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="10:00 - 15:00"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/mondayTextView"
         app:layout_constraintTop_toTopOf="@+id/mondayTextView" />
@@ -127,8 +136,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="10:00 - 15:00"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/mondayDisplayHours"
         app:layout_constraintTop_toBottomOf="@+id/mondayDisplayHours" />
@@ -138,8 +147,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="10:00 - 15:00"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tuesdayDisplayHours"
         app:layout_constraintTop_toBottomOf="@+id/tuesdayDisplayHours" />
@@ -149,8 +158,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="10:00 - 15:00"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/wednesdayDisplayHours"
         app:layout_constraintTop_toBottomOf="@+id/wednesdayDisplayHours" />
@@ -160,8 +169,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="10:00 - 15:00"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/thursdayDisplayHours"
         app:layout_constraintTop_toBottomOf="@+id/thursdayDisplayHours" />
@@ -171,8 +180,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="8:00 - 12:00"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/fridayDisplayHours"
         app:layout_constraintTop_toBottomOf="@+id/fridayDisplayHours" />
@@ -182,11 +191,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="8:00 - 12:00"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/saturdayDisplayHours"
         app:layout_constraintTop_toBottomOf="@+id/saturdayDisplayHours" />
+
+    <TableRow
+        android:id="@+id/hr2"
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:background="#CCCCCC"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
 
     <TextView
         android:id="@+id/numberTextView"
@@ -219,8 +238,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="+421 955 783 221"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/numberTextView"
         app:layout_constraintTop_toBottomOf="@+id/sundayDisplayHours" />
@@ -231,20 +250,43 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/sen"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="yourbarber@yahoo.com"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/phoneDisplay"
         app:layout_constraintTop_toBottomOf="@+id/phoneDisplay" />
 
-    <FrameLayout
-        android:id="@+id/frameLayout3"
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".reservation.ContactInfoActivity"
+        tools:layout="@layout/support_simple_spinner_dropdown_item"/>
 
-    </FrameLayout>
+    <TextView
+        android:id="@+id/barberShopNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/sen_bold"
+        android:text="BarberName"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map" />
+
+    <ImageView
+        android:id="@+id/googleMapsLogoImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/addressTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/google_maps_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
