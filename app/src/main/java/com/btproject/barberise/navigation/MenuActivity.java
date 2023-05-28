@@ -11,10 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
 import com.btproject.barberise.database.clientDAO;
 import com.btproject.barberise.databinding.ActivityMenuBinding;
 import com.btproject.barberise.registration.NewUserActivity;
+import com.btproject.barberise.utils.CalendarUtils;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,6 +30,7 @@ public class MenuActivity extends AppCompatActivity {
     ActivityMenuBinding binding;
     FirebaseDatabase database;
     DatabaseReference reference;
+    public static Set<Long> previousDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,17 @@ public class MenuActivity extends AppCompatActivity {
 
         boolean openReservations = getIntent().getBooleanExtra("openReservations",false);
         boolean REGISTER_FLAG = getIntent().getBooleanExtra("REGISTER_FLAG",false);
+
+        // Retrieve the array of long values from the intent
+        long[] previousDaysArray = getIntent().getLongArrayExtra("previousDays");
+
+        // Create a new HashSet and add the long values from the array
+        previousDays = new HashSet<>();
+        if (previousDaysArray != null) {
+            for (long day : previousDaysArray) {
+                previousDays.add(day);
+            }
+        }
 
 
         /**If opened from VerifyPhoneNumberActivity*/
@@ -97,6 +111,15 @@ public class MenuActivity extends AppCompatActivity {
             return true;
         });
     }
+
+    public static Set<Long> getPreviousDays()
+    {
+        if(previousDays == null)
+            return CalendarUtils.getPreviousDays();
+        else
+            return previousDays;
+    }
+
 
     private void launchNewUserActivity(String currentUserId,String phoneNo)
     {

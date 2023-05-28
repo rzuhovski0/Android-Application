@@ -9,6 +9,7 @@ import android.view.View;
 import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
+import com.btproject.barberise.navigation.MenuActivity;
 import com.btproject.barberise.reservation.Day;
 import com.btproject.barberise.reservation.Reservation;
 
@@ -144,9 +145,20 @@ public class CalendarUtils {
 
     public static void disablePreviousDays(CalendarView calendarView,TreeSet<Long> alreadyReservedDates)
     {
-        Set<Long> disabledDays = getPreviousDays();
+//        Set<Long> disabledDays = getPreviousDays();
+        Set<Long> disabledDays = MenuActivity.getPreviousDays();
         disabledDays.addAll(alreadyReservedDates);
         calendarView.setDisabledDays(disabledDays);
+    }
+
+    public static void disablePreviousDays(CalendarView calendarView,Set<Long> previousDays)
+    {
+        calendarView.setDisabledDays(previousDays);
+    }
+
+    public static void disableOnlyReservedDays(CalendarView calendarView,TreeSet<Long> alreadyReservedDates)
+    {
+        calendarView.setDisabledDays(alreadyReservedDates);
     }
 
     public static ArrayList<Day> getDays(ArrayList<Reservation> reservations, Map<String,ArrayList<String>> openingHours)

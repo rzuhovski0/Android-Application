@@ -43,6 +43,7 @@ import android.widget.Toast;
 
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
+import com.btproject.barberise.navigation.MenuActivity;
 import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.users.ClientUser;
 import com.btproject.barberise.utils.CalendarUtils;
@@ -62,6 +63,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeSet;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class ReservationTestingActivity extends AppCompatActivity {
 
@@ -111,6 +114,11 @@ public class ReservationTestingActivity extends AppCompatActivity {
     {
         AboutUsTextView.setOnClickListener(view -> {
             Intent intent = new Intent(ReservationTestingActivity.this,AboutUsActivity.class);
+
+            Bundle bundle = new Bundle();
+            intent.putExtra("categories",categories);
+            intent.putExtra("name",barberShop.getUsername());
+
             startActivity(intent);
             /**Without finish() to not close current Activity*/
         });
@@ -254,7 +262,8 @@ public class ReservationTestingActivity extends AppCompatActivity {
                 TreeSet<Long> disabledDates = new TreeSet<>();
                 disabledDates = getDisabledDates(allDays);
 
-//                 Disable all dates past today
+//                 Disable all dates past today -> Currently using async task
+                startBackgroundTask(disabledDates);
 //                CalendarUtils.disablePreviousDays(calendarView,disabledDates);
             }
         };
@@ -280,6 +289,27 @@ public class ReservationTestingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // ASYNCTASK for disabling previous days on calendar
+    private Executor backgroundExecutor = Executors.newSingleThreadExecutor();
+
+    private void startBackgroundTask(TreeSet<Long> disabledDates) {
+        backgroundExecutor.execute(() -> {
+            // Perform your background task here
+            // For example, call the CalendarUtils.disablePreviousDays(calendarView, disabledDates) method
+            CalendarUtils.disablePreviousDays(calendarView, disabledDates);
+
+            // Update the UI on the main thread if needed
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // Update the UI based on the background task result
+                    // For example, update the calendar view
+                    calendarView.invalidate();
+                }
+            });
+        });
     }
 
     private Bundle getUserInfoBundle()

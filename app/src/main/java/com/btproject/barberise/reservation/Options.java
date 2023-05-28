@@ -2,7 +2,9 @@ package com.btproject.barberise.reservation;
 
 import android.graphics.Path;
 
-public abstract class Options {
+import java.io.Serializable;
+
+public abstract class Options implements Serializable {
 
     protected String name;
 

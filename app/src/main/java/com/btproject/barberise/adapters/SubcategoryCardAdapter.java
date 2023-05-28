@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.btproject.barberise.R;
-import com.btproject.barberise.reservation.Category;
 import com.btproject.barberise.reservation.Subcategory;
 
 import java.util.ArrayList;
@@ -21,12 +20,12 @@ import java.util.ArrayList;
 public class SubcategoryCardAdapter extends RecyclerView.Adapter<SubcategoryCardAdapter.ViewHolder>{
 
     private Context context;
-    private Category category;
+    private ArrayList<Subcategory> subcategories;
 
-    public SubcategoryCardAdapter(Context context, CategoryCardAdapter categoryCardAdapter, Category category)
+    public SubcategoryCardAdapter(Context context, ArrayList<Subcategory> subcategories)
     {
         this.context = context;
-        this.category = category;
+        this.subcategories = subcategories;
     }
 
 
@@ -39,21 +38,13 @@ public class SubcategoryCardAdapter extends RecyclerView.Adapter<SubcategoryCard
 
     @Override
     public void onBindViewHolder(@NonNull SubcategoryCardAdapter.ViewHolder holder, int position) {
-        /**Get the current subcategory*/
 
-        ArrayList<Subcategory> subcategories = category.getSubcategories();
-
-        // Get current subcategory
-        Subcategory subcategory = subcategories.get(position);
-
-        holder.subcategoryNameEditText.setText(subcategory.getName());
-        holder.DescriptionEditText.setText(subcategory.getDescription());
-        holder.priceEditText.setText(Double.toString(subcategory.getPrice()));
+        int tempPos = position;
 
         /**Add listener to delete subcategory clicking frameLayout*/
         holder.inSubCardUserFragmentView.setOnClickListener(view -> {
-            int removedPosition = holder.getAdapterPosition();
-            subcategories.remove(removedPosition);
+            subcategories.remove(position);
+            notifyDataSetChanged();
         });
 
         /**Listener for subcategory name*/
@@ -74,33 +65,33 @@ public class SubcategoryCardAdapter extends RecyclerView.Adapter<SubcategoryCard
                 String subcategoryNameInput = holder.subcategoryNameEditText.getText().toString();
 
                 // Set the name to subcategory
-                subcategory.setName(subcategoryNameInput);
+                subcategories.get(tempPos).setName(subcategoryNameInput);
             }
         });
-
-        /**Listener for subcategory description*/
-        holder.DescriptionEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                // Get the name of the subcategory
-                String descriptionInput = holder.DescriptionEditText.getText().toString();
-
-                // Set the name to subcategory
-                subcategory.setDescription(descriptionInput);
-            }
-        });
-
-        /**Listener for subcategory price*/
+//
+//        /**Listener for subcategory description*/
+//        holder.DescriptionEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                // Get the name of the subcategory
+//                String descriptionInput = holder.DescriptionEditText.getText().toString();
+//
+//                // Set the name to subcategory
+//                subcategories.get(position).setDescription(descriptionInput);
+//            }
+//        });
+//
+//        /**Listener for subcategory price*/
 //        holder.DescriptionEditText.addTextChangedListener(new TextWatcher() {
 //            @Override
 //            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -118,7 +109,7 @@ public class SubcategoryCardAdapter extends RecyclerView.Adapter<SubcategoryCard
 //                String priceInput = holder.DescriptionEditText.getText().toString();
 //
 //                // Set the name to subcategory
-//                subcategory.setPrice(priceInput);
+//                subcategories.get(position).setPrice(Double.parseDouble(priceInput));
 //            }
 //        });
 
@@ -127,7 +118,7 @@ public class SubcategoryCardAdapter extends RecyclerView.Adapter<SubcategoryCard
 
     @Override
     public int getItemCount() {
-        return category.getSubcategories().size();
+        return subcategories.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -136,9 +127,9 @@ public class SubcategoryCardAdapter extends RecyclerView.Adapter<SubcategoryCard
 
         public ViewHolder(View itemView) {
             super(itemView);
-            subcategoryNameEditText = itemView.findViewById(R.id.subcategoryNameEditText);
-            DescriptionEditText = itemView.findViewById(R.id.DescriptionEditText);
-            priceEditText = itemView.findViewById(R.id.priceEditText);
+            subcategoryNameEditText = itemView.findViewById(R.id.subcategoryNameTextViewInSubservices);
+            DescriptionEditText = itemView.findViewById(R.id.DescriptionTextViewInSubServices);
+            priceEditText = itemView.findViewById(R.id.priceTextViewInSubServices);
 
             inSubCardUserFragmentView = itemView.findViewById(R.id.addSubcategoryButton);
         }

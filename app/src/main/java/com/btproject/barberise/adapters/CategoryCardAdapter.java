@@ -1,11 +1,13 @@
 package com.btproject.barberise.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.btproject.barberise.navigation.profile.SetUpSubcategoriesActivity;
 import com.btproject.barberise.reservation.Category;
 
 import java.util.ArrayList;
@@ -22,22 +24,53 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.btproject.barberise.R;
+import com.btproject.barberise.reservation.ReservationTestingActivity;
 import com.btproject.barberise.reservation.Subcategory;
+
+
 
 
 public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapter.ViewHolder>{
 
-    private static Context mContext;
-    private ArrayList<Category> categories;
-    private ArrayList<Subcategory> subcategories;
+    private static CategoryCardAdapter INSTANCE;
 
-    public CategoryCardAdapter(Context mContext,ArrayList<Category> categories)
+
+    public interface CategoryRemoveListener {
+        void onCategoryRemoved(Category category);
+    }
+
+
+    private Context mContext;
+    private ArrayList<Category> categories;
+
+    private CategoryRemoveListener categoryRemoveListener;
+
+    private CategoryCardAdapter()
+    {
+    }
+
+    public void setContextAndCategories(Context mContext,ArrayList<Category> categories)
     {
         this.mContext = mContext;
         this.categories = categories;
-        subcategories = new ArrayList<>();
     }
 
+    public static CategoryCardAdapter getCategoryCardAdapter()
+    {
+        if(INSTANCE == null)
+            return new CategoryCardAdapter();
+        else
+            return INSTANCE;
+    }
+
+    public void setCategoryRemoveListener(CategoryRemoveListener listener) {
+        this.categoryRemoveListener = listener;
+    }
+
+    public void addCategory(Category category) {
+        categories.add(category);
+        notifyItemInserted(categories.size() - 1);
+    }
 
     @NonNull
     @Override
@@ -49,12 +82,32 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
     @Override
     public void onBindViewHolder(@NonNull CategoryCardAdapter.ViewHolder holder, int position) {
 
-        Category category = categories.get(position);
+        holder.goIntoCategoryFrameLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(mContext, SetUpSubcategoriesActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+        });
 
-        // Set category name
-        holder.categoryName.setText(category.getName());
+        holder.removeCategoryFrameLayout.setOnClickListener(view -> {
+            if (position >= 0 && position < categories.size()) {
+                Category category = categories.get(position);
+                categories.remove(category);
+                if (categories.isEmpty()) {
+                    notifyDataSetChanged();
+                    if (categoryRemoveListener != null) {
+                        categoryRemoveListener.onCategoryRemoved(category);
+                    }
+                } else {
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, categories.size());
+                    if (categoryRemoveListener != null) {
+                        categoryRemoveListener.onCategoryRemoved(category);
+                    }
+                }
+            }
+        });
 
-        /** Add a watcher for categoryEditText to set category name*/
+        /**Listener for subcategory name*/
         holder.categoryName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -68,45 +121,20 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
 
             @Override
             public void afterTextChanged(Editable editable) {
-                // Get the name of the category
-                String categoryInput = holder.categoryName.getText().toString();
+                // Get the name of the subcategory
+                String subcategoryNameInput = holder.categoryName.getText().toString();
 
-                // Set the name to category
-                categories.get(holder.getAdapterPosition()).setName(categoryInput);
+                // Set the name to subcategory
+                categories.get(position).setName(subcategoryNameInput);
             }
         });
 
-        holder.addSubcategoryFrameLayout.setOnClickListener(view ->
-        {
-            // Create new subcategory and add it to the category
-            Subcategory subcategory = new Subcategory();
-            category.addSubcategory(subcategory);
-
-            int index = category.getSubcategories().indexOf(subcategory);
-
-            if(holder.subcategoryCardAdapter == null)
-            {
-                holder.subcategoryCardAdapter = new SubcategoryCardAdapter(mContext,this,category);
-                holder.inCategoryCardRecyclerView.setAdapter(holder.subcategoryCardAdapter);
-            }
-
-            holder.subcategoryCardAdapter.notifyItemInserted(index);
-        });
-
-        holder.removeSubcategoryFrameLayout.setOnClickListener(view -> {
-            int removedPosition = holder.getAdapterPosition();
-            categories.remove(removedPosition);
-            notifyItemRemoved(removedPosition);
-        });
+        /** Display name*/
+        holder.categoryName.setText(categories.get(position).getName());
 
 
     }
 
-
-    private void initAdapter()
-    {
-
-    }
 
     @Override
     public int getItemCount() {
@@ -116,25 +144,21 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected EditText categoryName;
-        protected FrameLayout addSubcategoryFrameLayout,removeSubcategoryFrameLayout;
-        protected RecyclerView inCategoryCardRecyclerView;
-        protected SubcategoryCardAdapter subcategoryCardAdapter;
-        protected boolean isCustomized = false;
+        protected FrameLayout goIntoCategoryFrameLayout,removeCategoryFrameLayout;
+
+        protected TextView firstSubcategoryDesTextView, SubcategoriesTotalTextView, firstSubcategoryTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             categoryName = itemView.findViewById(R.id.categoryEditText);
-            addSubcategoryFrameLayout = itemView.findViewById(R.id.addSubcategoryButton);
-            removeSubcategoryFrameLayout = itemView.findViewById(R.id.removeCategoryButton);
-            inCategoryCardRecyclerView = itemView.findViewById(R.id.inCategoryCardRecyclerView);
-            initRecyclerView();
+            goIntoCategoryFrameLayout = itemView.findViewById(R.id.addSubcategoryButton);
+            removeCategoryFrameLayout = itemView.findViewById(R.id.removeCategoryButton);
+
+            firstSubcategoryDesTextView = itemView.findViewById(R.id.firstSubcategoryDesTextView);
+            SubcategoriesTotalTextView = itemView.findViewById(R.id.SubcategoriesTotalTextView);
+            firstSubcategoryTextView = itemView.findViewById(R.id.firstSubcategoryTextView);
         }
 
-        protected void initRecyclerView()
-        {
-            inCategoryCardRecyclerView.setHasFixedSize(true);
-            inCategoryCardRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,false));
-        }
 
     }
 

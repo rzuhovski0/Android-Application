@@ -17,14 +17,14 @@ import com.btproject.barberise.reservation.Subcategory;
 
 import java.util.ArrayList;
 
-public class SetUpServicesActivity extends AppCompatActivity {
+public class SetUpServicesActivity extends AppCompatActivity implements CategoryCardAdapter.CategoryRemoveListener {
 
-    private ArrayList<Category> categories = new ArrayList<>();
+    public ArrayList<Category> categories = new ArrayList<>();
     private CategoryCardAdapter categoryCardAdapter;
     private RecyclerView recyclerView;
     private Button addCategoryButton;
 
-    private TextView saveTextView;
+    private TextView saveTextView,textView8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class SetUpServicesActivity extends AppCompatActivity {
 
         addCategoryButton = findViewById(R.id.addCategoryButton);
         saveTextView = findViewById(R.id.inSetServicesSaveTextView);
+        textView8 = findViewById(R.id.textView8);
 
         initRecyclerView();
 
@@ -42,32 +43,20 @@ public class SetUpServicesActivity extends AppCompatActivity {
             Category category = new Category();
             categories.add(category);
 
-            // Update categories inside adapter
-//            categoryCardAdapter.addCategory(category);
-
-            //Get item index and notify adapter
-            int index = getItemIndex(category);
-//            categoryCardAdapter.notifyItemInserted(index);
+            // Add the new category to the adapter
             categoryCardAdapter.notifyDataSetChanged();
         });
 
         initAdapter();
 
         saveTextView.setOnClickListener(view -> {
-            RegistrationActivity.categories = categories;
-            onBackPressed();
-        });
-    }
-
-    private int getItemIndex(Category categoryInput) {
-        int i = 0;
-        for(Category category : categories) {
-            if(category == categoryInput) {
-                return i;
+    //            RegistrationActivity.categories = categories;
+    //            onBackPressed();
+            for(Category category : categories)
+            {
+                category.getSubcategories();
             }
-            i++;
-        }
-        return -1;
+        });
     }
 
     private void initRecyclerView()
@@ -79,7 +68,16 @@ public class SetUpServicesActivity extends AppCompatActivity {
 
     private void initAdapter()
     {
-        categoryCardAdapter = new CategoryCardAdapter(getApplicationContext(),categories);
+        categoryCardAdapter = CategoryCardAdapter.getCategoryCardAdapter();
         recyclerView.setAdapter(categoryCardAdapter);
+        categoryCardAdapter.setContextAndCategories(getApplicationContext(),categories);
+        // Set the CategoryRemoveListener to the adapter
+        categoryCardAdapter.setCategoryRemoveListener(this);
     }
+
+    @Override
+    public void onCategoryRemoved(Category category) {
+        categories.remove(category);
+    }
+
 }

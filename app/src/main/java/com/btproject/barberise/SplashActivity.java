@@ -9,6 +9,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.btproject.barberise.navigation.MenuActivity;
+import com.btproject.barberise.navigation.profile.RegistrationActivity;
+import com.btproject.barberise.navigation.profile.SetUpServicesActivity;
+import com.btproject.barberise.navigation.profile.SetUpServicesSecondActivity;
 import com.btproject.barberise.utils.CalendarUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,8 +21,7 @@ import java.util.Set;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private Set<Long> previousDays;
-    private Long[] previousDaysArray;
+    private long[] previousDaysArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +29,23 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         hideSystemUI();
-//        previousDays = CalendarUtils.getPreviousDays();
-//        previousDaysArray = previousDays.toArray(new Long[previousDays.size()]);
-        splashCountdown();
+        Set<Long> previousDays = CalendarUtils.getPreviousDays();
+        previousDaysArray = getConvertedPreviousDays(previousDays);
+        splashCountdown(previousDaysArray);
     }
 
-    private void splashCountdown()
+    public long[] getConvertedPreviousDays(Set<Long> previousDays)
+    {
+        // Convert the set of Long values to an array of long
+        long[] previousDaysArray = new long[previousDays.size()];
+        int i = 0;
+        for (Long day : previousDays) {
+            previousDaysArray[i++] = day;
+        }
+        return previousDaysArray;
+    }
+
+    private void splashCountdown(long[] previousDaysArray)
     {
         new CountDownTimer(1000, 1000) {
             @Override
@@ -44,8 +57,11 @@ public class SplashActivity extends AppCompatActivity {
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(firebaseUser != null){
                     Intent intent = new Intent(SplashActivity.this,MenuActivity.class);
-//                    intent.putExtra("previousDays",previousDaysArray);
+
+                    // Pass the array of long values as an extra to the intent
+                    intent.putExtra("previousDays",previousDaysArray);
                     startActivity(intent);
+//                    startActivity(new Intent(SplashActivity.this, SetUpServicesSecondActivity.class));
                 }else{
                     startActivity(new Intent(SplashActivity.this, VerifyPhoneNoActivity.class));
                     finish();   //removes current activity from backstack

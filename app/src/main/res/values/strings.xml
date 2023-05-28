@@ -108,6 +108,7 @@
     <!--Chosen user-->
     <string name="contact_info">Contact information ›</string>
     <string name="about_us">About us ›</string>
+    <string name="services">Our services :</string>
 
     <!--Reservation-->
     <string name="choose_category">Choose category</string>

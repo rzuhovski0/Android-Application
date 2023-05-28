@@ -15,7 +15,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/removeCategoryButton"
@@ -56,7 +56,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/plus" />
+                    android:src="@drawable/box_arrow_in_right" />
 
             </FrameLayout>
 
@@ -76,16 +76,35 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/firstSubcategoryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_bold"
+                android:text="TextView"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/categoryEditText"
+                app:layout_constraintTop_toBottomOf="@+id/categoryEditText" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/inCategoryCardRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/categoryEditText"
-                tools:itemCount="5"
-                tools:listitem="@layout/subcategory_card" />
+            <TextView
+                android:id="@+id/firstSubcategoryDesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen"
+                android:text="TextView"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/firstSubcategoryTextView"
+                app:layout_constraintTop_toBottomOf="@+id/firstSubcategoryTextView" />
+
+            <TextView
+                android:id="@+id/SubcategoriesTotalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="@+id/firstSubcategoryDesTextView"
+                app:layout_constraintTop_toBottomOf="@+id/firstSubcategoryDesTextView" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

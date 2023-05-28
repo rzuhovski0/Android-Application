@@ -19,7 +19,7 @@ public class Subcategory extends Options{
     }
 
     public String getName() {
-        return name;
+        return name + " " + String.valueOf(getPrice()) + "€";
     }
 
     public double getPrice() {

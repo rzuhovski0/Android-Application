@@ -49,6 +49,10 @@ public class UserResCardAdapter extends RecyclerView.Adapter<UserResCardAdapter.
         if(clientName != null)
             holder.inResCardUserClientNameTextView.setText(clientName);
 
+        String phoneNo = reservations.get(position).getClientPhoneNo();
+        if(phoneNo != null)
+            holder.phoneNoTextView.setText(phoneNo);
+
         /**Subcategory string*/
         String subcategoryName = reservations.get(position).getSubcategoryName();
         if(subcategoryName != null)
