@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.btproject.barberise.R;
 import com.btproject.barberise.adapters.ReservationCardAdapter;
@@ -33,14 +35,22 @@ public class PartnerSignedInActivity extends AppCompatActivity {
 
     private ArrayList<Reservation> reservations = new ArrayList<>();
 
+    private TextView myProfileTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partner_signed_in);
 
+        myProfileTextView = findViewById(R.id.myProfileTextView);
         recyclerView = findViewById(R.id.reservationRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false));
+
+        myProfileTextView.setOnClickListener(view ->{
+            startActivity(new Intent(PartnerSignedInActivity.this, PartnerProfileSettingsActivity.class));
+        });
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

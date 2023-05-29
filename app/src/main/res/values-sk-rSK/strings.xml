@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">barberise-app</string>
-    <string name="sign_ip">Zapamätať email</string>
+    <string name="sign_up">Prihlásiť sa</string>
     <string name="continue_guest">Preskočiť ›</string>
     <string name="save">Uložit</string>
     <string name="title_activity_menu">Menu Activity</string>
@@ -39,6 +39,9 @@
     <string name="surname">Priezvisko</string>
     <string name="sign_out">Odhlásiť sa</string>
     <string name="delete_acc">Vymazať údaje</string>
+    <string name="contact_us">Kontaktuj nás priamo cez tiket!</string>
+    <string name="your_message">Tvoja správa...</string>
+    <string name="we_will_reach">My sa ti ozveme mailom</string>
     <string name="Monday">Pondelok</string>
     <string name="Tuesday">Utorok</string>
     <string name="Wednesday">Streda</string>
@@ -103,5 +106,8 @@
     <string name="num_of_subservices">Počet podslužieb každej služby</string>
     <string name="num_of_subservices_example">(Príklad: Ak má služba \"Krátke vlasy\" 2 čiastkové služby (\"Strihanie nožnicami a strihanie britvou\"), uveďte \"2\".)</string>
     <string name="confirm">Potvrdiť</string>
+    <string name="my_profile">Môj profil</string>
+    <string name="support">Kontaktovať podporu ›</string>
+    <string name="logout">Odhlásiť sa</string>
 
 </resources>

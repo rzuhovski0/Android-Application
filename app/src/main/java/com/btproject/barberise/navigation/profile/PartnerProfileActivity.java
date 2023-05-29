@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +52,12 @@ public class PartnerProfileActivity extends AppCompatActivity {
             String password = passwordRegisterEditText.getText().toString();
 
             if(!email.equals("") && !password.equals("")){
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                {
+                    Toast.makeText(getApplicationContext(),R.string.valid_email,Toast.LENGTH_LONG).show();
+                    emailRegisterEditText.requestFocus();
+                    return;
+                }
                 Intent intent = new Intent(PartnerProfileActivity.this,RegistrationActivity.class);
                 intent.putExtra("email",email);
                 intent.putExtra("password",password);
@@ -64,6 +71,12 @@ public class PartnerProfileActivity extends AppCompatActivity {
             String email = emailLoginEditText.getText().toString();
             String password = passwordLoginEditText.getText().toString();
             if(!email.equals("") && !password.equals("")) {
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                {
+                    Toast.makeText(getApplicationContext(),R.string.valid_email,Toast.LENGTH_LONG).show();
+                    emailLoginEditText.requestFocus();
+                    return;
+                }
                 signIn(email,password);
             }else {
                 Toast.makeText(PartnerProfileActivity.this,

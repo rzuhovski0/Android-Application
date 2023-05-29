@@ -6,13 +6,11 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.btproject.barberise.R;
-import com.btproject.barberise.reservation.ReservationActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +37,7 @@ public class SetUpOpeningHoursActivity extends AppCompatActivity{
 
     private ArrayList<String> daysName = new ArrayList<>();
 
-
+    String sourceActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +52,11 @@ public class SetUpOpeningHoursActivity extends AppCompatActivity{
         // Set time dialogs
         setTimePickerForTextViews();
 
+        sourceActivity = getIntent().getStringExtra("sourceActivity");
+
+        // Check the value of sourceActivity
+
+
 
         saveChangesTextView.setOnClickListener(view -> {
             /**User wants to use default hours*/
@@ -61,7 +64,17 @@ public class SetUpOpeningHoursActivity extends AppCompatActivity{
             {
                 setDefaultTimeOnTextViews();
                 setDefaultTimeToMap();
-                RegistrationActivity.hoursConfigured = true;
+
+
+                if (sourceActivity.equals("PartnerProfileSettingsActivity")) {
+                    // The new activity was created from Activity A
+                    PartnerProfileSettingsActivity.hoursConfigured = true;
+                    PartnerProfileSettingsActivity.hoursUpdated = true;
+                } else if (sourceActivity.equals("RegistrationActivity")) {
+                    RegistrationActivity.hoursConfigured = true;
+                }
+
+
                 onBackPressed();
             }else{ /** Custom hours configured*/
 
@@ -69,13 +82,28 @@ public class SetUpOpeningHoursActivity extends AppCompatActivity{
                 /** Check if all days have correctly configured opening hours*/
                 for(String day : daysName)
                 {
-                    if(RegistrationActivity.openingHours.get(day) == null) {
-                        daysCorrectlyConfigured = false;
-                        break;
+                    if (sourceActivity.equals("PartnerProfileSettingsActivity")) {
+                        // The new activity was created from Activity A
+                        if(PartnerProfileSettingsActivity.openingHours.get(day) == null) {
+                            PartnerProfileSettingsActivity.hoursUpdated = true;
+                            daysCorrectlyConfigured = false;
+                            break;
+                        }
+                    } else if (sourceActivity.equals("RegistrationActivity")) {
+                        if(RegistrationActivity.openingHours.get(day) == null) {
+                            daysCorrectlyConfigured = false;
+                            break;
+                        }
                     }
                 }
                 if(daysCorrectlyConfigured) {
-                    RegistrationActivity.hoursConfigured = true;
+                    if (sourceActivity.equals("PartnerProfileSettingsActivity")) {
+                        // The new activity was created from Activity A
+                        PartnerProfileSettingsActivity.hoursConfigured = true;
+                        PartnerProfileSettingsActivity.hoursUpdated = true;
+                    } else if (sourceActivity.equals("RegistrationActivity")) {
+                        RegistrationActivity.hoursConfigured = true;
+                    }
                     onBackPressed();
                 }else
                     Toast.makeText(getApplicationContext(),R.string.check_hours,Toast.LENGTH_LONG).show();
@@ -103,7 +131,14 @@ public class SetUpOpeningHoursActivity extends AppCompatActivity{
         for(String day : daysName)
         {
             ArrayList<String> openingHours = getReservationSlots(9,17);
-            RegistrationActivity.openingHours.put(day,openingHours);
+            if (sourceActivity.equals("PartnerProfileSettingsActivity")) {
+                // The new activity was created from Activity A
+                PartnerProfileSettingsActivity.hoursUpdated = true;
+                PartnerProfileSettingsActivity.openingHours.put(day,openingHours);
+            } else if (sourceActivity.equals("RegistrationActivity")) {
+                RegistrationActivity.openingHours.put(day,openingHours);
+            }
+
         }
     }
 
@@ -212,9 +247,13 @@ public class SetUpOpeningHoursActivity extends AppCompatActivity{
                     closingMinute = minute;
 
                     if (isValidTimeRange()) {
-
-                        RegistrationActivity.openingHours.put(dayString,getReservationSlots(openingHour,closingHour));
-
+                        if (sourceActivity.equals("PartnerProfileSettingsActivity")) {
+                            // The new activity was created from Activity A
+                            PartnerProfileSettingsActivity.hoursUpdated = true;
+                            PartnerProfileSettingsActivity.openingHours.put(dayString,getReservationSlots(openingHour,closingHour));
+                        } else if (sourceActivity.equals("RegistrationActivity")) {
+                            RegistrationActivity.openingHours.put(dayString,getReservationSlots(openingHour,closingHour));
+                        }
                         updateTextView(textView);
                     } else {
                         Toast.makeText(getApplicationContext(), "Invalid time range", Toast.LENGTH_SHORT).show();
@@ -290,7 +329,7 @@ public class SetUpOpeningHoursActivity extends AppCompatActivity{
         openingHoursTextArray.add(sundayEditText);
         daysName.add("Sunday");
 
-        saveChangesTextView = findViewById(R.id.saveChangesTextView);
+        saveChangesTextView = findViewById(R.id.logOutTextView);
     }
 
 

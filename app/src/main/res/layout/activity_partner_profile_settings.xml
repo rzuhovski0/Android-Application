@@ -35,14 +35,14 @@
         android:id="@+id/shopNameEditText"
         android:layout_width="350dp"
         android:layout_height="48dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/rounded"
         android:backgroundTint="#D9D9D9"
         android:fontFamily="@font/sen"
         android:hint="@string/business_name"
         android:inputType="textPersonName"
-        android:paddingEnd="20dp"
         android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#BF000000"
@@ -91,28 +91,16 @@
         android:id="@+id/inRegEmailTextView"
         android:layout_width="350dp"
         android:layout_height="48dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/rounded"
         android:backgroundTint="#D9D9D9"
-        android:fontFamily="@font/sen"
+        android:fontFamily="@font/sen_bold"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:drawableRight="@drawable/check_circle"
-        android:paddingEnd="20dp"
         android:hint="@string/youremail_gmail_com"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sen"
-        android:text="@string/email_reminder"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/inRegEmailTextView"
-        app:layout_constraintTop_toBottomOf="@+id/inRegEmailTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/shopNameEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hintTextView" />
 
     <EditText
         android:id="@+id/inRegAddressEditTextView"
@@ -123,12 +111,12 @@
         android:backgroundTint="#D9D9D9"
         android:fontFamily="@font/sen"
         android:gravity="center_vertical"
+        android:hint="@string/address_format"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:hint="@string/address_format"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+        app:layout_constraintStart_toStartOf="@+id/inRegPhoneNoEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/textView26"
@@ -141,18 +129,32 @@
         app:layout_constraintTop_toBottomOf="@+id/inRegAddressEditTextView" />
 
     <TextView
-        android:id="@+id/registerTextView"
+        android:id="@+id/saveChangesTextView"
         android:layout_width="150dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/round_corners_stroke"
         android:gravity="center"
-        android:text="@string/register"
+        android:text="@string/save_changes"
         android:textColor="@color/orange"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/logOutTextView"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:background="@drawable/round_corners_stroke_red"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="@string/logout"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/setUpOpeningHoursTextView"
@@ -177,29 +179,14 @@
         app:layout_constraintTop_toBottomOf="@+id/setUpOpeningHoursTextView" />
 
     <TextView
-        android:id="@+id/pictureConfiguredTextView"
+        android:id="@+id/contactSupportTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/check_circle"
-        app:layout_constraintBottom_toTopOf="@+id/ProfileImageView"
-        app:layout_constraintEnd_toEndOf="@+id/ProfileImageView" />
-
-    <TextView
-        android:id="@+id/servicesConfiguredTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableRight="@drawable/check_circle"
-        android:paddingEnd="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/inRegEmailTextView"
-        app:layout_constraintTop_toTopOf="@+id/setUpServicesTextView" />
-
-    <TextView
-        android:id="@+id/openingHoursConfiguredTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableRight="@drawable/check_circle"
-        android:paddingEnd="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/inRegEmailTextView"
-        app:layout_constraintTop_toTopOf="@+id/setUpOpeningHoursTextView" />
+        android:layout_marginTop="25dp"
+        android:textSize="16sp"
+        android:text="@string/support"
+        android:fontFamily="@font/sen_bold"
+        app:layout_constraintStart_toStartOf="@+id/setUpServicesTextView"
+        app:layout_constraintTop_toBottomOf="@+id/setUpServicesTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

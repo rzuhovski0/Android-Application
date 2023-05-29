@@ -28,12 +28,16 @@ public class ConfigureServicesActivity extends AppCompatActivity {
     private ArrayList<Category> categories = new ArrayList<>();
     private ConfServicesCardAdapter confServicesCardAdapter;
 
+    String sourceActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configure_services);
 
         initItems();
+
+        sourceActivity = getIntent().getStringExtra("sourceActivity");
 
         // Init visibility
         recyclerView.setVisibility(View.GONE);
@@ -60,7 +64,12 @@ public class ConfigureServicesActivity extends AppCompatActivity {
         });
 
         saveSettingsButton.setOnClickListener(view -> {
-            RegistrationActivity.categories = categories;
+            if (sourceActivity.equals("PartnerProfileSettingsActivity")) {
+                PartnerProfileSettingsActivity.categories = categories;
+                PartnerProfileSettingsActivity.servicesUpdated = true;
+            } else if (sourceActivity.equals("RegistrationActivity")) {
+                RegistrationActivity.categories = categories;
+            }
             onBackPressed();
         });
     }

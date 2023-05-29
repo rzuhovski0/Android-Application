@@ -64,7 +64,21 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 
         removeAccButton.setOnClickListener(view ->
         {
-            Toast.makeText(getApplicationContext(),"Not implemented yet",Toast.LENGTH_SHORT).show();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                user.delete()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Account deleted successfully
+                        mAuth.signOut();
+                        // Add any additional code to handle the sign out process, such as navigating back to the login screen
+                        startActivity(new Intent(ProfileSettingsActivity.this, VerifyPhoneNoActivity.class));
+                        finish();   //removes current activity from backstack
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Ups, something went wrong.. Try again.",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         });
 
         signOutButton.setOnClickListener(view ->
@@ -243,6 +257,12 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         /**Set correct color for remove acc button*/
         setColor(removeAccButton,R.color.red);
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user == null) {
+            setColor(signOutButton, R.color.green);
+            signOutButton.setText(R.string.sign_up);
+        }
+
         nameEditText = findViewById(R.id.firstnameEditText);
         surnameEditText = findViewById(R.id.surnameEditText);
         phoneEditText = findViewById(R.id.phoneTextView);
@@ -252,8 +272,8 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 
     private void setColor(Button button, @ColorRes int id)
     {
-        int redColor = ContextCompat.getColor(this, id);
-        button.setBackgroundTintList(ColorStateList.valueOf(redColor));
+        int color = ContextCompat.getColor(this, id);
+        button.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
 }

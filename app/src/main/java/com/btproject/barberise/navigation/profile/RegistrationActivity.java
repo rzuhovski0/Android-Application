@@ -50,8 +50,9 @@ RegistrationActivity extends AppCompatActivity {
     private ImageView profileImageView;
     boolean imageControl = false;
     Uri imageUri;
-    ActivityResultLauncher<Intent> activityResultLauncher;
     private Bitmap selectedImage;
+
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     //name,email and password
     private String email,password;
@@ -98,7 +99,6 @@ RegistrationActivity extends AppCompatActivity {
         setUpServicesTextView = findViewById(R.id.setUpServicesTextView);
         servicesConfiguredTextView = findViewById(R.id.servicesConfiguredTextView);
         servicesConfiguredTextView.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -130,12 +130,16 @@ RegistrationActivity extends AppCompatActivity {
 
         setUpOpeningHoursTextView.setOnClickListener(view ->
         {
-            startActivity(new Intent(RegistrationActivity.this,SetUpOpeningHoursActivity.class));
+            Intent intent = new Intent(RegistrationActivity.this, SetUpOpeningHoursActivity.class);
+            intent.putExtra("sourceActivity", "RegistrationActivity");
+            startActivity(intent);
         });
 
         setUpServicesTextView.setOnClickListener(view ->
         {
-            startActivity(new Intent(RegistrationActivity.this,ConfigureServicesActivity.class));
+            Intent intent = new Intent(RegistrationActivity.this, ConfigureServicesActivity.class);
+            intent.putExtra("sourceActivity", "RegistrationActivity");
+            startActivity(intent);
         });
 
 
@@ -143,7 +147,7 @@ RegistrationActivity extends AppCompatActivity {
 //        addAttributesToUsers(getOpeningHours(),getCategories());
 
         profileImageView = findViewById(R.id.ProfileImageView);
-        saveChangesTextView = findViewById(R.id.saveChangesTextView);
+        saveChangesTextView = findViewById(R.id.registerTextView);
         userNameEditText = findViewById(R.id.shopNameEditText);
 
 
