@@ -42,6 +42,9 @@
     <string name="contact_us">Kontaktuj nás priamo cez tiket!</string>
     <string name="your_message">Tvoja správa...</string>
     <string name="we_will_reach">My sa ti ozveme mailom</string>
+    <string name="message_success">Tvoja správa bola úspešne odoslaná</string>
+    <string name="switch_lang">Jazyk ></string>
+    <string name="news_sub">Odber noviniek a promo ponúk ></string>
     <string name="Monday">Pondelok</string>
     <string name="Tuesday">Utorok</string>
     <string name="Wednesday">Streda</string>
@@ -109,5 +112,16 @@
     <string name="my_profile">Môj profil</string>
     <string name="support">Kontaktovať podporu ›</string>
     <string name="logout">Odhlásiť sa</string>
+    <string name="error_lang">Táto funkcia nie je v súčasnosti k dispozícii. Aplikácia používa predvolený strojový jazyk, ak chcete prepnúť jazyk, prejdite do nastavení telefónu. Ospravedlňujeme sa za nepríjemnosti</string>
+    <string name="news_error">Novinky vám budeme posielať na vašu e-mailovú adresu.</string>
+    <string name="version">Verzia 0.0.1A</string>
+    <string name="rate_app">Ohodnoť aplikáciu ></string>
+    <string name="instagram">Podpor nás na Instagrame ></string>
+    <string name="terms">Právne informácie ></string>
+    <string name="contact">Kontakt ></string>
+    <string name="rate_warn">Toto bude implementované pri nahrávaní aplikácie do obchodu PlayStore</string>
+    <string name="instagram_warn">V súčasnosti nemáme Instagram</string>
+    <string name="terms_warn">Kontaktujte distribútora aplikácie pre právne podmienky</string>
+    <string name="contact_warn">filip.rzuhovsky@gmail.com</string>
 
 </resources>

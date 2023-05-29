@@ -94,7 +94,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TableRow
-        android:id="@+id/hr"
+        android:id="@+id/hr22"
         android:layout_width="350dp"
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
@@ -158,7 +158,7 @@
         android:fontFamily="@font/sen"
         android:text="@string/about_us"
         app:layout_constraintStart_toStartOf="@+id/contactInfoTextView"
-        app:layout_constraintTop_toBottomOf="@+id/hr" />
+        app:layout_constraintTop_toBottomOf="@+id/hr22" />
 
 
     <TextView

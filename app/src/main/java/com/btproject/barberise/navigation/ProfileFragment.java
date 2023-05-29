@@ -13,12 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.btproject.barberise.AboutAppActivity;
+import com.btproject.barberise.AppSettingsActivity;
+import com.btproject.barberise.ContactSupportActivity;
 import com.btproject.barberise.R;
 import com.btproject.barberise.database.clientDAO;
-import com.btproject.barberise.navigation.profile.PartnerProfileActivity;
 import com.btproject.barberise.settings.ProfileSettingsActivity;
 import com.btproject.barberise.settings.PromoActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +40,7 @@ public class ProfileFragment extends Fragment {
 
     // Helper val for getting name and surname
     private String returnValue;
-    private TextView partnerProfileTextView,profileTextView,secondProfileTextView;
+    private TextView partnerProfileTextView,profileTextView,secondProfileTextView,helpTextView,aboutUsTextView,settingsTextView;
     private TextView usrNameTextView,usrPhoneTextView;
 
     private HashMap<String, String> credentials = new HashMap<>();
@@ -122,6 +123,21 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
+        helpTextView.setOnClickListener(View -> {
+            Intent intent = new Intent(context, ContactSupportActivity.class);
+            startActivity(intent);
+        });
+
+        aboutUsTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, AboutAppActivity.class);
+            startActivity(intent);
+        });
+
+        settingsTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, AppSettingsActivity.class);
+            startActivity(intent);
+        });
+
         return rootView;
     }
 
@@ -166,6 +182,9 @@ public class ProfileFragment extends Fragment {
         partnerProfileTextView = rootView.findViewById(R.id.partnerTextView);
         profileTextView = rootView.findViewById(R.id.profileTextView);
         secondProfileTextView = rootView.findViewById(R.id.secondProfileTextView);
+        helpTextView = rootView.findViewById(R.id.helpTextView);
+        aboutUsTextView = rootView.findViewById(R.id.aboutUsTextView);
+        settingsTextView = rootView.findViewById(R.id.settingsTextView);
         /**Set the correct color for */
 
     }

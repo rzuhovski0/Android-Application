@@ -88,7 +88,7 @@
             </FrameLayout>
 
             <TableRow
-                android:id="@+id/hr"
+                android:id="@+id/hr22"
                 android:layout_width="350dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"

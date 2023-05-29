@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.btproject.barberise.ContactSupportActivity;
 import com.btproject.barberise.R;
 import com.btproject.barberise.VerifyPhoneNoActivity;
 import com.btproject.barberise.reservation.Category;
@@ -109,7 +110,7 @@ public class PartnerProfileSettingsActivity extends AppCompatActivity {
         getUserData(callback);
 
         contactSupportTextView.setOnClickListener(view -> {
-
+            startActivity(new Intent(PartnerProfileSettingsActivity.this, ContactSupportActivity.class));
         });
 
         registerActivityForSelectImage();
