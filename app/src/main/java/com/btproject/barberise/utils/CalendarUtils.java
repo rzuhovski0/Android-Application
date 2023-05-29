@@ -145,8 +145,8 @@ public class CalendarUtils {
 
     public static void disablePreviousDays(CalendarView calendarView,TreeSet<Long> alreadyReservedDates)
     {
-//        Set<Long> disabledDays = getPreviousDays();
-        Set<Long> disabledDays = MenuActivity.getPreviousDays();
+        Set<Long> disabledDays = getPreviousDays();
+//        Set<Long> disabledDays = MenuActivity.getPreviousDays();
         disabledDays.addAll(alreadyReservedDates);
         calendarView.setDisabledDays(disabledDays);
     }

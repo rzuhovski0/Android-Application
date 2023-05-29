@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/inServicesRecyclerView"
+        android:id="@+id/inConfRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -32,7 +32,7 @@
         tools:listitem="@layout/category_card" />
 
     <Button
-        android:id="@+id/addCategoryButton"
+        android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -41,12 +41,12 @@
         android:text="Add"
         android:textAllCaps="false"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/inSetServicesSaveTextView"
+        app:layout_constraintEnd_toStartOf="@+id/saveSettingsButton"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/inSetServicesSaveTextView"
+        android:id="@+id/saveSettingsButton"
         android:layout_width="75dp"
         android:layout_height="48dp"
         android:layout_marginEnd="25dp"
@@ -55,7 +55,7 @@
         android:gravity="center"
         android:text="@string/save"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/inServicesRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/inConfRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

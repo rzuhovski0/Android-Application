@@ -48,6 +48,7 @@
     <string name="Sunday">Nedela</string>
     <string name="set_opening_hours">Nastaviť otváracie hodiny ›</string>
     <string name="set_categories">Nastaviť služby ›</string>
+    <string name="service_type">Typ služby</string>
     <string name="check_hours">Skontrolujte prosím, či každý deň má správne nastavené otváracie hodiny</string>
     <string name="forgot_password">Zabudnuté heslo?</string>
     <string name="contact_info">Kontaktné údaje ›</string>
@@ -92,5 +93,15 @@
     <string name="back_to_login">Prejsť na login</string>
     <string name="address_format">Ulica č., Mesto, Štát</string>
     <string name="check_info">Skontrolujte prosím či ste zadali všetky potrebné údaje</string>
+    <string name="service">Služba</string>
+    <string name="service_description">Opis služby</string>
+    <string name="price">Cena</string>
+    <string name="services_intro">Tu môžete nakonfigurovať kategórie a podkategórie</string>
+    <string name="services_explanation">Začneme výberom toho, koľko služieb a koľko podslužieb budete poskytovať</string>
+    <string name="num_of_services">Počet služieb</string>
+    <string name="num_of_services_example">(Príklad: ak \"krátke vlasy\" a \"dlhé vlasy\", uveďte \"2\")</string>
+    <string name="num_of_subservices">Počet podslužieb každej služby</string>
+    <string name="num_of_subservices_example">(Príklad: Ak má služba \"Krátke vlasy\" 2 čiastkové služby (\"Strihanie nožnicami a strihanie britvou\"), uveďte \"2\".)</string>
+    <string name="confirm">Potvrdiť</string>
 
 </resources>

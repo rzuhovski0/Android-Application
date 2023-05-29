@@ -2,11 +2,21 @@ package com.btproject.barberise.navigation;
 
 import static com.btproject.barberise.database.clientDAO.clientDataValid;
 import static com.btproject.barberise.database.clientDAO.getAuthUser;
+import static com.btproject.barberise.utils.DatabaseUtils.getReservationsRealTime;
+import static com.btproject.barberise.utils.ReservationUtils.sortReservations;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,12 +25,16 @@ import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.btproject.barberise.R;
 import com.btproject.barberise.database.clientDAO;
 import com.btproject.barberise.databinding.ActivityMenuBinding;
+import com.btproject.barberise.navigation.profile.User;
 import com.btproject.barberise.registration.NewUserActivity;
+import com.btproject.barberise.reservation.DataFetchCallback;
+import com.btproject.barberise.reservation.Reservation;
 import com.btproject.barberise.utils.CalendarUtils;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,28 +56,27 @@ public class MenuActivity extends AppCompatActivity {
         binding = ActivityMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        boolean openReservations = getIntent().getBooleanExtra("openReservations",false);
-        boolean REGISTER_FLAG = getIntent().getBooleanExtra("REGISTER_FLAG",false);
+        boolean openReservations = getIntent().getBooleanExtra("openReservations", false);
+        boolean REGISTER_FLAG = getIntent().getBooleanExtra("REGISTER_FLAG", false);
 
-        // Retrieve the array of long values from the intent
-        long[] previousDaysArray = getIntent().getLongArrayExtra("previousDays");
-
-        // Create a new HashSet and add the long values from the array
-        previousDays = new HashSet<>();
-        if (previousDaysArray != null) {
-            for (long day : previousDaysArray) {
-                previousDays.add(day);
-            }
-        }
-
+//        // Retrieve the array of long values from the intent
+//        long[] previousDaysArray = getIntent().getLongArrayExtra("previousDays");
+//
+//        // Create a new HashSet and add the long values from the array
+//        previousDays = new HashSet<>();
+//        if (previousDaysArray != null) {
+//            for (long day : previousDaysArray) {
+//                previousDays.add(day);
+//            }
+//        }
 
         /**If opened from VerifyPhoneNumberActivity*/
-        if(REGISTER_FLAG) {
+        if (REGISTER_FLAG) {
 
             // Firstly, get the user who signed-in
             FirebaseUser currentUser = getAuthUser();
 
-            if(currentUser == null)
+            if (currentUser == null)
                 return;
 
             // Get the phone number
@@ -74,27 +87,27 @@ public class MenuActivity extends AppCompatActivity {
 
             // Check whether the user already has any name, surname, email
             clientDAO.DataExistsCallback dataExistsCallback = dataExists -> {
-                if(dataExists)
+                if (dataExists)
                     replaceFragment(new HomeFragment());
-                else{
-                    launchNewUserActivity(currentUserId,phoneNo);
+                else {
+                    launchNewUserActivity(currentUserId, phoneNo);
                 }
             };
             // Call the check method
-            clientDataValid(currentUserId,dataExistsCallback);
-        }else {
+            clientDataValid(currentUserId, dataExistsCallback);
+        } else {
             replaceFragment(new HomeFragment());
         }
 
         /**If opened from ReservationSuccessfulActivity*/
-        if(openReservations) {
+        if (openReservations) {
             replaceFragment(new CalendarFragment());
-        }else {
+        } else {
             replaceFragment(new HomeFragment());
         }
 
         binding.bottomNavigationView2.setOnItemSelectedListener(item -> {
-            switch(item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.home:
                     replaceFragment(new HomeFragment());
                     break;
@@ -111,6 +124,8 @@ public class MenuActivity extends AppCompatActivity {
             return true;
         });
     }
+
+
 
     public static Set<Long> getPreviousDays()
     {

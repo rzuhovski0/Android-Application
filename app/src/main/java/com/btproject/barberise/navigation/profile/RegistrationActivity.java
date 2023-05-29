@@ -79,7 +79,6 @@ RegistrationActivity extends AppCompatActivity {
     public static boolean hoursConfigured = false;
 
     public static ArrayList<Category> categories = new ArrayList<>();
-
     private TextView openingHoursConfiguredTextView,pictureConfiguredTextView,servicesConfiguredTextView;
 
     private void setUpUI()
@@ -136,7 +135,7 @@ RegistrationActivity extends AppCompatActivity {
 
         setUpServicesTextView.setOnClickListener(view ->
         {
-            startActivity(new Intent(RegistrationActivity.this,SetUpServicesActivity.class));
+            startActivity(new Intent(RegistrationActivity.this,ConfigureServicesActivity.class));
         });
 
 

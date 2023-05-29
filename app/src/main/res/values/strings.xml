@@ -92,7 +92,19 @@
     <string name="save_changes">Save changes ›</string>
 
     <string name="set_opening_hours">Set up opening hours ›</string>
+    <string name="confirm">Confirm</string>
+
+    <string name="services_intro">Here, you can add categories and subcategories</string>
+    <string name="services_explanation">We\'ll start by selecting how many services and how many subservices you will provide</string>
+    <string name="num_of_services">Number of services</string>
+    <string name="num_of_services_example">(Example : If "Short hair" and "Long hair" say "2")</string>
+    <string name="num_of_subservices">Number of sub-services of each service</string>
+    <string name="num_of_subservices_example">(Example : If "Short hair" has 2 sub-services ("Scissors cut and Razor cut") say "2")</string>
     <string name="set_categories">Set up your services ›</string>
+    <string name="service_type">Type of service</string>
+    <string name="service">Service</string>
+    <string name="service_description">Description of service</string>
+    <string name="price">price</string>
 
     <string name="check_hours">Please, make sure that opening hours for each day are correctly configured</string>
     <string name="default_time_hint">(Mo – Fri : 9:00 – 17:00 Sa – Sun : –––)</string>

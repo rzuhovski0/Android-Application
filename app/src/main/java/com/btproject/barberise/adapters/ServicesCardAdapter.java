@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,10 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.btproject.barberise.R;
 import com.btproject.barberise.reservation.Category;
-import com.btproject.barberise.reservation.ContactInfoActivity;
 import com.btproject.barberise.reservation.Subcategory;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -64,7 +59,7 @@ public class ServicesCardAdapter extends RecyclerView.Adapter<ServicesCardAdapte
 
         public ViewHolder(View itemView,Context context) {
             super(itemView);
-            categoryName = itemView.findViewById(R.id.categoryTextView);
+            categoryName = itemView.findViewById(R.id.categoryConfEditText);
             recyclerView = itemView.findViewById(R.id.recyclerView);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false));

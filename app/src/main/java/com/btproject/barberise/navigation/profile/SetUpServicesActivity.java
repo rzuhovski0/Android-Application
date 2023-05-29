@@ -5,15 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.btproject.barberise.R;
 import com.btproject.barberise.adapters.CategoryCardAdapter;
-import com.btproject.barberise.adapters.FavoriteCardAdapter;
 import com.btproject.barberise.reservation.Category;
-import com.btproject.barberise.reservation.Subcategory;
 
 import java.util.ArrayList;
 
@@ -31,8 +28,8 @@ public class SetUpServicesActivity extends AppCompatActivity implements Category
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_services);
 
-        addCategoryButton = findViewById(R.id.addCategoryButton);
-        saveTextView = findViewById(R.id.inSetServicesSaveTextView);
+        addCategoryButton = findViewById(R.id.btnConfirm);
+        saveTextView = findViewById(R.id.saveSettingsButton);
         textView8 = findViewById(R.id.textView8);
 
         initRecyclerView();
@@ -52,16 +49,12 @@ public class SetUpServicesActivity extends AppCompatActivity implements Category
         saveTextView.setOnClickListener(view -> {
     //            RegistrationActivity.categories = categories;
     //            onBackPressed();
-            for(Category category : categories)
-            {
-                category.getSubcategories();
-            }
         });
     }
 
     private void initRecyclerView()
     {
-        recyclerView = findViewById(R.id.inServicesRecyclerView);
+        recyclerView = findViewById(R.id.inConfRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false));
     }
@@ -71,6 +64,7 @@ public class SetUpServicesActivity extends AppCompatActivity implements Category
         categoryCardAdapter = CategoryCardAdapter.getCategoryCardAdapter();
         recyclerView.setAdapter(categoryCardAdapter);
         categoryCardAdapter.setContextAndCategories(getApplicationContext(),categories);
+
         // Set the CategoryRemoveListener to the adapter
         categoryCardAdapter.setCategoryRemoveListener(this);
     }

@@ -9,6 +9,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.btproject.barberise.navigation.MenuActivity;
+import com.btproject.barberise.navigation.profile.ConfigureServicesActivity;
+import com.btproject.barberise.navigation.profile.PartnerProfileActivity;
 import com.btproject.barberise.navigation.profile.RegistrationActivity;
 import com.btproject.barberise.navigation.profile.SetUpServicesActivity;
 import com.btproject.barberise.navigation.profile.SetUpServicesSecondActivity;
@@ -29,8 +31,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         hideSystemUI();
-        Set<Long> previousDays = CalendarUtils.getPreviousDays();
-        previousDaysArray = getConvertedPreviousDays(previousDays);
+//        Set<Long> previousDays = CalendarUtils.getPreviousDays();
+//        previousDaysArray = getConvertedPreviousDays(previousDays);
         splashCountdown(previousDaysArray);
     }
 
@@ -58,10 +60,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(firebaseUser != null){
                     Intent intent = new Intent(SplashActivity.this,MenuActivity.class);
 
-                    // Pass the array of long values as an extra to the intent
-                    intent.putExtra("previousDays",previousDaysArray);
                     startActivity(intent);
-//                    startActivity(new Intent(SplashActivity.this, SetUpServicesSecondActivity.class));
                 }else{
                     startActivity(new Intent(SplashActivity.this, VerifyPhoneNoActivity.class));
                     finish();   //removes current activity from backstack

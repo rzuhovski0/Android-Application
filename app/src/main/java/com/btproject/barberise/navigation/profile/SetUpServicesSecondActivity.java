@@ -20,7 +20,6 @@ public class SetUpServicesSecondActivity extends AppCompatActivity{
 
     LinearLayout layoutList;
     Button buttonAdd;
-
     List<String> teamList = new ArrayList<>();
 
     @Override
