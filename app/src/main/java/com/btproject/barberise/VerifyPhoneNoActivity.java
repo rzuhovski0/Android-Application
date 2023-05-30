@@ -8,6 +8,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +40,7 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String phoneNo;
 
-    private TextView inVerSkipTextView;
+    private TextView inVerSkipTextView,ImBarberTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         send_btn = findViewById(R.id.send_btn);
         inVerSkipTextView = findViewById(R.id.inVerSkipTextView);
+        ImBarberTextView = findViewById(R.id.ImBarberTextView);
 
         inVerSkipTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +61,13 @@ public class VerifyPhoneNoActivity extends AppCompatActivity {
                 startActivity(new Intent(VerifyPhoneNoActivity.this,MenuActivity.class));
                 finish();
             }
+        });
+
+        ImBarberTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(VerifyPhoneNoActivity.this, MenuActivity.class);
+            intent.putExtra("BARBER_FLAG",true);
+            startActivity(intent);
+            finish();
         });
 
         // Hide progress bar

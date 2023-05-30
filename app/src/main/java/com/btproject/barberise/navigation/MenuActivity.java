@@ -58,6 +58,7 @@ public class MenuActivity extends AppCompatActivity {
 
         boolean openReservations = getIntent().getBooleanExtra("openReservations", false);
         boolean REGISTER_FLAG = getIntent().getBooleanExtra("REGISTER_FLAG", false);
+        boolean BARBER_FLAG = getIntent().getBooleanExtra("BARBER_FLAG",false);
 
 //        // Retrieve the array of long values from the intent
 //        long[] previousDaysArray = getIntent().getLongArrayExtra("previousDays");
@@ -69,6 +70,11 @@ public class MenuActivity extends AppCompatActivity {
 //                previousDays.add(day);
 //            }
 //        }
+        if(BARBER_FLAG){
+            replaceFragment(new ProfileFragment());
+        } else {
+            replaceFragment(new HomeFragment());
+        }
 
         /**If opened from VerifyPhoneNumberActivity*/
         if (REGISTER_FLAG) {

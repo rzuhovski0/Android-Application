@@ -9,6 +9,7 @@
     <string name="save">Save</string>
     <string name="phone_no">Your phone number here</string>
     <string name="send">Send</string>
+    <string name="im_barber">I\'m barber ›</string>
 
     <!--SMS activity-->
     <string name="welcome">Hey there
