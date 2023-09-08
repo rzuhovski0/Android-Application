@@ -2,7 +2,7 @@
 
 This mobile app provides users with a convenient and efficient way to book a hairdresser. Using the app, users can book an appointment with a hairdresser, register and log in to their account where they can see their previous and upcoming bookings, save their favourite branches and rate services. The app allows service providers (hairdressers) to create their profile for customers to book with them, manage their bookings and edit their profile.
 
-Features of this application are authentication, data storage, users interaction, system & profile personalization and many others. App supports SMS registration and login, as well as standard, more secure forms of authentication like email and password. There are two types of userbases, normal and super user (client and hairdresser). As server side mechanism, Firebase was integrated, which should provide if needed, additional scalability. App also supports Google-Maps API, as well other server-based products.
+Features of this application consist of authentication, data storage, users interaction, system & profile personalization and many others. App supports SMS registration and login, as well as standard, more secure forms of authentication like email and password. There are two types of userbases, normal and super user (client and hairdresser). As server side mechanism, Firebase was integrated, which should provide if needed, additional scalability. App also supports Google-Maps API, as well other server-based products.
 
 Some of the in-app screenshots :
 
