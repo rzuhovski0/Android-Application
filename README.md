@@ -17,11 +17,10 @@ Our mobile app offers users a streamlined way to book appointments with hairdres
 **Google Maps Integration**: The app seamlessly integrates with the Google Maps API and other server-based services to enhance the user experience.
 
 ## Screenshots
-<img width="1155" alt="prod_1" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/1dd3fbd3-d23f-4cd7-a755-ba4a89bf5354">
-<img width="1155" alt="prod_2" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/1192c396-ae85-46fe-9d4a-b808c611bba0">
-<img width="1155" alt="prod_3" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/aa9fd409-3b50-469e-9c98-fd9a6e97a5f5">
-<img width="1155" alt="prod_4" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/77939439-e18d-4c39-8980-7068883c71b0">
-
+<img width="1155" alt="prod_1" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/6a032c7e-364c-4bd5-a2a0-a174348e57cf">
+<img width="1155" alt="prod_2" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/dfde7d57-77d9-433c-ad16-1bb1b10aab34">
+<img width="1155" alt="prod_3" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/8da46440-cc22-4100-832c-bafb548323a0">
+<img width="1155" alt="prod_4" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/301ebe39-5a0d-4d03-99a1-9ba3b2d604ce">
 
 ## System Requirements
 Android Operating System: The app is compatible with Android version 9.0 (Pie) and later.
