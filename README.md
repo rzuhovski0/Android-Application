@@ -1,18 +1,37 @@
 # Android-Application
 
-This application was coded in Java & XML. Third-party libraries can be found inside Gradle file. Application is integrated with Firebase, which provides data storage & user authentication.
+## Overview
+This Android application was developed using Java and XML. It leverages various third-party libraries, which can be found listed in the Gradle file. The app is tightly integrated with Firebase, providing robust data storage and user authentication capabilities.
 
-This mobile app provides users with a convenient and **efficient** **way** **to** **book** a hairdresser. Using the app, users can book an appointment with a hairdresser, register and log in to their account where they can see their previous and upcoming bookings, save their favourite branches and rate services. The app allows service providers (hairdressers) to create their profile for customers to book with them, manage their bookings and edit their profile.
+## Features
+Our mobile app offers users a streamlined way to book appointments with hairdressers. Key features include:
 
-Features of this application consist of **authentication**, **data** **storage**, **users** **interaction**, **system** & **profile** **personalization** and many others. App supports **SMS** **registration** and **login**, as well as standard, more secure forms of authentication like email and password. There are two types of userbases, normal and super user (client and hairdresser). As server-side mechanism, **Firebase** was integrated, which should provide if needed, additional **scalability**. App also supports Google-Maps API, as well other server-based products.
+**User Registration and Login**: Users can create accounts and securely log in to manage their bookings, view past appointments, save favorite branches, and rate services.
 
-Some of the in-app screenshots :
+**Service Provider Profiles**: Hairdressers can create profiles, allowing customers to easily book appointments with them, manage their bookings, and update their profiles.
 
+**Authentication**: The app supports multiple authentication methods, including SMS registration and login, as well as traditional email and password authentication. Users can be categorized as normal users (clients) or super users (hairdressers).
+
+**Data Storage**: Firebase integration ensures efficient data storage, enabling seamless access to user data and application scalability when needed.
+
+**Google Maps Integration**: The app seamlessly integrates with the Google Maps API and other server-based services to enhance the user experience.
+
+## Screenshots
 <img width="1155" alt="prod_1" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/1dd3fbd3-d23f-4cd7-a755-ba4a89bf5354">
 <img width="1155" alt="prod_2" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/1192c396-ae85-46fe-9d4a-b808c611bba0">
 <img width="1155" alt="prod_3" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/aa9fd409-3b50-469e-9c98-fd9a6e97a5f5">
 <img width="1155" alt="prod_4" src="https://github.com/rzuhovski0/Android-Application/assets/113238933/77939439-e18d-4c39-8980-7068883c71b0">
 
 
-The app does not use any processor or graphics-intensive animations or calculations, so a powerful mobile phone is not required to get the full experience of the app. The mobile device must have the **Android** **operating** **system**, minimum version 9.0 (Pie), installed. The device must be connected to the internet for the app to work properly. To ensure full functionality of the system, the application must be granted permissions to access the location and photos of the device or the camera, as well as to send notifications and SMS. These permissions are not a prerequisite for use, but they are when making a reservation or registering as a business with specialised services.For the readability of the text, a minimum screen size of 320 x 480 pixels is recommended.
+## System Requirements
+Android Operating System: The app is compatible with Android version 9.0 (Pie) and later.
+
+Internet Connection: The device must be connected to the internet for the app to function correctly.
+
+Permissions: The app may require permissions to access device location, photos, camera, send notifications, and SMS. While these permissions are not mandatory for basic use, they are necessary for certain features such as making reservations or registering businesses with specialized services.
+
+Screen Size: A minimum screen size of 320 x 480 pixels is recommended for optimal readability.
+
+## Performance
+The app is designed to run smoothly on a wide range of devices and does not rely on processor-intensive animations or calculations. It provides a seamless experience on both powerful and less powerful mobile phones.
 
