@@ -1,0 +1,2 @@
+# Android-Application
+The "Barberise" mobile app provides users with a convenient and efficient way to book a hairdresser. Using the app, users can book an appointment with a hairdresser, register and log in to their account where they can see their previous and upcoming bookings, save their favourite branches and rate services. The app allows service providers (hairdressers) to create their profile for customers to book with them, manage their bookings and edit their pr
